@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-template-typescript",
+  "name": "hmpps-probation-frontend-component-api",
   "version": "0.0.1",
-  "description": "HMPPS Typescript Template",
-  "repository": "git@github.com:ministryofjustice/hmpps-template-typescript.git",
+  "description": "HMPPS Probation Frontend Component Api",
+  "repository": "git@github.com:ministryofjustice/hmpps-probation-frontend-component-api.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky",

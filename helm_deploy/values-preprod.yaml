@@ -1,14 +1,14 @@
 ---
-# Per environment values which override defaults in hmpps-template-typescript/values.yaml
+# Per environment values which override defaults in hmpps-probation-frontend-component-api/values.yaml
 
 generic-service:
   replicaCount: 2
 
   ingress:
-    host: template-typescript-preprod.hmpps.service.justice.gov.uk
+    host: probation-frontend-component-api-preprod.hmpps.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://template-typescript-preprod.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://probation-frontend-component-api-preprod.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     EXAMPLE_API_URL: 'https://template-kotlin-preprod.hmpps.service.justice.gov.uk'
