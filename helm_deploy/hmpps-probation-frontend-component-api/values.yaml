@@ -46,7 +46,7 @@ generic-service:
       CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_CREDS_CLIENT_SECRET'
     hmpps-probation-frontend-component-api-auth-code:
       AUTH_CODE_CLIENT_ID: 'AUTH_CODE_CLIENT_ID'
-      AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'    
+      AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'
     hmpps-probation-frontend-component-api-session-secret:
       SESSION_SECRET: 'SESSION_SECRET'
     hmpps-probation-frontend-component-api-elasticache-redis:
