@@ -1,7 +1,6 @@
 import session, { MemoryStore, Store } from 'express-session'
 import { RedisStore } from 'connect-redis'
 import express, { Router } from 'express'
-import { randomUUID } from 'crypto'
 import { createRedisClient } from '../data/redisClient'
 import config from '../config'
 import logger from '../../logger'
@@ -31,7 +30,7 @@ export default function setUpWebSession(): Router {
 
   // Update a value in the cookie so that the set-cookie will be sent.
   // Only changes every minute so that it's not sent with every request.
-  router.use((req, res, next) => {
+  router.use((req, _res, next) => {
     req.session.nowInMinutes = Math.floor(Date.now() / 60e3)
     next()
   })
@@ -39,7 +38,7 @@ export default function setUpWebSession(): Router {
   router.use((req, res, next) => {
     const headerName = 'X-Request-Id'
     const oldValue = req.get(headerName)
-    const id = oldValue === undefined ? randomUUID() : oldValue
+    const id = oldValue === undefined ? crypto.randomUUID() : oldValue
 
     res.set(headerName, id)
     req.id = id

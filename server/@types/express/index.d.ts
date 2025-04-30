@@ -1,6 +1,9 @@
 import { HmppsUser } from '../../interfaces/hmppsUser'
+import { TokenData } from '../Users'
 
-export declare module 'express-session' {
+export default {}
+
+declare module 'express-session' {
   // Declare that the session will potentially contain these additional fields
   interface SessionData {
     returnTo: string
@@ -19,7 +22,9 @@ export declare global {
     interface Request {
       verified?: boolean
       id: string
+      middleware?: Record
       logout(done: (err: unknown) => void): void
+      auth?: TokenData
     }
 
     interface Locals {

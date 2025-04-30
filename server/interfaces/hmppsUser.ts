@@ -1,3 +1,6 @@
+import { Role } from '../services/utils/roles'
+import { Service } from './Service'
+
 export type AuthSource = 'nomis' | 'delius' | 'external' | 'azuread'
 
 /**
@@ -9,8 +12,12 @@ export interface BaseUser {
   userId: string
   name: string
   displayName: string
-  userRoles: string[]
+  userRoles: Role[]
   token: string
+}
+
+export interface UserAccess {
+  services: Service[]
 }
 
 /**
@@ -23,14 +30,13 @@ export interface BaseUser {
  */
 export interface PrisonUser extends BaseUser {
   authSource: 'nomis'
-  staffId: number
 }
 
 /**
  * Probation users are those that have a user account in nDelius.
  * HMPPS Auth automatically grants these users a `ROLE_PROBATION` role.
  */
-export interface ProbationUser extends BaseUser {
+export interface ProbationUser extends BaseUser, UserAccess {
   authSource: 'delius'
 }
 
@@ -57,3 +63,7 @@ export interface AzureADUser extends BaseUser {
 }
 
 export type HmppsUser = PrisonUser | ProbationUser | ExternalUser | AzureADUser
+
+export const isProbationUser = (user: HmppsUser): boolean => {
+  return user.authSource === 'delius'
+}

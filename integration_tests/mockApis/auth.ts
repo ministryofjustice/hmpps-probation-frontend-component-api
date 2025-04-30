@@ -16,7 +16,7 @@ const createToken = (userToken: UserToken) => {
     name: userToken.name || 'john smith',
     user_name: 'USER1',
     scope: ['read'],
-    auth_source: 'nomis',
+    auth_source: 'delius',
     authorities,
     jti: '83b50a10-cca6-41db-985f-e87efb303ddb',
     client_id: 'clientid',

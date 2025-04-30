@@ -4,9 +4,21 @@
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+  <h1>Probation Frontend Component API</h1>
+  <p>This service makes front end components available to be incorporated into your project using the server side includes.</p>
 
-  <h1>This site is under construction...</h1>
-  <p>Please check back later when there is content to view.</p>
-  <p id="timestamp">The time is currently {{ currentTime }}</p>
+  <h2>Documentation</h2>
+  <p>
+    The API is documented using <a href="/swagger" class="govuk-link">Swagger</a>
+  </p>
 
+  <h2>Components</h2>
+  <p>Examples of the components available:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    {% for component in components %}
+      <li>
+        <a class="govuk-link" href="/{{ component }}">{{ component}}</a>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock %}
