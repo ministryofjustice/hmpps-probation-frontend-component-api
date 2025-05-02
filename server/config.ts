@@ -38,7 +38,7 @@ export default {
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
     cacheTimeout: Number(get('CACHE_TIMEOUT', 600)),
-    enabled: get('REDIS_ENABLED', 'true') === 'true',
+    enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
   },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),

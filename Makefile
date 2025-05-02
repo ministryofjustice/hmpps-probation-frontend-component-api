@@ -31,7 +31,7 @@ lint: ## Runs the linter.
 	docker compose ${DEV_COMPOSE_FILES} run --rm --no-deps app npm run lint
 
 lint-fix: ## Automatically fixes linting issues.
-	docker compose ${DEV_COMPOSE_FILES} run --rm --no-deps app npm run lint:fix
+	docker compose ${DEV_COMPOSE_FILES} run --rm --no-deps app npm run lint-fix
 
 clean: ## Stops and removes all project containers. Deletes local build/cache directories.
 	docker compose down

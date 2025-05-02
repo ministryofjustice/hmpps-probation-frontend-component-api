@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import createApp from '../app'
 import { services } from '../services'
 import { getTokenDataMock } from '../../tests/mocks/TokenDataMock'
+import { disconnectRedisClient } from '../middleware/setUpWebSession'
 
 jest.mock('../applicationInfo', () => () => ({
   applicationName: 'test',
@@ -37,6 +38,7 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.resetAllMocks()
+  disconnectRedisClient()
 })
 
 describe('GET /api/components', () => {
