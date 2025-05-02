@@ -31,7 +31,7 @@ const options = {
 
 const configFromJsDoc = swaggerConfig => async () => {
   const swaggerJson = JSON.stringify(swaggerJsdoc(swaggerConfig), null, 2)
-  await writeFile('./dist/swagger.json', swaggerJson)
+  await writeFile(path.join(__dirname, '../dist/swagger.json'), swaggerJson)
 }
 
 const generateSwaggerPlugin = swaggerConfig => ({
