@@ -3,6 +3,7 @@ const path = require('node:path')
 
 const { glob } = require('glob')
 const chokidar = require('chokidar')
+const { spawn } = require('child_process')
 const buildAssets = require('./assets.config')
 const buildApp = require('./app.config')
 
@@ -73,7 +74,6 @@ const main = () => {
 
   /** @type {string | null} */
   let serverEnv = null
-  if (args.includes('--dev-server')) serverEnv = '.env'
   if (args.includes('--dev-test-server')) serverEnv = 'feature.env'
 
   if (serverEnv) {
@@ -87,6 +87,16 @@ const main = () => {
         serverProcess = childProcess.spawn('node', [`--env-file=${serverEnv}`, 'dist/server.js'], { stdio: 'inherit' })
       }),
     )
+  }
+
+  if (args.includes('--dev-server')) {
+    let serverProcess = null
+    chokidar.watch(['dist']).on('all', () => {
+      if (serverProcess) serverProcess.kill()
+      serverProcess = spawn('node', ['--inspect=0.0.0.0', '--enable-source-maps', 'dist/server.js'], {
+        stdio: 'inherit',
+      })
+    })
   }
 
   if (args.includes('--watch')) {

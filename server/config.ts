@@ -69,14 +69,9 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
-  supportUrl: get('SUPPORT_URL', 'http://localhost:3000', requiredInProduction),
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   contentfulFooterLinksEnabled: false,
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {},
-  features: {
-    servicesStore: {
-      enabled: get('FEATURE_SERVICES_STORE_ENABLED', 'false', requiredInProduction) === 'true',
-    },
-  },
+  features: {},
 }
