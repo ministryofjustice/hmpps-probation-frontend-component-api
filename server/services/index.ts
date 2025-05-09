@@ -1,15 +1,18 @@
-import { dataAccess } from '../data'
-import AuditService from './auditService'
-import ExampleService from './exampleService'
+import UserService from './userService'
+import config from '../config'
+import { createRedisClient } from '../data/redisClient'
+import CacheService from './cacheService'
 
 export const services = () => {
-  const { applicationInfo, hmppsAuditClient, exampleApiClient } = dataAccess()
+  const cacheService = new CacheService(createRedisClient(), config.redis.cacheTimeout)
+  const userService = new UserService(cacheService)
 
   return {
-    applicationInfo,
-    auditService: new AuditService(hmppsAuditClient),
-    exampleService: new ExampleService(exampleApiClient),
+    userService,
+    cacheService,
   }
 }
 
 export type Services = ReturnType<typeof services>
+
+export { UserService }

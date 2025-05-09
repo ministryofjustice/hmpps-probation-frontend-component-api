@@ -1,35 +1,38 @@
 /* eslint-disable no-param-reassign */
-import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
-import fs from 'fs'
+import * as pathModule from 'path'
 import { initialiseName } from './utils'
 import config from '../config'
-import logger from '../../logger'
 
-export default function nunjucksSetup(app: express.Express): void {
+const production = process.env.NODE_ENV === 'production'
+
+export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath): void {
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
-  app.locals.applicationName = 'HMPPS Probation Frontend Component Api'
-  app.locals.environmentName = config.environmentName
-  app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
-  let assetManifest: Record<string, string> = {}
+  app.locals.applicationName = 'HMPPS Probation Frontend Component API'
+  app.locals.config = config
 
-  try {
-    const assetMetadataPath = path.resolve(__dirname, '../../assets/manifest.json')
-    assetManifest = JSON.parse(fs.readFileSync(assetMetadataPath, 'utf8'))
-  } catch (e) {
-    if (process.env.NODE_ENV !== 'test') {
-      logger.error(e, 'Could not read asset manifest file')
-    }
+  // Cachebusting version string
+  if (production) {
+    // Version only changes with new commits
+    app.locals.version = Date.now().toString()
+  } else {
+    // Version changes every request
+    app.use((req, res, next) => {
+      res.locals.version = Date.now().toString()
+      return next()
+    })
   }
 
   const njkEnv = nunjucks.configure(
     [
       path.join(__dirname, '../../server/views'),
       'node_modules/govuk-frontend/dist/',
+      'node_modules/govuk-frontend/dist/components/',
       'node_modules/@ministryofjustice/frontend/',
+      'node_modules/@ministryofjustice/frontend/moj/components/',
     ],
     {
       autoescape: true,
@@ -38,5 +41,4 @@ export default function nunjucksSetup(app: express.Express): void {
   )
 
   njkEnv.addFilter('initialiseName', initialiseName)
-  njkEnv.addFilter('assetMap', (url: string) => assetManifest[url] || url)
 }

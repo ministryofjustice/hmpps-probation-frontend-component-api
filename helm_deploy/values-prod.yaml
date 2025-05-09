@@ -3,13 +3,12 @@
 
 generic-service:
   ingress:
-    host: frontend-components.probation.service.justice.gov.uk
+    host: probation-frontend-components.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "frontend-components.probation.service.justice.gov.uk"
+    INGRESS_URL: "probation-frontend-components.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
-    EXAMPLE_API_URL: 'https://template-kotlin.hmpps.service.justice.gov.uk'
     AUDIT_ENABLED: "false"
 
 generic-prometheus-alerts:

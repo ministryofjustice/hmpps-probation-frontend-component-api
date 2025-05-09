@@ -1,7 +1,11 @@
-import { Router } from 'express'
+import { Request, Router } from 'express'
 import { csrfSync } from 'csrf-sync'
 
 const testMode = process.env.NODE_ENV === 'test'
+
+interface CsrfRequest extends Request {
+  csrfToken(): string
+}
 
 export default function setUpCsrf(): Router {
   const router = Router({ mergeParams: true })
@@ -21,7 +25,7 @@ export default function setUpCsrf(): Router {
     router.use(csrfSynchronisedProtection)
   }
 
-  router.use((req, res, next) => {
+  router.use((req: CsrfRequest, res, next) => {
     if (typeof req.csrfToken === 'function') {
       res.locals.csrfToken = req.csrfToken()
     }

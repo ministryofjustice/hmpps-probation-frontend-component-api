@@ -4,9 +4,11 @@
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
-
-  <h1>{{ message }}</h1>
-  <h2>{{ status }}</h2>
-  <pre>{{ stack }}</pre>
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">{{ message }}</h1>
+      <h2 class="govuk-heading-l">{{ status }}</h2>
+      <pre class="govuk-body error-stack">{{ stack }}</pre>
+    </div>
+  </div>
 {% endblock %}

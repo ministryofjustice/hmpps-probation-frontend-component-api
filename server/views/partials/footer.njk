@@ -1,0 +1,44 @@
+<footer class="probation-common-footer govuk-!-display-none-print" role="contentinfo">
+  <div class="govuk-width-container">
+    {% if user.services.length %}
+      <div class="govuk-grid-row">
+        <div id="probation-common-footer-services" class="govuk-grid-column-three-quarters probation-common-footer__services-menu">
+          <h2>Services</h2>
+          <ul class='govuk-list'>
+            {% for service in user.services %}
+              {% if service.navEnabled %}
+                <li>
+                  <a class="probation-common-footer__link" href='{{ service.href }}' class=''>{{ service.heading }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="govuk-grid-column-one-quarter"></div>
+      </div>
+    {% endif %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <div class="probation-common-footer__support-links">
+          <h2 class="govuk-visually-hidden">Support links</h2>
+
+          <ul class="probation-common-footer__inline-list">
+            <li class="probation-common-footer__inline-list-item">
+              <a class="probation-common-footer__link" href="#" target='_blank' referrerpolicy='no-referrer' rel='noopener'>
+                Feedback (opens in a new tab)
+              </a>
+            </li>
+
+            {% for page in managedPages %}
+              <li class="probation-common-footer__inline-list-item">
+                <a class="probation-common-footer__link" href="{{ page.href }}">
+                  {{ page.text }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

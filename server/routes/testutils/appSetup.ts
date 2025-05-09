@@ -1,12 +1,12 @@
 import express, { Express } from 'express'
 import { NotFound } from 'http-errors'
 
+import path from 'path'
 import { randomUUID } from 'crypto'
-import routes from '../index'
+import componentRoutes from '../componentRoutes'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
 import type { Services } from '../../services'
-import AuditService from '../../services/auditService'
 import { HmppsUser } from '../../interfaces/hmppsUser'
 import setUpWebSession from '../../middleware/setUpWebSession'
 
@@ -18,9 +18,9 @@ export const user: HmppsUser = {
   token: 'token',
   username: 'user1',
   displayName: 'First Last',
-  authSource: 'nomis',
-  staffId: 1234,
+  authSource: 'delius',
   userRoles: [],
+  services: [],
 }
 
 export const flashProvider = jest.fn()
@@ -30,7 +30,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
 
   app.set('view engine', 'njk')
 
-  nunjucksSetup(app)
+  nunjucksSetup(app, path)
   app.use(setUpWebSession())
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
@@ -40,14 +40,14 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
     }
     next()
   })
-  app.use((req, res, next) => {
+  app.use((req, _res, next) => {
     req.id = randomUUID()
     next()
   })
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use(routes(services))
-  app.use((req, res, next) => next(new NotFound()))
+  app.use(componentRoutes(services))
+  app.use((_req, _res, next) => next(new NotFound()))
   app.use(errorHandler(production))
 
   return app
@@ -55,9 +55,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
 
 export function appWithAllRoutes({
   production = false,
-  services = {
-    auditService: new AuditService(null) as jest.Mocked<AuditService>,
-  },
+  services = {},
   userSupplier = () => user,
 }: {
   production?: boolean

@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        BUILD_NUMBER: "1.0.0"
+        GIT_REF: "a1b2c3"
+        GIT_BRANCH: main
+      target: development
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    volumes:
+      - ./assets:/app/assets
+      - ./integration_tests:/app/integration_tests
+      - ./esbuild:/app/esbuild
+      - ./server:/app/server
+      - ./tests:/app/tests
+      - ./test_results:/app/test_result
+      - ./.prettierrc.json:/app/.prettierrc.json
+      - ./eslint.config.mjs:/app/eslint.config.mjs
+      - ./logger.ts:/app/logger.ts
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./server.ts:/app/server.ts
+      - ./tsconfig.json:/app/tsconfig.json

@@ -3,35 +3,35 @@
  * Do appinsights first as it does some magic instrumentation work, i.e. it affects other 'require's
  * In particular, applicationinsights automatically collects bunyan logs
  */
-import { AuthenticationClient, InMemoryTokenStore, RedisTokenStore } from '@ministryofjustice/hmpps-auth-clients'
+import applicationInfoProvider from '../applicationInfo'
 import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
-import applicationInfoSupplier from '../applicationInfo'
 
-const applicationInfo = applicationInfoSupplier()
+const applicationInfo = applicationInfoProvider()
 initialiseAppInsights()
 buildAppInsightsClient(applicationInfo)
 
+import { systemTokenBuilder } from './hmppsAuthClient'
 import { createRedisClient } from './redisClient'
-import config from '../config'
-import HmppsAuditClient from './hmppsAuditClient'
-import logger from '../../logger'
-import ExampleApiClient from './exampleApiClient'
+import TokenStore from './tokenStore'
+import RestClient, { CreateRestClientBuilder } from './restClient'
+import { ApiConfig } from '../config'
 
-export const dataAccess = () => {
-  const hmppsAuthClient = new AuthenticationClient(
-    config.apis.hmppsAuth,
-    logger,
-    config.redis.enabled ? new RedisTokenStore(createRedisClient()) : new InMemoryTokenStore(),
-  )
+type RestClientBuilder<T> = (token: string) => T
 
-  return {
-    applicationInfo,
-    hmppsAuthClient,
-    exampleApiClient: new ExampleApiClient(hmppsAuthClient),
-    hmppsAuditClient: new HmppsAuditClient(config.sqs.audit),
-  }
+export default function restClientBuilder<T>(
+  name: string,
+  options: ApiConfig,
+  constructor: new (client: RestClient) => T,
+): RestClientBuilder<T> {
+  const restClient = CreateRestClientBuilder(name, options)
+  return token => new constructor(restClient(token))
 }
 
-export type DataAccess = ReturnType<typeof dataAccess>
+export const dataAccess = {
+  getSystemToken: systemTokenBuilder(new TokenStore(createRedisClient())),
+  applicationInfo,
+}
 
-export { AuthenticationClient, HmppsAuditClient, ExampleApiClient }
+export type DataAccess = typeof dataAccess
+
+export type { RestClientBuilder }
