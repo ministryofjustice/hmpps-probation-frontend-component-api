@@ -15,6 +15,8 @@ RUN addgroup --gid 2000 --system appgroup && \
 
 WORKDIR /app
 
+FROM base AS build
+
 ARG BUILD_NUMBER
 ARG GIT_REF
 ARG GIT_BRANCH
@@ -29,35 +31,31 @@ ENV BUILD_NUMBER=${BUILD_NUMBER}
 ENV GIT_REF=${GIT_REF}
 ENV GIT_BRANCH=${GIT_BRANCH}
 
-# Stage: build assets
-FROM base AS build
-
 ARG BUILD_NUMBER
 ARG GIT_REF
 ARG GIT_BRANCH
 
-COPY package*.json ./
-RUN CYPRESS_INSTALL_BINARY=0 npm ci --no-audit
-ENV NODE_ENV='production'
-
 COPY . .
+RUN CYPRESS_INSTALL_BINARY=0 npm ci --no-audit
+
 RUN npm run build
 
+FROM base AS development
+
+COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules
+COPY --from=build --chown=appuser:appgroup /app/dist ./dist
+COPY --from=build --chown=appuser:appgroup /app/tests ./tests
+
+ENV NODE_ENV='development'
+
+FROM base AS production
+
+COPY --from=build --chown=appuser:appgroup /app/package.json ./
+COPY --from=build --chown=appuser:appgroup /app/package-lock.json ./
+COPY --from=build --chown=appuser:appgroup /app/dist ./dist
+COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules
+
 RUN npm prune --no-audit --omit=dev
-
-# Stage: copy production assets and dependencies
-FROM base
-
-COPY --from=build --chown=appuser:appgroup \
-        /app/package.json \
-        /app/package-lock.json \
-        ./
-
-COPY --from=build --chown=appuser:appgroup \
-        /app/dist ./dist
-
-COPY --from=build --chown=appuser:appgroup \
-        /app/node_modules ./node_modules
 
 EXPOSE 3000
 ENV NODE_ENV='production'
