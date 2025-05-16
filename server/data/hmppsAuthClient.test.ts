@@ -50,7 +50,10 @@ describe('hmppsAuthClient', () => {
 
       fakeHmppsAuthApi
         .post(`/oauth/token`, 'grant_type=client_credentials&username=Bob')
-        .basicAuth({ user: config.apis.hmppsAuth.systemClientId, pass: config.apis.hmppsAuth.systemClientSecret })
+        .basicAuth({
+          user: config.apis.hmppsAuth.clientCredentialsClientId,
+          pass: config.apis.hmppsAuth.clientCredentialsClientSecret,
+        })
         .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
         .reply(200, token)
 
@@ -65,7 +68,10 @@ describe('hmppsAuthClient', () => {
 
       fakeHmppsAuthApi
         .post(`/oauth/token`, 'grant_type=client_credentials')
-        .basicAuth({ user: config.apis.hmppsAuth.systemClientId, pass: config.apis.hmppsAuth.systemClientSecret })
+        .basicAuth({
+          user: config.apis.hmppsAuth.clientCredentialsClientId,
+          pass: config.apis.hmppsAuth.clientCredentialsClientSecret,
+        })
         .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
         .reply(200, token)
 

@@ -54,10 +54,14 @@ export default {
         deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000))),
-      apiClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-typescript-template', requiredInProduction),
-      apiClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
-      systemClientId: get('CLIENT_CREDS_CLIENT_ID', 'hmpps-typescript-template-system', requiredInProduction),
-      systemClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-typescript-template', requiredInProduction),
+      authCodeClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+      clientCredentialsClientId: get(
+        'CLIENT_CREDS_CLIENT_ID',
+        'hmpps-typescript-template-system',
+        requiredInProduction,
+      ),
+      clientCredentialsClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
