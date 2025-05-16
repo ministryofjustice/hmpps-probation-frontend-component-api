@@ -7,16 +7,6 @@ RUN apk --update-cache upgrade --available \
   && apk --no-cache add tzdata \
   && rm -rf /var/cache/apk/*
 
-ENV TZ=Europe/London
-RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
-
-RUN addgroup --gid 2000 --system appgroup && \
-    adduser --uid 2000 --system appuser --ingroup appgroup
-
-WORKDIR /app
-
-FROM base AS build
-
 ARG BUILD_NUMBER
 ARG GIT_REF
 ARG GIT_BRANCH
@@ -31,9 +21,15 @@ ENV BUILD_NUMBER=${BUILD_NUMBER}
 ENV GIT_REF=${GIT_REF}
 ENV GIT_BRANCH=${GIT_BRANCH}
 
-ARG BUILD_NUMBER
-ARG GIT_REF
-ARG GIT_BRANCH
+ENV TZ=Europe/London
+RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
+
+RUN addgroup --gid 2000 --system appgroup && \
+    adduser --uid 2000 --system appuser --ingroup appgroup
+
+WORKDIR /app
+
+FROM base AS build
 
 COPY . .
 RUN CYPRESS_INSTALL_BINARY=0 npm ci --no-audit
