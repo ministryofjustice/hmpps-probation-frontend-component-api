@@ -2,33 +2,32 @@ import { Router } from 'express'
 import { Services } from '../services'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import authorisationMiddleware from '../middleware/authorisationMiddleware'
+import { AVAILABLE_COMPONENTS } from '../@types/AvailableComponent'
 import auth from '../authentication/auth'
 import tokenVerifier from '../data/tokenVerification'
-import componentsController from '../controllers/componentsController'
 import populateCurrentUser from '../middleware/populateCurrentUser'
 
-export default function developRoutes(services: Services): Router {
+export default function contentRoutes(services: Services): Router {
   const router = Router()
-  const controller = componentsController()
 
   router.use(authorisationMiddleware())
   router.use(auth.authenticationMiddleware(tokenVerifier))
   router.use(populateCurrentUser(services.userService))
 
   router.get(
-    '/header',
+    '/',
     asyncMiddleware(async (_req, res, _next) => {
-      const viewModel = await controller.getHeaderViewModel(res.locals.user)
-      return res.render('pages/componentPreview', viewModel)
+      res.render(`pages/markdown`, { components: AVAILABLE_COMPONENTS, page: 'index' })
     }),
   )
 
-  router.get(
-    '/footer',
-    asyncMiddleware(async (_req, res, _next) => {
-      const viewModel = await controller.getFooterViewModel(res.locals.user)
-      return res.render('pages/componentPreview', viewModel)
-    }),
+  Array.of('accessibility', 'cookies-policy', 'privacy-policy').forEach(page =>
+    router.get(
+      `/${page}`,
+      asyncMiddleware(async (_req, res, _next) => {
+        res.render(`pages/markdown`, { components: AVAILABLE_COMPONENTS, page, showBacklink: true })
+      }),
+    ),
   )
 
   return router

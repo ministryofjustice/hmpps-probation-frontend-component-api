@@ -13,6 +13,7 @@ services:
       - "9229:9229"
     volumes:
       - ./assets:/app/assets
+      - ./content:/app/content
       - ./integration_tests:/app/integration_tests
       - ./esbuild:/app/esbuild
       - ./server:/app/server

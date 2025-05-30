@@ -40,6 +40,7 @@ FROM base AS development
 
 COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules
 COPY --from=build --chown=appuser:appgroup /app/dist ./dist
+COPY --from=build --chown=appuser:appgroup /app/content ./content
 COPY --from=build --chown=appuser:appgroup /app/tests ./tests
 
 ENV NODE_ENV='development'
@@ -49,6 +50,7 @@ FROM base AS production
 COPY --from=build --chown=appuser:appgroup /app/package.json ./
 COPY --from=build --chown=appuser:appgroup /app/package-lock.json ./
 COPY --from=build --chown=appuser:appgroup /app/dist ./dist
+COPY --from=build --chown=appuser:appgroup /app/content ./content
 COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules
 
 RUN npm prune --no-audit --omit=dev

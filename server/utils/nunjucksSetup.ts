@@ -2,12 +2,13 @@
 import nunjucks from 'nunjucks'
 import express from 'express'
 import * as pathModule from 'path'
-import { initialiseName } from './utils'
 import config from '../config'
+import { initialiseName } from './utils'
+import renderMarkdown from './markdown'
 
 const production = process.env.NODE_ENV === 'production'
 
-export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath): void {
+export default function nunjucksSetup(app: express.Express): void {
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
@@ -28,7 +29,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
 
   const njkEnv = nunjucks.configure(
     [
-      path.join(__dirname, '../../server/views'),
+      pathModule.join(__dirname, '../../server/views'),
       'node_modules/govuk-frontend/dist/',
       'node_modules/govuk-frontend/dist/components/',
       'node_modules/@ministryofjustice/frontend/',
@@ -41,4 +42,6 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   )
 
   njkEnv.addFilter('initialiseName', initialiseName)
+
+  njkEnv.addGlobal('renderMarkdown', renderMarkdown)
 }
