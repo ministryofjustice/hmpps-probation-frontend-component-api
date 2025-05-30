@@ -24,18 +24,14 @@
 
           <ul class="probation-common-footer__inline-list">
             <li class="probation-common-footer__inline-list-item">
-              <a class="probation-common-footer__link" href="#" target='_blank' referrerpolicy='no-referrer' rel='noopener'>
-                Feedback (opens in a new tab)
-              </a>
+              <a class="probation-common-footer__link" href="{{ baseUrl }}/accessibility">Accessibility</a>
             </li>
-
-            {% for page in managedPages %}
-              <li class="probation-common-footer__inline-list-item">
-                <a class="probation-common-footer__link" href="{{ page.href }}">
-                  {{ page.text }}
-                </a>
-              </li>
-            {% endfor %}
+            <li class="probation-common-footer__inline-list-item">
+              <a class="probation-common-footer__link" href="{{ baseUrl }}/cookies-policy">Cookies policy</a>
+            </li>
+            <li class="probation-common-footer__inline-list-item">
+              <a class="probation-common-footer__link" href="{{ baseUrl }}/privacy-policy">Privacy policy</a>
+            </li>
           </ul>
         </div>
       </div>

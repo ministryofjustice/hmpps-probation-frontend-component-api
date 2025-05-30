@@ -17,9 +17,6 @@ export default function setUpStaticResources(): Router {
   }
 
   Array.of(
-    '/assets',
-    '/assets/stylesheets',
-    '/assets/js',
     '/dist/assets',
     '/dist/assets/css',
     '/dist/assets/images',

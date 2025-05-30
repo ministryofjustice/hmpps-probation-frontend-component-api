@@ -2,7 +2,6 @@ import express from 'express'
 
 import createError from 'http-errors'
 
-import path from 'path'
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
 
@@ -21,6 +20,8 @@ import setUpEnvironmentName from './middleware/setUpEnvironmentName'
 import setUpSwagger from './middleware/setUpSwagger'
 import applicationInfo from './applicationInfo'
 import { appInsightsMiddleware } from './utils/azureAppInsights'
+import contentRoutes from './routes/contentRoutes'
+import config from './config'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -36,13 +37,19 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   setUpEnvironmentName(app)
-  nunjucksSetup(app, path)
+  nunjucksSetup(app)
   app.use(setUpAuthentication())
   app.use(setUpCsrf())
   setUpSwagger(app)
 
+  app.use((_req, res, next) => {
+    res.locals.baseUrl = config.domain
+
+    next()
+  })
   app.use('/api', componentRoutes(services))
   app.use('/', developRoutes(services))
+  app.use('/', contentRoutes(services))
 
   app.use((_req, _res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler(process.env.NODE_ENV === 'production'))

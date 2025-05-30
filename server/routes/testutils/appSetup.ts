@@ -1,7 +1,6 @@
 import express, { Express } from 'express'
 import { NotFound } from 'http-errors'
 
-import path from 'path'
 import { randomUUID } from 'crypto'
 import componentRoutes from '../componentRoutes'
 import nunjucksSetup from '../../utils/nunjucksSetup'
@@ -30,7 +29,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
 
   app.set('view engine', 'njk')
 
-  nunjucksSetup(app, path)
+  nunjucksSetup(app)
   app.use(setUpWebSession())
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
