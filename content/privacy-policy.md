@@ -136,7 +136,7 @@ You can also:
 * request that your personal data is erased if there is no longer a justification for it
 * ask that the processing of your personal data is restricted in certain circumstances
 
-For more information on your rights and how to complain, see the Ministry of Justice personal information charter.
+For more information on your rights and how to complain, see the [Ministry of Justice personal information charter](https://www.gov.uk/government/organisations/ministry-of-justice/about/personal-information-charter).
 
 You can contact our Data Protection team at:
 
