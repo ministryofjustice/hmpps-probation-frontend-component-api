@@ -21,7 +21,18 @@ export default function contentRoutes(services: Services): Router {
     }),
   )
 
-  Array.of('accessibility', 'cookies-policy', 'privacy-policy').forEach(page =>
+  Array.of(
+    'accessibility',
+    'cookies-policy',
+    'privacy-policy',
+    'accessibility/allocate-a-person-on-probation',
+    'accessibility/consider-a-recall',
+    'accessibility/create-and-vary-a-licence',
+    'accessibility/prepare-a-case-for-sentence',
+    'accessibility/refer-and-monitor-an-intervention',
+    'accessibility/transitional-accomodation',
+    'accessibility/workload-measurement-tool',
+  ).forEach(page =>
     router.get(
       `/${page}`,
       asyncMiddleware(async (_req, res, _next) => {

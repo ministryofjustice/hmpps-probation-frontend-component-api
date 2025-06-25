@@ -4,6 +4,7 @@ import fs from 'fs'
 import { RenderRule } from 'markdown-it/lib/renderer.mjs'
 
 const md = new MarkdownIt()
+const markdownsDir = 'content'
 
 const getRendererFor = (rule: string): RenderRule => {
   return md.renderer.rules[rule] || ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
@@ -37,6 +38,14 @@ const addClassesToRule = ([rule, classes]: string[]) => {
   }
 }
 
+export const getMarkdownPath = (filePath: string): { directory: string; fileName: string } => {
+  const pathArray = filePath.split('/')
+  if (pathArray.length === 1) return { directory: markdownsDir, fileName: pathArray[0] }
+  const fileName = pathArray[pathArray.length - 1]
+  const directory = `${markdownsDir}/${pathArray.slice(0, pathArray.length - 1).join('/')}`
+  return { directory, fileName }
+}
+
 Object.entries({
   paragraph_open: 'govuk-body',
   link_open: 'govuk-link',
@@ -52,8 +61,9 @@ Object.entries({
 }).forEach(addClassesToRule)
 
 function renderContent(content: string) {
-  const baseDir = path.resolve(process.cwd(), 'content')
-  const markdown = fs.readFileSync(path.join(baseDir, `${content}.md`), 'utf8')
+  const { directory, fileName } = getMarkdownPath(content)
+  const baseDir = path.resolve(process.cwd(), directory)
+  const markdown = fs.readFileSync(path.join(baseDir, `${fileName}.md`), 'utf8')
   const rendered = md.render(markdown)
 
   return rendered

@@ -17,7 +17,7 @@ The websites on Probation Digital Services may store a cookie when you log in to
 
 ## Analytics cookies
 
-The websites on Probation Digital Services may use Google Analytics software to collect information about how you use them. We do this to help make sure the sites are meeting the needs of users, and to [help us make improvements](https://insidegovuk.blog.gov.uk/2014/10/29/info-pages-publishing-data-about-user-needs-and-metrics/).
+The websites on Probation Digital Services may use Google Analytics software to collect information about how you use them. We do this to help make sure the sites are meeting the needs of users, and to help us make improvements.
 
 Google Analytics stores information about:
 
