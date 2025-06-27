@@ -89,5 +89,3 @@ This statement was prepared on 24 October 2023. It was last reviewed on 24 Octob
 This website was last tested on 25 September 2023.
 
 The test was carried out by UserVision, an independent accessibility testing company, to the WCAG 2.2 AA standard.
-
-You can read the full  [accessibility test report](https://drive.google.com/file/d/1-P_EPeHrneuUwi0p5iTYGm1aLpheiKDx/view?usp=drive_link).

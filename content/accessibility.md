@@ -24,4 +24,4 @@ Select a link to view the accessibility statement for that service.
 
 [Workload Measurement Tool](/accessibility/workload-measurement-tool)
 
-If you have difficulty navigating this page or the linked statements, email: <connected-services@justice.gov.uk>.
+If you have difficulty navigating this page or the linked statements, email: <connected-services@justice.gov.uk>
