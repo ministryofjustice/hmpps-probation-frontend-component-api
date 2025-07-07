@@ -9,7 +9,7 @@ services:
       target: development
     command: npm run start:dev
     ports:
-      - "3000:3000"
+      - "30002:3002"
       - "9229:9229"
     volumes:
       - ./assets:/app/assets

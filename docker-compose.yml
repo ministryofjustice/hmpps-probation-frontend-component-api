@@ -49,6 +49,7 @@ services:
       - ./hmpps-auth-proxy/nginx.conf:/etc/nginx/nginx.conf
 
   app:
+    container_name: hmpps-probation-frontend-component
     build:
       context: .
       args:
@@ -63,9 +64,9 @@ services:
       - hmpps-auth-proxy
       - redis
     ports:
-      - "3000:3000"
+      - "3002:3002"
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3000/health"]
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3002/health"]
     environment:
       - PRODUCT_ID=UNASSIGNED
       - REDIS_ENABLED=true
@@ -79,9 +80,10 @@ services:
       - SESSION_SECRET=somesecretvalue
       - TOKEN_VERIFICATION_API_URL=http://hmpps-auth:8080/auth
       - TOKEN_VERIFICATION_ENABLED=false
-      - INGRESS_URL=http://localhost:3000
+      - INGRESS_URL=http://localhost:3002
       - NO_HTTPS=true
       - NODE_ENV=development
 
 networks:
   hmpps:
+    name: hmpps
