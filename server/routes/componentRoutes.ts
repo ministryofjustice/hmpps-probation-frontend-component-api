@@ -50,7 +50,7 @@ export default function componentRoutes(services: Services): Router {
         resolve({
           html,
           css: [`${config.ingressUrl}/assets/css/header.css`],
-          javascript: [`${config.ingressUrl}/assets/js/header.css`],
+          javascript: [`${config.ingressUrl}/assets/js/header.js`],
         })
       })
     })
@@ -87,10 +87,10 @@ export default function componentRoutes(services: Services): Router {
    *         explode: true
    *         examples:
    *           header:
-   *             value: header
+   *             value: ['header']
    *             summary: Request the header component
    *           footer:
-   *             value: footer
+   *             value: ['footer']
    *             summary: Request the footer component
    *           headerAndFooter:
    *             value: ['header', 'footer']

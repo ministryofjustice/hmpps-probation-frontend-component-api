@@ -16,13 +16,16 @@ const options = {
     },
     servers: [
       {
-        url: 'probation-frontend-components-dev.service.justice.gov.uk',
+        url: 'http://localhost:3000/api',
+      },
+      {
+        url: 'https://probation-frontend-components-dev.service.justice.gov.uk/api',
       },
       // {
-      //   url: 'probation-frontend-components-preprod.service.justice.gov.uk',
+      //   url: 'https://probation-frontend-components-preprod.service.justice.gov.uk/api',
       // },
       // {
-      //   url: 'probation-frontend-components.service.justice.gov.uk',
+      //   url: 'https://probation-frontend-components.service.justice.gov.uk/api',
       // },
     ],
   },
