@@ -14,3 +14,8 @@ Available components
 
 - [Header](/header)
 - [Footer](/footer)
+
+Fallback components
+
+- [Header](/fallback/header)
+- [Footer](/fallback/footer)
