@@ -12,8 +12,8 @@ The `/api/components` path contains the minimum requirements of the component to
 The root level component displays the component in an HTML page including the required blocks and assets for display. This is to be used for development of components and is authed via `hmpps-auth` as the other applications are.
 
 ## Available components
-* Header
-* Footer
+* PDS header
+* PDS footer
 
 ## Contents
 

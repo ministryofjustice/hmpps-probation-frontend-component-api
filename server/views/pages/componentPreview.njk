@@ -27,7 +27,11 @@
   <body class="govuk-template__body {{ bodyClasses }}" {%- for attribute, value in bodyAttributes %} {{attribute}}="{{value}}"{% endfor %}>
 
     {% block component %}
+      {% if fallback %}
+        {% include "../../../_fallbacks/" + component + ".njk" %}
+      {% else %}
         {% include "../components/" + component + ".njk" %}
+      {% endif %}
     {% endblock %}
 
   </body>

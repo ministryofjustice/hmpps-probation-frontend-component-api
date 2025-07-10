@@ -1,4 +1,10 @@
-.probation-common-footer {
+$govuk-page-width: 1170px;
+
+@import "govuk-frontend/dist/govuk/settings/spacing";
+@import "govuk-frontend/dist/govuk/helpers/spacing";
+@import "govuk-frontend/dist/govuk/objects/width-container";
+
+.probation-common-fallback-footer {
   @include govuk-font($size: 16);
 
   border-top: 1px solid $govuk-border-colour;
@@ -56,3 +62,4 @@
     }
   }
 }
+

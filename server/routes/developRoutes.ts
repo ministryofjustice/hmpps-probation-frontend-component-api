@@ -15,21 +15,22 @@ export default function developRoutes(services: Services): Router {
   router.use(auth.authenticationMiddleware(tokenVerifier))
   router.use(populateCurrentUser(services.userService))
 
-  router.get(
-    '/header',
-    asyncMiddleware(async (_req, res, _next) => {
-      const viewModel = await controller.getHeaderViewModel(res.locals.user)
-      return res.render('pages/componentPreview', viewModel)
-    }),
-  )
+  const routes = [
+    { path: '/header', getViewModel: controller.getHeaderViewModel },
+    { path: '/footer', getViewModel: controller.getFooterViewModel },
+    { path: '/fallback/footer', getViewModel: controller.getFallbackFooterViewModel },
+    { path: '/fallback/header', getViewModel: controller.getFallbackHeaderViewModel },
+  ]
 
-  router.get(
-    '/footer',
-    asyncMiddleware(async (_req, res, _next) => {
-      const viewModel = await controller.getFooterViewModel(res.locals.user)
-      return res.render('pages/componentPreview', viewModel)
-    }),
-  )
+  routes.forEach(({ path, getViewModel }) => {
+    router.get(
+      path,
+      asyncMiddleware(async (_req, res, _next) => {
+        const viewModel = await getViewModel(res.locals.user)
+        return res.render('pages/componentPreview', viewModel)
+      }),
+    )
+  })
 
   return router
 }
