@@ -302,9 +302,9 @@ Note: If your application was copied from the typescript template before August 
 
 Appropriate fallback components should be included within your application. For the header and footer, templates are provided in the `_fallbacks` directory of this repo to copy and paste into your application, along with `scss` stylesheets.
 
-Place the `header.njk` and `footer.njk` files into your `/server/views/partials` directory, overwriting the existing `header.njk` file if applicable.
+Place the `fallback-header.njk` and `fallback-footer.njk` files into your `/server/views/partials` directory, remove the `fallback-` prefix, overwriting the existing `header.njk` and `footer.njk` files if applicable.
 
-Place the `_header.scss` and `_footer.scss` files into your `/assets/scss/components` directory, overwriting the existing `_header`.scss file if applicable, and update your `/assets/scss/index.scss` file to include these stylesheets, i.e.
+Place the `fallback-header.scss` and `fallback-footer.scss` files into your `/assets/scss/components` directory, rename them `_header.scss` and `_footer.scss`, overwriting the existing `_header.scss` and `_footer.scss` files if applicable, and update your `/assets/scss/index.scss` file to include these stylesheets, i.e.
 
 ```
 @import './components/header';

@@ -26,3 +26,4 @@ services:
       - ./package-lock.json:/app/package-lock.json
       - ./server.ts:/app/server.ts
       - ./tsconfig.json:/app/tsconfig.json
+      - ./_fallbacks:/app/_fallbacks
