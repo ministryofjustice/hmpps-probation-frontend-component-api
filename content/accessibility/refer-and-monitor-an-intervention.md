@@ -42,7 +42,7 @@ As part of providing this service, we may need to send you messages or documents
 
 We’re always looking to improve the accessibility of this service.
 
-If you find any problems that are not listed on this page or think we’re not meeting accessibility requirements, email [refer-and-monitor-feedback@digital.justice.gov.uk](mailto:refer-and-monitor-feedback@digital.justice.gov.uk)
+If you find any problems that are not listed on this page or think we’re not meeting accessibility requirements, email: [refer-and-monitor-feedback@digital.justice.gov.uk](mailto:refer-and-monitor-feedback@digital.justice.gov.uk)
 
 ## Enforcement procedure
 

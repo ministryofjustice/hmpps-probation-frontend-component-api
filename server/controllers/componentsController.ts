@@ -17,6 +17,11 @@ export interface FooterViewModel {
   component: string
 }
 
+export interface FallbackViewModel {
+  component: string
+  fallback: boolean
+}
+
 const defaultFooterLinks: PageLink[] = [
   {
     href: `${config.ingressUrl}/accessibility-statement`,
@@ -39,6 +44,8 @@ const defaultFooterLinks: PageLink[] = [
 export default (): {
   getHeaderViewModel: (user: HmppsUser) => Promise<HeaderViewModel>
   getFooterViewModel: (user: HmppsUser) => Promise<FooterViewModel>
+  getFallbackFooterViewModel: () => Promise<FallbackViewModel>
+  getFallbackHeaderViewModel: () => Promise<FallbackViewModel>
   getViewModels: (components: AvailableComponent[], user: HmppsUser) => Promise<ComponentsData>
 } => ({
   async getHeaderViewModel(user: HmppsUser): Promise<HeaderViewModel> {
@@ -57,6 +64,20 @@ export default (): {
       managedPages,
       isProbationUser: isProbationUser(user),
       component: 'footer',
+    }
+  },
+
+  async getFallbackFooterViewModel(): Promise<FallbackViewModel> {
+    return {
+      component: 'fallback-footer',
+      fallback: true,
+    }
+  },
+
+  async getFallbackHeaderViewModel(): Promise<FallbackViewModel> {
+    return {
+      component: 'fallback-header',
+      fallback: true,
     }
   },
 
