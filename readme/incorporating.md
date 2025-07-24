@@ -10,11 +10,11 @@ An example PR containing all the steps below, including the fallbacks, can be fo
 
 API swagger docs can be found at
 
-dev - https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/swagger
+[API Swagger dev documentation](https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/swagger)
 
-preprod - https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk/swagger
+[API Swagger preprod documentation](https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk/swagger)
 
-prod - https://probation-frontend-components.hmpps.service.justice.gov.uk/swagger
+[API Swagger prod documentation](https://probation-frontend-components.hmpps.service.justice.gov.uk/swagger)
 
 ## Running the component library API locally
 
