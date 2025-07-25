@@ -71,10 +71,11 @@
 
             {# USER MENU #}
             <div class="probation-common-header__navigation__item">
+              <div class="govuk-visually-hidden">{{ user.displayName | initialiseName }}</div>
               <button class="probation-common-header__menu-toggle probation-common-header__user-menu-toggle" aria-controls="probation-common-header-user-menu" aria-expanded="false" type="button" hidden='hidden'>
                 <span>
                   {{ userSvg | safe }}
-                  <span data-qa="probation-common-header-user-name">{{ user.displayName | initialiseName }}</span>
+                  <span data-qa="probation-common-header-user-name" aria-hidden="true">{{ user.displayName | initialiseName }}</span>
                   <span class="govuk-visually-hidden">Account menu</span>
                 </span>
               </button>
