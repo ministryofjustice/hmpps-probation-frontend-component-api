@@ -310,6 +310,11 @@
     width: 107px;
   }
 
+  &__menu-toggle-label {
+    display: block;
+    text-align: left;
+  }
+
   @media print {
     display: none;
   }
