@@ -1,65 +1,7 @@
-$govuk-page-width: 1170px;
-
-@import "govuk-frontend/dist/govuk/settings/spacing";
-@import "govuk-frontend/dist/govuk/helpers/spacing";
 @import "govuk-frontend/dist/govuk/objects/width-container";
 
 .probation-common-fallback-footer {
-  @include govuk-font($size: 16);
-
-  border-top: 1px solid $govuk-border-colour;
-  padding: 30px 0;
-  color: $govuk-text-colour;
   background: $govuk-template-background-colour;
-
-  a {
-    text-underline-offset: 0.23em;
-  }
-
-  &__info {
-    display: flex;
-  }
-
-  h2 {
-    font-size: 24px;
-    margin-top: 0;
-    padding-bottom: 25px;
-    border-bottom: 1px solid govuk-colour('dark-grey');
-  }
-
-  &__help {
-    flex-basis: 50%;
-  }
-
-  &__inline-list {
-    margin-top: 0;
-    margin-bottom: govuk-spacing(3);
-    padding: 0;
-  }
-
-  &__inline-list-item {
-    display: inline-block;
-    margin-right: govuk-spacing(3);
-    margin-bottom: govuk-spacing(1);
-  }
-
-  &__link {
-    @include govuk-link-common;
-    @include govuk-link-style-text;
-  }
-
-  &__services-menu {
-    ul {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 15px 15px;
-      justify-items: start;
-      li a {
-        color: $govuk-text-colour;
-        font-size: 16px;
-      }
-    }
-  }
+  min-height: 100px;
 }
 
