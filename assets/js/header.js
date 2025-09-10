@@ -4,28 +4,14 @@ function initHeader() {
   const userToggle = document.querySelector('.probation-common-header__user-menu-toggle')
   const userMenu = document.querySelector('#probation-common-header-user-menu')
 
-  const servicesToggle = document.querySelector('.probation-common-header__services-menu-toggle')
-  const servicesMenu = document.querySelector('#probation-common-header-services-menu')
-
   hideFallbackLinks()
   if (userToggle) userToggle.removeAttribute('hidden')
-  if (servicesToggle) servicesToggle.removeAttribute('hidden')
 
-  closeTabs([
-    [userToggle, userMenu],
-    [servicesToggle, servicesMenu],
-  ])
+  closeTabs([[userToggle, userMenu]])
 
   if (userToggle)
     userToggle.addEventListener('click', function handleUserMenuToggle(_event) {
-      closeTabs([[servicesToggle, servicesMenu]])
       toggleMenu(userToggle, userMenu)
-    })
-
-  if (servicesToggle)
-    servicesToggle.addEventListener('click', function handleServiceMenuToggle(_event) {
-      closeTabs([[userToggle, userMenu]])
-      toggleMenu(servicesToggle, servicesMenu)
     })
 }
 
@@ -57,7 +43,5 @@ function toggleMenu(toggle, menu) {
 
 function hideFallbackLinks() {
   const userLink = document.querySelector('.probation-common-header__user-menu-link')
-  const servicesLink = document.querySelector('.probation-common-header__services-menu-link')
   if (userLink) userLink.setAttribute('hidden', 'hidden')
-  if (servicesLink) servicesLink.setAttribute('hidden', 'hidden')
 }
