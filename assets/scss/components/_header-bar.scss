@@ -1,19 +1,22 @@
 .probation-common-header {
-  [hidden] { display: none !important; }
+  [hidden] {
+    display: none;
+  }
+  color: govuk-colour("white");
 
   background-color: govuk-colour("black");
-  color: govuk-colour("white");
 
   &__logo {
     @include govuk-responsive-margin(3, "right");
     position: relative;
     top: -2px;
-    fill: govuk-colour("white");
     padding: 15px 0;
+    fill: govuk-colour("white");
   }
 
   &__title {
     display: flex;
+
     &__organisation-name {
       @include govuk-responsive-margin(2, "right");
       @include govuk-font($size: 24, $weight: "bold");
@@ -43,23 +46,23 @@
     &:visited,
     &:active {
       color: govuk-colour("white");
-      text-decoration: none;
       font-weight: normal;
+      text-decoration: none;
     }
 
     &:focus {
       color: govuk-colour("black");
       box-shadow: none;
 
-      &:after {
-        background: govuk-colour("black");
+      &::after {
         content: "";
-        height: 3px;
         position: absolute;
+        top: auto;
+        right: 15px;
         bottom: 0;
         left: 15px;
-        right: 15px;
-        top: auto;
+        height: 3px;
+        background: govuk-colour("black");
       }
 
       svg {
@@ -77,77 +80,78 @@
   }
 
   &__button-container {
-
     @include govuk-media-query(925px) {
       position: absolute;
-      right: 0;
       top: -70px;
+      right: 0;
       background-color: govuk-colour("black");
     }
   }
 
   &__navigation {
-    height: 70px;
     display: flex;
-    list-style: none;
+    height: 70px;
     margin: 0;
     padding: 0;
+    list-style: none;
     flex-direction: row;
     align-items: center;
 
     &__item {
-      height: 100%;
       position: relative;
+      height: 100%;
 
-      >button, >a {
+      > button,
+      > a {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 100%;
         padding: 0;
+        overflow: hidden;
         border: none;
-        cursor: pointer;
         color: govuk-colour("white");
         background: govuk-colour("black");
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
         @include govuk-font(16);
-        height: 100%;
-        overflow: hidden;
 
         &:hover {
-          color: govuk-colour("mid-grey") !important;
-          &:after {
-            background: govuk-colour("mid-grey");
+          color: govuk-colour("mid-grey");
+
+          &::after {
             content: "";
-            height: 3px;
             position: absolute;
+            top: auto;
+            right: 15px;
             bottom: 0;
             left: 15px;
-            right: 15px;
-            top: auto;
+            height: 3px;
+            background: govuk-colour("mid-grey");
           }
         }
 
         &.probation-common-header__menu-toggle {
-          padding: 10px 0px;
+          padding: 10px 0;
 
-          >span {
+          > span {
+            display: flex;
             height: 100%;
             padding: 0 15px;
             border-left: 1px solid govuk-colour("white");
-            display: flex;
             align-items: center;
 
-            &:before {
-              webkit-transform: translateY(-35%) rotate(45deg) scale(1);
-              -ms-transform: translateY(-35%) rotate(45deg) scale(1);
-              transform: translateY(-35%) rotate(45deg) scale(1);
-              border-bottom: 2px solid govuk-colour("white");
-              border-right: 2px solid govuk-colour("white");
+            &::before {
               content: "";
               display: inline-block;
+              width: 8px;
               height: 8px;
               margin: 3px 15px 0 3px;
+              -ms-transform: translateY(-35%) rotate(45deg) scale(1);
+              -webkit-transform: translateY(-35%) rotate(45deg) scale(1);
+              transform: translateY(-35%) rotate(45deg) scale(1);
+              border-right: 2px solid govuk-colour("white");
+              border-bottom: 2px solid govuk-colour("white");
               vertical-align: middle;
-              width: 8px;
             }
           }
 
@@ -156,41 +160,42 @@
           }
 
           &:hover {
-            >span {
-              &:before {
-                border-bottom: 2px solid govuk-colour("mid-grey");
+            > span {
+              &::before {
                 border-right: 2px solid govuk-colour("mid-grey");
+                border-bottom: 2px solid govuk-colour("mid-grey");
               }
             }
           }
         }
 
         &.probation-common-header__toggle-open {
-          background: govuk-colour("light-grey");
           color: govuk-colour("blue");
+          background: govuk-colour("light-grey");
 
-          >span {
-            &:before {
-              webkit-transform: translateY(-0%) rotate(225deg) scale(1);
+          > span {
+            &::before {
               -ms-transform: translateY(-0%) rotate(225deg) scale(1);
+              -webkit-transform: translateY(-0%) rotate(225deg) scale(1);
               transform: translateY(-0%) rotate(225deg) scale(1);
-              border-bottom: 2px solid govuk-colour("blue");
               border-right: 2px solid govuk-colour("blue");
+              border-bottom: 2px solid govuk-colour("blue");
             }
 
-            &:after {
-              background: govuk-colour("blue");
+            &::after {
               content: "";
-              height: 3px;
               position: absolute;
+              top: auto;
+              right: 15px;
               bottom: 0;
               left: 15px;
-              right: 15px;
-              top: auto;
+              height: 3px;
+              background: govuk-colour("blue");
             }
           }
+
           &:hover {
-            color: govuk-colour("dark-grey") !important;
+            color: govuk-colour("dark-grey");
           }
         }
 
@@ -198,32 +203,34 @@
           outline: 3px solid transparent;
           color: govuk-colour("black");
           background-color: govuk-colour("yellow");
-          text-decoration: none;
           box-shadow: none;
+          text-decoration: none;
 
-          &:after {
-            background: govuk-colour("black");
+          &::after {
             content: "";
-            height: 3px;
             position: absolute;
+            top: auto;
+            right: 15px;
             bottom: 0;
             left: 15px;
-            right: 15px;
-            top: auto;
+            height: 3px;
+            background: govuk-colour("black");
           }
 
-          >span {
-            &:before {
-            border-bottom: 2px solid govuk-colour("black");
-            border-right: 2px solid govuk-colour("black");
+          > span {
+            &::before {
+              border-right: 2px solid govuk-colour("black");
+              border-bottom: 2px solid govuk-colour("black");
             }
           }
         }
       }
+
       &.item-open {
         + div {
-          >button, >a {
-            >span {
+          > button,
+          > a {
+            > span {
               border-left: 1px solid transparent;
             }
           }
@@ -237,54 +244,57 @@
     z-index: 10000000;
     padding: 15px;
     background: govuk-colour("light-grey");
+
     a {
-      font-weight: 700;
       display: block;
       margin-bottom: 15px;
+      font-weight: 700;
     }
   }
 
   &__pushdown-menu {
-    padding: 30px 0 60px 0;
+    padding: 30px 0 60px;
     background: govuk-colour("light-grey");
   }
 
   &__icon-link-wrapper {
+    display: flex;
     position: relative;
     height: 100%;
-    display: flex;
 
-    img, svg {
+    img,
+    svg {
       margin: 0 15px 0 0;
     }
 
     a {
-      padding: 10px 0;
       box-sizing: border-box;
       display: block;
       width: 100%;
+      padding: 10px 0;
 
-      >span {
+      > span {
+        display: flex;
         height: 100%;
         padding: 0 15px;
         border-left: 1px solid govuk-colour("white");
-        display: flex;
         align-items: center;
         justify-content: center;
       }
 
       &:hover {
-        color: govuk-colour("mid-grey") !important;
+        color: govuk-colour("mid-grey");
         text-decoration: none;
-        &:after {
-          background: govuk-colour("mid-grey");
+
+        &::after {
           content: "";
-          height: 3px;
           position: absolute;
+          top: auto;
+          right: 15px;
           bottom: 0;
           left: 15px;
-          right: 15px;
-          top: auto;
+          height: 3px;
+          background: govuk-colour("mid-grey");
         }
       }
     }
@@ -292,13 +302,13 @@
 
   &__services-menu {
     ul {
-      width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 15px 15px;
-      justify-items: start;
-      font-weight: bold;
+      width: 100%;
       margin-bottom: 0;
+      font-weight: bold;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      justify-items: start;
     }
   }
 
