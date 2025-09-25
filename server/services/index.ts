@@ -1,6 +1,7 @@
 import UserService from './userService'
 import config from '../config'
 import { createRedisClient } from '../data/redisClient'
+import '../data'
 import CacheService from './cacheService'
 
 export const services = () => {
