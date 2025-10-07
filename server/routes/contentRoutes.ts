@@ -6,6 +6,7 @@ import { AVAILABLE_COMPONENTS } from '../@types/AvailableComponent'
 import auth from '../authentication/auth'
 import tokenVerifier from '../data/tokenVerification'
 import populateCurrentUser from '../middleware/populateCurrentUser'
+import { DEFAULT_USER_ACCESS } from '../services/userService'
 
 export default function contentRoutes(services: Services): Router {
   const router = Router()
@@ -39,6 +40,15 @@ export default function contentRoutes(services: Services): Router {
         res.render(`pages/markdown`, { components: AVAILABLE_COMPONENTS, page, showBacklink: true })
       }),
     ),
+  )
+
+  router.get(
+    '/services',
+    asyncMiddleware(async (_req, res, _next) => {
+      res.render(`pages/services`, {
+        meta: res.locals.user.authSource === 'delius' ? { services: res.locals.user.services } : DEFAULT_USER_ACCESS,
+      })
+    }),
   )
 
   return router

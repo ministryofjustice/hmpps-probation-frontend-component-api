@@ -27,10 +27,10 @@ export interface UserAccess {
  * a stringified version of the staffId. Some teams may need to separately
  * retrieve the user case load (which prisons that a prison user has access
  * to) and store it here, an example can be found in `hmpps-prisoner-profile`.
- */
-export interface PrisonUser extends BaseUser {
+ *
+export interface PrisonUser extends BaseUser, UserAccess {
   authSource: 'nomis'
-}
+} */
 
 /**
  * Probation users are those that have a user account in nDelius.
@@ -44,10 +44,10 @@ export interface ProbationUser extends BaseUser, UserAccess {
  * External users are those that have a user account in our External Users
  * database. These accounts are created for users that need access to HMPPS
  * services but have neither NOMIS nor nDelius access.
- */
+ *
 export interface ExternalUser extends BaseUser {
   authSource: 'external'
-}
+} */
 
 /**
  * AzureAD users are those that have a justice.gov.uk email address and
@@ -57,12 +57,12 @@ export interface ExternalUser extends BaseUser {
  * to use to access the service, however if there is no match, it is
  * possible that a user of this type could attempt to access the service,
  * and would have no user roles associated.
- */
+ *
 export interface AzureADUser extends BaseUser {
   authSource: 'azuread'
-}
+} */
 
-export type HmppsUser = PrisonUser | ProbationUser | ExternalUser | AzureADUser
+export type HmppsUser = ProbationUser
 
 export const isProbationUser = (user: HmppsUser): boolean => {
   return user.authSource === 'delius'
