@@ -9,6 +9,7 @@ export interface HeaderViewModel {
   component: string
   ingressUrl: string
   manageDetailsLink: string
+  menuLink: string
 }
 
 export interface FooterViewModel {
@@ -54,6 +55,7 @@ export default (): {
       manageDetailsLink: `${config.apis.hmppsAuth.url}/account-details`,
       component: 'header',
       ingressUrl: config.ingressUrl,
+      menuLink: `${config.ingressUrl}/services`,
     }
   },
 

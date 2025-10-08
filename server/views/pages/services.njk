@@ -1,0 +1,30 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Services" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full probation-services">
+        <h1 class="govuk-heading-xl">Services</h1>
+        <ul class="govuk-task-list">
+            {% for service in user.services %}
+                {% if service.navEnabled %}
+                    <li class="govuk-task-list__item govuk-task-list__item--with-link">
+                        <a class="probation-services__container-link" href="{{ service.href }}" target="{{ service.target | default('_self') }}" {% if service.target == '_blank' %}rel="noopener noreferrer"{% endif %}></a>
+                        <div class="govuk-task-list__name-and-hint">
+                        <a class="govuk-link govuk-task-list__link" href="{{ service.href }}" target="{{ service.target | default('_self') }}" {% if service.target == '_blank' %}rel="noopener noreferrer"{% endif %} aria-describedby="company-details-1-status">
+                            {{ service.heading }}
+                        </a>
+                        </div>
+                        <div class="govuk-task-list__status probation-services__arrow" id="company-details-1-status">
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+  </div>
+{% endblock %}

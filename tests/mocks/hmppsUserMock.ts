@@ -1,4 +1,4 @@
-import { HmppsUser, ProbationUser } from '../../server/interfaces/hmppsUser'
+import { ProbationUser } from '../../server/interfaces/hmppsUser'
 import { Service } from '../../server/interfaces/Service'
 
 export const servicesMock: Service[] = [
@@ -20,14 +20,4 @@ export const probationUserMock: ProbationUser = {
   userRoles: [],
   token: 'abc.def.ghi',
   services: servicesMock,
-}
-
-export const hmppsUserMock: HmppsUser = {
-  authSource: 'nomis',
-  username: 'HMPPS_USER',
-  userId: '11111',
-  name: 'Hmpps User',
-  displayName: 'H. User',
-  userRoles: [],
-  token: 'token',
 }

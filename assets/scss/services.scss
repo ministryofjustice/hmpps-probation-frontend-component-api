@@ -1,0 +1,42 @@
+.probation-services {
+    .govuk-task-list__item {
+        padding-top: 24px;
+        padding-bottom: 32px;
+
+        &--with-link {
+            background-color: white;
+            &:hover {
+                cursor: pointer;
+                background-color: white;
+            }
+        }
+    }
+    .govuk-task-list__link {
+        font-weight: bold;
+    }
+
+    &__arrow {
+        &:before {
+            -webkit-transform: translateY(-35%) rotate(45deg) scale(1);
+            -ms-transform: translateY(-35%) rotate(45deg) scale(1);
+            transform: translateY(-35%) rotate(45deg) scale(1);
+            border-top: 3px solid govuk-colour("black");
+            border-right: 3px solid govuk-colour("black");
+            content: "";
+            display: inline-block;
+            height: 8px;
+            margin-top: govuk-spacing(1);
+            margin-right: govuk-spacing(3);
+            vertical-align: middle;
+            width: 8px;
+        }
+    }
+
+    &__container-link {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+    }
+}

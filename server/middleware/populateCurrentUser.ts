@@ -6,7 +6,7 @@ import { Role } from '../services/utils/roles'
 import { HmppsUser } from '../interfaces/hmppsUser'
 import { UserService } from '../services'
 
-export default function populateCurrentUser(_userService: UserService): RequestHandler {
+export default function populateCurrentUser(userService: UserService): RequestHandler {
   return async (req, res, next) => {
     try {
       // expressjwt middleware puts user object on req.auth
@@ -28,12 +28,15 @@ export default function populateCurrentUser(_userService: UserService): RequestH
         authorities?: string[]
       }
 
+      const userRoles = roles.map(role => role.substring(role.indexOf('_') + 1) as Role)
+
       res.locals.user = {
         ...res.locals.user,
         userId,
         name,
         displayName: convertToTitleCase(name),
-        userRoles: roles.map(role => role.substring(role.indexOf('_') + 1) as Role),
+        userRoles,
+        services: userService.getServicesForUser(userRoles),
       }
 
       next()

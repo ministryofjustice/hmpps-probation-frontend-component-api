@@ -15,16 +15,16 @@ export default class UserService {
 
   constructor(private readonly cacheService: CacheService) {}
 
+  getServicesForUser(userRoles: string[]): Service[] {
+    return getServicesForUser(userRoles)
+  }
+
   private getCache(user: BaseUser): Promise<UserAccess> {
     return this.cacheService.getData<UserAccess>(`${user.username}_meta_data`)
   }
 
   private setCache(user: BaseUser, access: UserAccess): Promise<string> {
     return this.cacheService.setData(`${user.username}_meta_data`, access)
-  }
-
-  private async getServicesForUser(_user: BaseUser): Promise<Service[]> {
-    return getServicesForUser()
   }
 
   private handleError(error: Error) {
