@@ -3,6 +3,7 @@ import { PageLink } from '../interfaces/PageLink'
 import { AvailableComponent } from '../@types/AvailableComponent'
 import { HmppsUser, isProbationUser, UserAccess } from '../interfaces/hmppsUser'
 import { DEFAULT_USER_ACCESS } from '../services/userService'
+import { Role, userHasRoles } from '../services/utils/roles'
 
 export interface HeaderViewModel {
   isProbationUser: boolean
@@ -10,6 +11,7 @@ export interface HeaderViewModel {
   ingressUrl: string
   manageDetailsLink: string
   menuLink: string
+  mPoPLink: string
 }
 
 export interface FooterViewModel {
@@ -46,16 +48,20 @@ export default (): {
   getHeaderViewModel: (user: HmppsUser) => Promise<HeaderViewModel>
   getFooterViewModel: (user: HmppsUser) => Promise<FooterViewModel>
   getFallbackFooterViewModel: () => Promise<FallbackViewModel>
-  getFallbackHeaderViewModel: () => Promise<FallbackViewModel>
+  getFallbackHeaderViewModel: (user: HmppsUser) => Promise<FallbackViewModel>
   getViewModels: (components: AvailableComponent[], user: HmppsUser) => Promise<ComponentsData>
 } => ({
   async getHeaderViewModel(user: HmppsUser): Promise<HeaderViewModel> {
+    console.log(user.userRoles);
+    const hasAccessToMPOP = userHasRoles([Role.ManageSupervisions], user.userRoles);
+    console.log(hasAccessToMPOP);
     return {
       isProbationUser: isProbationUser(user),
       manageDetailsLink: `${config.apis.hmppsAuth.url}/account-details`,
       component: 'header',
       ingressUrl: config.ingressUrl,
       menuLink: `${config.ingressUrl}/services`,
+      mPoPLink: hasAccessToMPOP ? config.serviceUrls.managePeopleOnProbation.url : '/',
     }
   },
 
@@ -76,7 +82,8 @@ export default (): {
     }
   },
 
-  async getFallbackHeaderViewModel(): Promise<FallbackViewModel> {
+  async getFallbackHeaderViewModel(user: HmppsUser): Promise<FallbackViewModel> {
+    const hasAccessToMPOP = userHasRoles([Role.ManageSupervisions], user.userRoles);
     return {
       component: 'fallback-header',
       fallback: true,
