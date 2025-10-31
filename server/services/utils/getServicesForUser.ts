@@ -10,6 +10,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.allocateAPersonOnProbation.url,
       navEnabled: true,
       enabled: () => userHasRoles([Role.ManageAWorkforceAllocate], roles),
+      accessibilityHeading: 'Allocate a Person on Probation',
+      accessibilityUrl: '/accessibility/allocate-a-person-on-probation',
     },
     {
       id: 'approved-premises',
@@ -34,6 +36,28 @@ export default (roles: string[]): Service[] => {
           ],
           roles,
         ),
+      accessibilityHeading: 'Consider a Recall',
+      accessibilityUrl: '/accessibility/consider-a-recall',
+    },
+    {
+      id: 'create-and-vary-a-licence',
+      heading: 'Create and vary a licence',
+      href: config.serviceUrls.createAndVaryALicence.url,
+      navEnabled: false,
+      enabled: () =>
+        userHasRoles(
+          [
+            Role.CaseAdmin,
+            Role.ResponsibleOfficer,
+            Role.DecisionMaker,
+            Role.ReadOnly,
+            Role.AssistantChief,
+            Role.Support,
+          ],
+          roles,
+        ),
+      accessibilityHeading: 'Create and vary a licence',
+      accessibilityUrl: '/accessibility/create-and-vary-a-licence',
     },
     {
       id: 'manage-people-on-probation',
@@ -64,6 +88,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.prepareACase.url,
       navEnabled: true,
       enabled: () => userHasRoles([Role.PrepareACase], roles),
+      accessibilityHeading: 'Prepare a case for sentence',
+      accessibilityUrl: '/accessibility/prepare-a-case-for-sentence',
     },
     {
       id: 'refer-and-monitor-an-intervention',
@@ -71,6 +97,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.referAndMonitor.url,
       navEnabled: true,
       enabled: () => true,
+      accessibilityHeading: 'Refer and monitor an intervention',
+      accessibilityUrl: '/accessibility/refer-and-monitor-an-intervention',
     },
     {
       id: 'transitional-accomodation',
@@ -78,6 +106,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.transitionalAccomodation.url,
       navEnabled: true,
       enabled: () => true,
+      accessibilityHeading: 'Transitional Accommodation (CAS3)',
+      accessibilityUrl: '/accessibility/transitional-accomodation',
     },
     {
       id: 'workload-measurement-tool',
@@ -85,12 +115,14 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.workloadMeasurementTool.url,
       navEnabled: true,
       enabled: () => userHasRoles([Role.WorkloadMeasurement], roles),
+      accessibilityHeading: 'Workload Measurement Tool',
+      accessibilityUrl: '/accessibility/workload-measurement-tool',
     },
   ]
     .filter(service => service.enabled())
     .map(service => {
-      const { id, heading, href, navEnabled, target } = service
-      return { id, heading, href, navEnabled, target }
+      const { id, heading, href, navEnabled, target, accessibilityHeading, accessibilityUrl } = service
+      return { id, heading, href, navEnabled, target, accessibilityHeading, accessibilityUrl }
     })
     .sort((a, b) => (a.heading.toLowerCase() < b.heading.toLowerCase() ? -1 : 1))
 }

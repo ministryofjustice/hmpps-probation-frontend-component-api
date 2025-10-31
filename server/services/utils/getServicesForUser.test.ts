@@ -6,6 +6,7 @@ jest.mock('../../config', () => ({
     allocateAPersonOnProbation: { url: 'url' },
     approvedPremises: { url: 'url' },
     considerARecall: { url: 'url' },
+    createAndVaryALicence: { url: 'url' },
     managePeopleOnProbation: { url: 'url' },
     nDelius: { url: 'url' },
     oAsys: { url: 'url' },
@@ -57,6 +58,22 @@ describe('getServicesForUser', () => {
     `('user with roles: $roles, can see: $visible', ({ roles, visible }) => {
       const output = getServicesForUser(roles)
       expect(!!output.find(service => service.heading === 'Consider a recall')).toEqual(visible)
+    })
+  })
+
+  describe('Create and Vary a licence', () => {
+    test.each`
+      roles                        | visible
+      ${[Role.CaseAdmin]}          | ${true}
+      ${[Role.ResponsibleOfficer]} | ${true}
+      ${[Role.DecisionMaker]}      | ${true}
+      ${[Role.ReadOnly]}           | ${true}
+      ${[Role.AssistantChief]}     | ${true}
+      ${[Role.Support]}            | ${true}
+      ${[]}                        | ${false}
+    `('user with roles: $roles, can see: $visible', ({ roles, visible }) => {
+      const output = getServicesForUser(roles)
+      expect(!!output.find(service => service.heading === 'Create and vary a licence')).toEqual(visible)
     })
   })
 

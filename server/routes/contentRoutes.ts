@@ -7,6 +7,7 @@ import auth from '../authentication/auth'
 import tokenVerifier from '../data/tokenVerification'
 import populateCurrentUser from '../middleware/populateCurrentUser'
 import { DEFAULT_USER_ACCESS } from '../services/userService'
+import getAccessibilityServicesForUser from '../services/utils/getAccessibilityServicesForUser'
 
 export default function contentRoutes(services: Services): Router {
   const router = Router()
@@ -23,7 +24,6 @@ export default function contentRoutes(services: Services): Router {
   )
 
   Array.of(
-    'accessibility',
     'cookies-policy',
     'privacy-policy',
     'accessibility/allocate-a-person-on-probation',
@@ -40,6 +40,18 @@ export default function contentRoutes(services: Services): Router {
         res.render(`pages/markdown`, { components: AVAILABLE_COMPONENTS, page, showBacklink: true })
       }),
     ),
+  )
+
+  router.get(
+    '/accessibility',
+    asyncMiddleware(async (_req, res, _next) => {
+      res.render(`pages/accessibility`, {
+        services:
+          res.locals.user.authSource === 'delius'
+            ? getAccessibilityServicesForUser(res.locals.user.services)
+            : DEFAULT_USER_ACCESS,
+      })
+    }),
   )
 
   router.get(

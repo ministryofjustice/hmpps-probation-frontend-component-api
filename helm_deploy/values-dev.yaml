@@ -17,6 +17,7 @@ generic-service:
     ALLOCATE_A_PERSON_ON_PROBATION_URL: "https://workforce-management-dev.hmpps.service.justice.gov.uk"
     APPROVED_PREMISES_URL: "https://approved-premises-dev.hmpps.service.justice.gov.uk"
     CONSIDER_A_RECALL_URL: "https://consider-a-recall-dev.hmpps.service.justice.gov.uk"
+    CREATE_AND_VARY_A_LICENCE_URL: "https://create-and-vary-a-licence-dev.hmpps.service.justice.gov.uk"
     MANAGE_PEOPLE_ON_PROBATION_URL: "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk"
     NDELIUS_URL: "https://ndelius.test.probation.service.justice.gov.uk"
     OASYS_URL: "https://t2.oasys.service.justice.gov.uk"

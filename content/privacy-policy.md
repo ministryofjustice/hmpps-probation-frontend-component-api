@@ -1,16 +1,16 @@
 # Privacy policy for Probation Digital Services
 
-Last reviewed: 30 May 2025
+Last reviewed: 28 July 2025
 
-Probation Digital Services is provided by Justice Digital, part of the Ministry of Justice.
+Probation Digital Services is provided by Justice Digital, part of the Ministry of Justice (MOJ).
 
-The Ministry of Justice is the data controller. A data controller determines how and why personal data is processed.
+The MOJ is the data controller. A data controller determines how and why personal data is processed.
 
-The Ministry of Justice (MoJ) is committed to the protection and security of your personal information. It is important that you read this notice so that you are aware of how and why we are using such information. This privacy policy describes how we collect and use personal information during and after your relationship with us, in accordance with data protection law. It will be updated regularly.
+The MOJ is committed to the protection and security of your personal information. It is important that you read this notice so that you are aware of how and why we are using such information. This privacy policy describes how we collect and use personal information during and after your relationship with us, in accordance with data protection law. It will be updated regularly.
 
 ## About personal information
 
-This privacy policy sets out the standards that you can expect from the Ministry of Justice when we request or hold personal information ('personal data') about you; how you can get access to a copy of your personal data; and what you can do if you think the standards are not being met.
+This privacy policy sets out the standards that you can expect from the MOJ when we request or hold personal information ('personal data') about you; how you can get access to a copy of your personal data; and what you can do if you think the standards are not being met.
 
 Personal data is information about you as an individual. It can be your name and email address.
 
@@ -63,7 +63,7 @@ We also collect data in order to:
 
 The legal basis for processing personal data in relation to site security is our legitimate interests, and the legitimate interests of our users, in ensuring the security and integrity of Probation Digital Services.
 
-The legal basis for processing all other personal data is that it is collected to fulfil your obligations under your employment contract, and it is necessary to perform a task in line with HMPPS policies and procedures.
+The legal basis for processing all other personal data is that it is collected to fulfil your obligations under your employment contract, and is necessary for the performance of a task in the public interest or in the exercise of official authority, as per HMPPS policies and procedures.
 
 ## What we do with your data
 
@@ -108,9 +108,9 @@ You can get more details on:
 * how we check that the information we hold is accurate and up-to-date, and
 * how to make a complaint
 
-For more information about the above issues, please contact the MoJ data protection officer:
+For more information about the above issues, please contact the MOJ data protection officer:
 
-MoJ Data Protection Officer
+MOJ Data Protection Officer
 
 3rd Floor, Post Point 3.20
 
@@ -136,24 +136,26 @@ You can also:
 * request that your personal data is erased if there is no longer a justification for it
 * ask that the processing of your personal data is restricted in certain circumstances
 
-For more information on your rights and how to complain, see the [Ministry of Justice personal information charter](https://www.gov.uk/government/organisations/ministry-of-justice/about/personal-information-charter).
+For more information on your rights and how to complain, see the [MOJ personal information charter](https://www.gov.uk/government/organisations/ministry-of-justice/about/personal-information-charter).
 
 You can contact our Data Protection team at:
 
-MoJ Data Protection Officer
+Data Protection Team
 
-3rd Floor, Post Point 3.20
+5.18, 5th Floor
 
-10 South Colonnades
+102 Petty France
+
+Westminster
 
 London
 
-E14 4PU
+SW1H 9AJ
 
-You can email our Data Protection team at: DataProtection@justice.gov.uk
+You can email our Data Protection team at: <DataProtection@justice.gov.uk>
 
 ## Changes to this policy
 
 We may change this privacy policy. In that case, the 'Last reviewed' date on this page will also change. Any changes to this privacy policy will apply to you and your data immediately.
 
-If these changes affect how your personal data is processed, the MoJ will take reasonable steps to let you know.
+If these changes affect how your personal data is processed, the MOJ will take reasonable steps to let you know.
