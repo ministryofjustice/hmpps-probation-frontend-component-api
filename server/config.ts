@@ -82,6 +82,7 @@ export default {
     },
     approvedPremises: { url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction) },
     considerARecall: { url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction) },
+    createAndVaryALicence: { url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction) },
     managePeopleOnProbation: {
       url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
     },
