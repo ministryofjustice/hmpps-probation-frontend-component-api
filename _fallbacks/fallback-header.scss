@@ -19,7 +19,7 @@ $govuk-page-width: 1170px;
   }
 
   &__logo {
-    @include govuk-responsive-margin(2, "right");
+    @include govuk-responsive-margin(1, "right");
     position: relative;
     top: -2px;
     fill: govuk-colour("white");
