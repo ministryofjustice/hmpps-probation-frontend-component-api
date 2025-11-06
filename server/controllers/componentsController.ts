@@ -10,6 +10,7 @@ export interface HeaderViewModel {
   ingressUrl: string
   manageDetailsLink: string
   menuLink: string
+  mPoPLink: string
 }
 
 export interface FooterViewModel {
@@ -56,6 +57,7 @@ export default (): {
       component: 'header',
       ingressUrl: config.ingressUrl,
       menuLink: `${config.ingressUrl}/services`,
+      mPoPLink: config.serviceUrls.managePeopleOnProbation.url,
     }
   },
 
