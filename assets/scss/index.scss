@@ -15,3 +15,6 @@ $govuk-page-width: $moj-page-width;
 @import "assets/scss/local";
 @import "./components/error-page";
 @import "./services";
+
+@import "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/header";
+@import "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/footer";
