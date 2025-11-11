@@ -199,7 +199,7 @@ app.use(getFrontendComponents(services))
 
 The following code should be used in the `layout.njk` file within your application.
 
-Note: the `header.njk` and `footer.njk` templates used in the following code fragments are fallback HTML in case the component service is unavailable or the API call fails for some reason. These templates should be copied from the `_fallbacks` directory in this repo, and configuration added as described in the Fallbacks section at the end of this document.
+Note: the `header.njk` and `footer.njk` templates used in the following code fragments are fallback HTML in case the component service is unavailable or the API call fails for some reason. These templates should be copied from [here](https://github.com/ministryofjustice/hmpps-probation-frontend-components/tree/main/src/assets/pdsComponents), and configuration added as described in the Fallbacks section at the end of this document.
 
 ```
 {% block header %}
@@ -300,18 +300,31 @@ Note: If your application was copied from the typescript template before August 
 
 ### Fallbacks
 
-Appropriate fallback components should be included within your application. For the header and footer, templates are provided in the `_fallbacks` directory of this repo to copy and paste into your application, along with `scss` stylesheets.
+Appropriate fallback components should be included within your application. For the header and footer, templates are provided [here](https://github.com/ministryofjustice/hmpps-probation-frontend-components/tree/main/src/assets/pdsComponents) to copy and paste into your application, along with `scss` stylesheets available [here](https://github.com/ministryofjustice/hmpps-probation-frontend-components/tree/main/src/assets).
 
-Place the `fallback-header.njk` and `fallback-footer.njk` files into your `/server/views/partials` directory, remove the `fallback-` prefix, overwriting the existing `header.njk` and `footer.njk` files if applicable.
+Place the `header.njk` and `footer.njk` files into your `/server/views/partials` directory, overwriting the existing `header.njk` and `footer.njk` files if applicable.
 
-Place the `fallback-header.scss` and `fallback-footer.scss` files into your `/assets/scss/components` directory, rename them `_header.scss` and `_footer.scss`, overwriting the existing `_header.scss` and `_footer.scss` files if applicable, and update your `/assets/scss/index.scss` file to include these stylesheets, i.e.
+Place the `_header.scss` and `_footer.scss` files into your `/assets/scss/components` directory, overwriting the existing `_header.scss` and `_footer.scss` files if applicable, and update your `/assets/scss/index.scss` file to include these stylesheets, i.e.
 
 ```
 @import './components/header';
 @import './components/footer';
 ```
 
-The header component and fallback header include an environment 'badge' to display the name of the deployed environment (e.g. DEV, PRE-PRODUCTION). In order to support this in the fallback header, copy the `setUpEnvironmentName.ts.txt` file from the `_fallbacks` directory into your `/server/middleware` directory, removing the `.txt` extension, and add the following line to your `/server/app.ts`, immediately before the nunjucksSetup line:
+The header component and fallback header include an environment 'badge' to display the name of the deployed environment (e.g. DEV, PRE-PRODUCTION). In order to support this in the fallback header, create a file called `setUpEnvironmentName.ts` under your `/server/middleware` directory, and populate it with the code below:
+
+```
+/* eslint-disable no-param-reassign */
+import express from 'express'
+import config from '../config'
+
+export default (app: express.Express) => {
+  app.locals.environmentName = config.environmentName
+  app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
+}
+```
+
+Next, add the following line to your `/server/app.ts`, immediately before the nunjucksSetup line:
 ```
 setUpEnvironmentName(app)
 ```
