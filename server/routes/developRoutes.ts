@@ -26,6 +26,7 @@ export default function developRoutes(services: Services): Router {
     router.get(
       path,
       asyncMiddleware(async (_req, res, _next) => {
+        console.log(res.locals.user)
         const viewModel = await getViewModel(res.locals.user)
         return res.render('pages/componentPreview', viewModel)
       }),
