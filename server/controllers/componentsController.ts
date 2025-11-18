@@ -3,13 +3,16 @@ import { PageLink } from '../interfaces/PageLink'
 import { AvailableComponent } from '../@types/AvailableComponent'
 import { HmppsUser, isProbationUser, UserAccess } from '../interfaces/hmppsUser'
 import { DEFAULT_USER_ACCESS } from '../services/userService'
+import { Service } from '../interfaces/Service'
+import { initialiseName } from '../utils/utils'
 
 export interface HeaderViewModel {
   isProbationUser: boolean
   component: string
   ingressUrl: string
   manageDetailsLink: string
-  menuLink: string
+  servicesLink: string
+  services: Service[]
 }
 
 export interface FooterViewModel {
@@ -18,7 +21,14 @@ export interface FooterViewModel {
   component: string
 }
 
-export interface FallbackViewModel {
+export interface FallbackHeaderViewModel {
+  component: string
+  fallback: boolean
+  user: HmppsUser
+  name: string
+}
+
+export interface FallbackFooterViewModel {
   component: string
   fallback: boolean
 }
@@ -45,8 +55,8 @@ const defaultFooterLinks: PageLink[] = [
 export default (): {
   getHeaderViewModel: (user: HmppsUser) => Promise<HeaderViewModel>
   getFooterViewModel: (user: HmppsUser) => Promise<FooterViewModel>
-  getFallbackFooterViewModel: () => Promise<FallbackViewModel>
-  getFallbackHeaderViewModel: () => Promise<FallbackViewModel>
+  getFallbackFooterViewModel: (user: HmppsUser) => Promise<FallbackFooterViewModel>
+  getFallbackHeaderViewModel: (user: HmppsUser) => Promise<FallbackHeaderViewModel>
   getViewModels: (components: AvailableComponent[], user: HmppsUser) => Promise<ComponentsData>
 } => ({
   async getHeaderViewModel(user: HmppsUser): Promise<HeaderViewModel> {
@@ -55,7 +65,8 @@ export default (): {
       manageDetailsLink: `${config.apis.hmppsAuth.url}/account-details`,
       component: 'header',
       ingressUrl: config.ingressUrl,
-      menuLink: `${config.ingressUrl}/services`,
+      servicesLink: `${config.ingressUrl}/services`,
+      services: user.services.filter(service => service.navEnabled),
     }
   },
 
@@ -69,17 +80,19 @@ export default (): {
     }
   },
 
-  async getFallbackFooterViewModel(): Promise<FallbackViewModel> {
+  async getFallbackFooterViewModel(user: HmppsUser): Promise<FallbackFooterViewModel> {
     return {
-      component: 'fallback-footer',
+      component: 'footer',
       fallback: true,
     }
   },
 
-  async getFallbackHeaderViewModel(): Promise<FallbackViewModel> {
+  async getFallbackHeaderViewModel(user: HmppsUser): Promise<FallbackHeaderViewModel> {
     return {
-      component: 'fallback-header',
+      component: 'header',
       fallback: true,
+      user,
+      name: initialiseName(user?.displayName),
     }
   },
 
@@ -101,7 +114,10 @@ export default (): {
         }
       },
       {
-        meta: user.authSource === 'delius' ? { services: user.services } : DEFAULT_USER_ACCESS,
+        meta:
+          user.authSource === 'delius'
+            ? { services: user.services.filter(service => service.navEnabled === true) }
+            : DEFAULT_USER_ACCESS,
       },
     )
   },

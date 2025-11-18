@@ -1,5 +1,5 @@
-{% if isProbationUser %}
-    {% include "../partials/footer.njk" %}
-{% else %}
-    {% include "../partials/externalFooter.njk" %}
-{% endif %}
+{%- from "moj/components/domain-specific/probation/footer/macro.njk" import pdsFooter -%}
+
+{{ pdsFooter({
+  baseUrl: baseUrl
+}) }}
