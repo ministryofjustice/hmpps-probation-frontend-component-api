@@ -30,11 +30,11 @@ export default function nunjucksSetup(app: express.Express): void {
   const njkEnv = nunjucks.configure(
     [
       pathModule.join(__dirname, '../../server/views'),
-      pathModule.join(__dirname, '../../_fallbacks'),
       'node_modules/govuk-frontend/dist/',
       'node_modules/govuk-frontend/dist/components/',
       'node_modules/@ministryofjustice/frontend/',
       'node_modules/@ministryofjustice/frontend/moj/components/',
+      'node_modules/@ministryofjustice/hmpps-probation-frontend-components/dist/assets/',
     ],
     {
       autoescape: true,

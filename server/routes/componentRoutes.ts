@@ -176,8 +176,10 @@ export default function componentRoutes(services: Services): Router {
  *       properties:
  *         id: string
  *         heading: string
- *         description: string
+ *         navEnabled: boolean
  *         href: string
+ *         accessibilityHeading: string
+ *         accessibilityUrl: string
  *
  *     Component:
  *       type: object
@@ -204,7 +206,7 @@ export default function componentRoutes(services: Services): Router {
  *             javascript: ['https://example.com/scripts.js']
  *         meta:
  *           type: object
- *           description: Data about the user caseloads and services they have access to
+ *           description: Data about the services the user has access to
  *           properties:
  *            services:
  *              type: array
@@ -224,8 +226,10 @@ export default function componentRoutes(services: Services): Router {
  *             {
  *               id: 'example-service',
  *               heading: 'Example Service',
- *               description: 'An example service',
+ *               navEnabled: true,
  *               href: https://service.example.com,
+ *               accessibilityHeading: 'Example service statement',
+ *               accessibilityUrl: 'https://example.com/example-statement',
  *             }
  *           ]
  *         }

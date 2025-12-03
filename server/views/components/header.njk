@@ -1,5 +1,12 @@
-{% if isProbationUser %}
-    {% include "../partials/header.njk" %}
-{% else %}
-    {% include "../partials/externalHeader.njk" %}
-{% endif %}
+{%- from "moj/components/domain-specific/probation/header/macro.njk" import pdsHeader -%}
+
+{{ pdsHeader({
+    environmentName: environmentName,
+    environmentNameColour: environmentNameColour,
+    name: user.displayName | initialiseName,
+    manageDetailsLink: manageDetailsLink,
+    servicesLink: servicesLink,
+    services: services,
+    titleLink: titleLink
+  }) }}
+  

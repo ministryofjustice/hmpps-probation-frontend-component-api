@@ -57,9 +57,7 @@ export default function contentRoutes(services: Services): Router {
   router.get(
     '/services',
     asyncMiddleware(async (_req, res, _next) => {
-      res.render(`pages/services`, {
-        meta: res.locals.user.authSource === 'delius' ? { services: res.locals.user.services } : DEFAULT_USER_ACCESS,
-      })
+      res.render(`pages/services`)
     }),
   )
 

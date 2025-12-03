@@ -41,20 +41,12 @@ const buildConfig = {
         from: path.join(cwd, 'server/views/**/*'),
         to: path.join(cwd, 'dist/server/views'),
       },
-      {
-        from: path.join(cwd, '_fallbacks/*.njk'),
-        to: path.join(cwd, 'dist/_fallbacks'),
-      },
     ],
   },
 
   assets: {
     outDir: path.join(cwd, 'dist/assets'),
-    entryPoints: glob.sync([
-      path.join(cwd, 'assets/js/*.js'),
-      path.join(cwd, 'assets/scss/*.scss'),
-      path.join(cwd, '_fallbacks/*.scss'),
-    ]),
+    entryPoints: glob.sync([path.join(cwd, 'assets/js/*.js'), path.join(cwd, 'assets/scss/*.scss')]),
     copy: [
       {
         from: path.join(cwd, 'assets/images/**/*'),

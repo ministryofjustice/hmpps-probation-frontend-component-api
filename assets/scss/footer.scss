@@ -1,6 +1,4 @@
-$govuk-page-width: 1170px;
-
-@import "govuk-frontend/dist/govuk/settings/spacing";
-@import "govuk-frontend/dist/govuk/helpers/spacing";
-@import "govuk-frontend/dist/govuk/objects/width-container";
-@import "./components/footer";
+@use "govuk-frontend/dist/govuk/objects/width-container" with (
+  $govuk-page-width: 1170px
+);
+@use "@ministryofjustice/frontend/moj/components/domain-specific/probation/footer/footer";
