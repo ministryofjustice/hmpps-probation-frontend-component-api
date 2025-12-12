@@ -17,7 +17,7 @@ services:
       - -global-response-templating
 
   hmpps-auth:
-    image: quay.io/hmpps/hmpps-auth:2025-05-02.28494.105ac61
+    image: ghcr.io/ministryofjustice/hmpps-auth:2025-05-02.28494.105ac61
     networks:
       - hmpps
     container_name: hmpps-auth
