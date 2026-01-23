@@ -14,12 +14,39 @@
       <h1 class="govuk-heading-xl">Accessibility</h1>
       <p class="govuk-body">If you have difficulty using any of the probation services listed, contact details can be found on each service’s accessibility statement under ‘Feedback and contact information’.</p>
       <p class="govuk-body"><a href="https://mcmw.abilitynet.org.uk" class="govuk-link">AbilityNet</a> has advice on making your device easier to use if you have a disability.</p>
+      
+      <h1 class="govuk-heading-xl">Compliance status</h1>
+      <p class="govuk-body">The websites on the Probation Digital Services platform are partially compliant with the Web Content Accessibility Guidelines version 2.2 AA standard, due to the non-compliance(s) listed below.</p>
+      
+      <h2 class="govuk-heading-l">Non-accessible content</h2>
+      
+      <p class="govuk-body">The content listed below is non-accessible for the following reason(s):</p>
+      
+      <ul class="govuk-list">
+        <li><a class="govuk-link" href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html" class="govuk-link">Link Purpose (in context)</a></li>
+        <li><a class="govuk-link" href="https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html" class="govuk-link">Label in Name</a></li>
+      </ul>
+      
+      <h1 class="govuk-heading-xl">Non-compliance with the accessibility regulations</h1>
+
+      <p class="govuk-body">The MOJ crown logo and ‘Probation Digital Services’ text may lead to different link destinations, depending on the user’s access. For most users, they will link to the Probation Digital Services homepage (Manage People on Probation).</p>
+      
+      <p class="govuk-body">For users that don’t have access to Manage People on Probation, the MOJ crown logo and ‘Probation Digital Services’ text will link to the homepage of the service they’re currently using.</p>
+      
+      <p class="govuk-body">The ‘Probation Digital Services’ link text is also misleading, as the H1 on the homepage reads ‘Manage People on Probation’. This leads to a mismatch between link text and link destination.</p>
+      
+      <p class="govuk-body">This fails WCAG 2.2 success criterion 2.4.4 Link Purpose (in context), and success criterion 2.5.3 Label in Name.</p>
+      
+      <p class="govuk-body">We are aware of these accessibility issues and are actively working to address them. We've added this work to our roadmap for 2026, and will update this statement when the issues have been fixed.</p>
+      
       <h2 class="govuk-heading-l">Services with accessibility statements</h2>
       <p class="govuk-body">The probation services listed have accessibility statements, which include details of non-accessible content and how to request information in alternative formats (such as accessible PDF, large print, easy read, audio recording or braille).</p>
       <p class="govuk-body">Select a link to view the accessibility statement for that service.</p>
+      <ul class="govuk-list">
       {% for service in services %}
-        <p class="govuk-body"><a href="{{ service.url }}" class="govuk-link">{{ service.heading }}</a></p>
+        <li><a class="govuk-link" href="{{ service.url }}" class="govuk-link">{{ service.heading }}</a></li>
       {% endfor %}
+      </ul>
       <p class="govuk-body">If you have difficulty navigating this page or the linked statements, email: <a href="mailto:connected-services@justice.gov.uk" class="govuk-link">connected-services@justice.gov.uk</a></p>
     </div>
   </div>
