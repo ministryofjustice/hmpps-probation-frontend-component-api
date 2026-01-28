@@ -16,6 +16,11 @@ on:
         required: true
         default: false
         type: boolean
+      install_command:
+        description: "The command used to install npm dependencies"
+        required: false
+        type: string
+        default: "npm ci --legacy-peer-deps"
 
 permissions:
   contents: read
