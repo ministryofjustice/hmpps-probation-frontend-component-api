@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function onLoad() {
   link.classList = 'govuk-back-link'
   if (wrapper) {
     link.addEventListener('click', function handleClick(e) {
+      e.preventDefault()
       window.history.back()
     })
 
