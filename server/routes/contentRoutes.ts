@@ -29,6 +29,7 @@ export default function contentRoutes(services: Services): Router {
     'accessibility/allocate-a-person-on-probation',
     'accessibility/consider-a-recall',
     'accessibility/create-and-vary-a-licence',
+    'accessibility/manage-people-on-probation',
     'accessibility/prepare-a-case-for-sentence',
     'accessibility/refer-and-monitor-an-intervention',
     'accessibility/transitional-accomodation',
@@ -45,6 +46,7 @@ export default function contentRoutes(services: Services): Router {
   router.get(
     '/accessibility',
     asyncMiddleware(async (_req, res, _next) => {
+      // res.send(JSON.stringify(res.locals.user.services))
       res.render(`pages/accessibility`, {
         services:
           res.locals.user.authSource === 'delius'

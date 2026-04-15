@@ -65,6 +65,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.managePeopleOnProbation.url,
       navEnabled: true,
       enabled: () => userHasRoles([Role.ManageSupervisions], roles),
+      accessibilityHeading: 'Manage people on probation',
+      accessibilityUrl: '/accessibility/manage-people-on-probation',
     },
     {
       id: 'ndelius',
