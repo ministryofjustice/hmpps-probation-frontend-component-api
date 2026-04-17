@@ -14,7 +14,7 @@
           "surname": "Beaks",
           "email": "bernard.beaks@digital.justice.gov.uk",
           "enabled": true,
-          "roles": ["MANAGE_SUPERVISIONS", "ROLE_PROBATION", "MANAGE_A_WORKFORCE_ALLOCATE"]
+          "roles": ["LOCAL_MANAGE_SUPERVISIONS", "LOCAL_ROLE_PROBATION", "LOCAL_MAKE_RECALL_DECISION_SPO"]
         },
         "headers": {
           "Content-Type": "application/json"
