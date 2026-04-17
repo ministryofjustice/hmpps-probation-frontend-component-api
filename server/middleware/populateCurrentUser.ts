@@ -18,9 +18,17 @@ export default function populateCurrentUser(userService: UserService): RequestHa
         } as HmppsUser
       }
 
+      // Should be able to leave this uncommented safely but unaware of the log level in higher environment at the moment
+      // logger.debug(`raw token is ${JSON.stringify(res.locals.user.token)}`)
+
       const {
         name,
         user_id: userId,
+        /**
+         * This does two things:
+         * Renames: It takes the value of authorities and assigns it to a constant named roles.
+         * Default Value: If authorities is missing (undefined) in the token, it defaults roles to an empty array ([]) to prevent errors later in the code.
+         */
         authorities: roles = [],
       } = jwtDecode(res.locals.user.token) as {
         name?: string
@@ -29,6 +37,10 @@ export default function populateCurrentUser(userService: UserService): RequestHa
       }
 
       const userRoles = roles.map(role => role.substring(role.indexOf('_') + 1) as Role)
+      logger.debug(`The list of User Roles are :: ${JSON.stringify(roles)}`)
+      logger.debug(`The list of SET User Roles are :: ${JSON.stringify(userRoles)}`)
+      logger.debug(`Decoded token :: ${JSON.stringify(jwtDecode(res.locals.user.token))}`)
+      logger.debug(`User services :: ${JSON.stringify(userService.getServicesForUser(userRoles))}`)
 
       res.locals.user = {
         ...res.locals.user,
