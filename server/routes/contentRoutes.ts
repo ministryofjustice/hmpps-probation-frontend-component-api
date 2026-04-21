@@ -46,7 +46,6 @@ export default function contentRoutes(services: Services): Router {
   router.get(
     '/accessibility',
     asyncMiddleware(async (_req, res, _next) => {
-      // res.send(JSON.stringify(res.locals.user.services))
       res.render(`pages/accessibility`, {
         services:
           res.locals.user.authSource === 'delius'
