@@ -63,38 +63,38 @@ The content listed below is non-accessible for the following reasons.
 
 ### Non-compliance with the accessibility regulations 
 #### Risk page 
-The risk of serious recidivism (RSR) chart does not clearly communicate the different levels or severity of risk to screen readers. This fails WCAG 2.2 success criteria 1.1.1 (non-text information) and 1.3.1 (info and relationships). 
+- The risk of serious recidivism (RSR) chart does not clearly communicate the different levels or severity of risk to screen readers. This fails WCAG 2.2 success criteria 1.1.1 (non-text information) and 1.3.1 (info and relationships). 
 
-The risk flag section contains an empty link that is announced by screen readers as ‘link’, which does not provide any context for screen readers. This fails WCAG 2.2 success criterion 4.1.2 (name, role, value).  
+- The risk flag section contains an empty link that is announced by screen readers as ‘link’, which does not provide any context for screen readers. This fails WCAG 2.2 success criterion 4.1.2 (name, role, value).  
 
-The word ‘medium’, used for medium-risk flags, does not have sufficient colour contrast against the background, which may make it difficult to read. This fails WCAG 2.2 success criterion 1.4.3 (contrast – minimum). 
+- The word ‘medium’, used for medium-risk flags, does not have sufficient colour contrast against the background, which may make it difficult to read. This fails WCAG 2.2 success criterion 1.4.3 (contrast – minimum). 
 
 #### Alerts page 
 
-The ‘Select all alerts on this page’ button does not announce to screen reader users when the alert checkboxes have been selected or deselected. This fails WCAG 2.2 success criterion 4.1.2 (name, role, value). 
+- The ‘Select all alerts on this page’ button does not announce to screen reader users when the alert checkboxes have been selected or deselected. This fails WCAG 2.2 success criterion 4.1.2 (name, role, value). 
 
-Alerts can be removed without a confirmation step, which may lead to accidental changes. This fails WCAG 2.2 success criterion WCAG 3.3.4 (error prevention – legal, financial, data). 
+- Alerts can be removed without a confirmation step, which may lead to accidental changes. This fails WCAG 2.2 success criterion WCAG 3.3.4 (error prevention – legal, financial, data). 
 
 #### Add a note  
 
-The ‘Show CRISS headers’ button only works if the text box is empty, which may cause confusion. This fails WCAG 2.2 success criterion 3.3.2 (labels or instructions).
+- The ‘Show CRISS headers’ button only works if the text box is empty, which may cause confusion. This fails WCAG 2.2 success criterion 3.3.2 (labels or instructions).
 The text box does not have a proper label for screen readers, making its purpose unclear. This fails WCAG 2.2 success criterion 1.3.1 (info and relationships).  
 
-The screen suggests that a user should type a note and can optionally upload a file, but it is only revealed on submission that one of these actions is required to progress. The inconsistency may confuse users. This fails WCAG 2.2 success criterion 3.3.2 (labels or instructions). 
+- The screen suggests that a user should type a note and can optionally upload a file, but it is only revealed on submission that one of these actions is required to progress. The inconsistency may confuse users. This fails WCAG 2.2 success criterion 3.3.2 (labels or instructions). 
 
 #### Arranging appointments 
 
-The ‘Manage appointment’ screen has an empty H2 heading, which may make navigation harder for screen reader users. This fails WCAG 2.2 success criterion 1.3.1 (info and relationships). 
+- The ‘Manage appointment’ screen has an empty H2 heading, which may make navigation harder for screen reader users. This fails WCAG 2.2 success criterion 1.3.1 (info and relationships). 
 
-Table sorting options on the ‘Manage appointment’ screen are not clearly announced to screen reader users. This fails WCAG 2.2 success criteria 1.1.1 (non-text content) and 1.3.1 (info and relationships). 
+- Table sorting options on the ‘Manage appointment’ screen are not clearly announced to screen reader users. This fails WCAG 2.2 success criteria 1.1.1 (non-text content) and 1.3.1 (info and relationships). 
 
-On the ‘Which appointment are you recording an outcome for?’ screen, the list of answers are not linked to the main question, meaning screen reader users hear them without context. This fails WCAG 2.2 success criterion 1.3.1 (info and relationships). 
+- On the ‘Which appointment are you recording an outcome for?’ screen, the list of answers are not linked to the main question, meaning screen reader users hear them without context. This fails WCAG 2.2 success criterion 1.3.1 (info and relationships). 
 
-On the ‘Who will attend the appointment’ screen, the ‘Select team’ dropdown triggers a page reload when a selection is made. As this behaviour is unexpected, it may disrupt users. This fails WCAG 2.2 success criteria 2.4.3 (focus order) and 3.2.2 (on input).  
+- On the ‘Who will attend the appointment’ screen, the ‘Select team’ dropdown triggers a page reload when a selection is made. As this behaviour is unexpected, it may disrupt users. This fails WCAG 2.2 success criteria 2.4.3 (focus order) and 3.2.2 (on input).  
 
-On the ‘Check your answers and confirm the appointment’ screen, changing the location clears information already entered. This fails WCAG 2.2 success criterion 3.3.7 (redundant entry). 
+- On the ‘Check your answers and confirm the appointment’ screen, changing the location clears information already entered. This fails WCAG 2.2 success criterion 3.3.7 (redundant entry). 
 
-The appointment type on the Appointment page is labelled an outcome type on the Homepage, which may confuse users. This fails WCAG 2.2 success criterion 3.2.4 (consistent identification). 
+- The appointment type on the Appointment page is labelled an outcome type on the Homepage, which may confuse users. This fails WCAG 2.2 success criterion 3.2.4 (consistent identification). 
 
 #### Search and filter 
 
@@ -104,7 +104,7 @@ The homepage person search component, and the filter components on the Documents
 
 Icons used to show appointment status on the Appointments and Contacts pages rely on visual appearance alone, meaning their purpose may not be clear to sighted keyboard users. This fails WCAG 2.2 success criteria 1.1.1 (non-text content) and 1.3.1 (info and relationships). 
 
- We plan to fix these issues within 12 months, before 2 April 2027. 
+We plan to fix these issues within 12 months, before 2 April 2027. 
 
 ### Content that’s not within the scope of the accessibility regulations 
 #### PDFs and other documents 
