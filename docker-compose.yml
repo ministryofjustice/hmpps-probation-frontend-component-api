@@ -29,10 +29,11 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
     environment:
       - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=dev,delius
+      - SPRING_PROFILES_ACTIVE=dev,delius,manage-users-api
       - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
       - DELIUS_ENDPOINT_URL=http://delius:8080
+      - MANAGE_USERS_API_ENDPOINT_URL=http://delius:8080
       # - LOGGING_LEVEL_ROOT=INFO
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG
@@ -56,7 +57,12 @@ services:
         GIT_REF: "a1b2c3"
         GIT_BRANCH: main
       target: production
-    command: npm start
+      network: host  # fixing potential VPN issues.
+      # 10.12 WARNING: updating and opening https://dl-cdn.alpinelinux.org/alpine/v3.23/community/aarch64/APKINDEX.tar.gz: DNS: transient error (try again later)
+      # 10.12 ERROR: Not continuing due to stale/unavailable repositories. Use --force-missing-repositories to continue
+    command: sh -c  "npm install && npm run start:dev"
+    # command: npm start
+    user: root # local deployment must be root
     networks:
       - hmpps
     depends_on:
@@ -64,6 +70,8 @@ services:
       - redis
     ports:
       - "3000:3000"
+    volumes:
+      - ./esbuild:/app/esbuild
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3000/health"]
     environment:
