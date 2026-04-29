@@ -1,68 +1,45 @@
 services:
   redis:
-    image: "redis:6.2.3-alpine"
-    ports:
-      - "6379:6379"
-    networks:
-      - hmpps
+    extends:
+      file: docker-compose.deps.yml
+      service: redis
 
   delius:
-    image: wiremock/wiremock
-    networks:
-      - hmpps
-    volumes:
-      - ./wiremock-delius:/home/wiremock
-    command:
-      - -verbose
-      - -global-response-templating
+    extends:
+      file: docker-compose.deps.yml
+      service: delius
 
   hmpps-auth:
-    image: ghcr.io/ministryofjustice/hmpps-auth:2026-03-31.578.696b0a0
-    networks:
-      - hmpps
-    container_name: hmpps-auth
-    depends_on:
-      - delius
-    ports:
-      - "9090:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
-    environment:
-      - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=dev,delius,manage-users-api
-      - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
-      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
-      - DELIUS_ENDPOINT_URL=http://delius:8080
-      - MANAGE_USERS_API_ENDPOINT_URL=http://delius:8080
-      # - LOGGING_LEVEL_ROOT=INFO
-      # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
-      # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG
+    extends:
+      file: docker-compose.deps.yml
+      service: hmpps-auth
 
   hmpps-auth-proxy:
-    image: nginx:latest
-    depends_on:
-      - hmpps-auth
-    networks:
-      - hmpps
-    ports:
-      - "9091:9091"
-    volumes:
-      - ./hmpps-auth-proxy/nginx.conf:/etc/nginx/nginx.conf
+    extends:
+      file: docker-compose.deps.yml
+      service: hmpps-auth-proxy
+
+  editor:
+    extends:
+      file: docker-compose.deps.yml
+      service: editor
 
   app:
-    build:
-      context: .
-      args:
-        BUILD_NUMBER: "1.0.0"
-        GIT_REF: "a1b2c3"
-        GIT_BRANCH: main
-      target: production
-      network: host  # fixing potential VPN issues.
-      # 10.12 WARNING: updating and opening https://dl-cdn.alpinelinux.org/alpine/v3.23/community/aarch64/APKINDEX.tar.gz: DNS: transient error (try again later)
-      # 10.12 ERROR: Not continuing due to stale/unavailable repositories. Use --force-missing-repositories to continue
-    command: sh -c  "npm install && npm run start:dev"
-    # command: npm start
+    # build:
+    #   context: .
+    #   args:
+    #     BUILD_NUMBER: "1.0.0"
+    #     GIT_REF: "a1b2c3"
+    #     GIT_BRANCH: main
+    #   target: production
+    #   network: host  # fixing potential VPN issues.
+    #   # 10.12 WARNING: updating and opening https://dl-cdn.alpinelinux.org/alpine/v3.23/community/aarch64/APKINDEX.tar.gz: DNS: transient error (try again later)
+    #   # 10.12 ERROR: Not continuing due to stale/unavailable repositories. Use --force-missing-repositories to continue
+    image: "node:22"
+    command: sh -c  "npm install && npm run build && npm run start:dev"
+    # command: sleep infinity
     user: root # local deployment must be root
+    working_dir: "/app"
     networks:
       - hmpps
     depends_on:
@@ -71,7 +48,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./esbuild:/app/esbuild
+      - node_module:/app/node_modules
+      - "./:/app"
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3000/health"]
     environment:
@@ -93,3 +71,6 @@ services:
 
 networks:
   hmpps:
+
+volumes:
+  node_module:

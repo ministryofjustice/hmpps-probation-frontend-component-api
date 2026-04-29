@@ -1,0 +1,72 @@
+services:
+  redis:
+    image: "redis:6.2.3-alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - hmpps
+
+  delius:
+    image: wiremock/wiremock
+    networks:
+      - hmpps
+    volumes:
+      - ./wiremock-delius:/home/wiremock
+    command:
+      - -verbose
+      - -global-response-templating
+
+  hmpps-auth:
+    image: ghcr.io/ministryofjustice/hmpps-auth:2026-03-31.578.696b0a0
+    networks:
+      - hmpps
+    container_name: hmpps-auth
+    depends_on:
+      - delius
+    ports:
+      - "9090:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=dev,delius
+      - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+      - DELIUS_ENDPOINT_URL=http://delius:8080
+      # - LOGGING_LEVEL_ROOT=INFO
+      # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
+      # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG
+
+  hmpps-auth-proxy:
+    image: nginx:latest
+    depends_on:
+      - hmpps-auth
+    networks:
+      - hmpps
+    ports:
+      - "9091:9091"
+    volumes:
+      - ./hmpps-auth-proxy/nginx.conf:/etc/nginx/nginx.conf
+
+  editor:
+    image: dullage/flatnotes:v5.5
+    container_name: flatnotes
+    ports:
+      - "9080:8080"
+    volumes:
+      - ./content:/data
+      - ./editorDb:/data/.flatnotes
+    environment:
+      - FLA_AUTH_TYPE=none # Change to "password" if you want to secure it
+      - FLATNOTES_USERNAME=dummy_user
+      - FLATNOTES_PASSWORD=dummy_password
+      - FLATNOTES_SECRET_KEY=dummy_secret_key_12345
+      - PUID=502
+      - PGID=20
+    restart: unless-stopped
+
+networks:
+  hmpps:
+
+volumes:
+  node_module:

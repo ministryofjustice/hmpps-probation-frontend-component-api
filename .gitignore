@@ -125,3 +125,7 @@ integration_tests/screenshots/
 */*.iml
 **/Chart.lock
 **/.DS_Store
+
+# flatnotes db
+editorDb/*
+!editorDb/.gitkeep

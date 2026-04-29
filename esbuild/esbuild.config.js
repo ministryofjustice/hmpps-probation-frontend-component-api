@@ -79,7 +79,7 @@ const main = () => {
   if (serverEnv) {
     /** @type {childProcess.ChildProcess | null} */
     let serverProcess = null
-    chokidar.watch(['dist']).on(
+    chokidar.watch(['dist', 'content/**/*.md']).on(
       'all',
       debounce(() => {
         if (serverProcess) serverProcess.kill()
