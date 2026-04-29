@@ -54,7 +54,8 @@ services:
     ports:
       - "9080:8080"
     volumes:
-      - content:/app/data
+      - ./content:/data
+      - ./editorDb:/data/.flatnotes
     environment:
       - FLA_AUTH_TYPE=none # Change to "password" if you want to secure it
       - FLATNOTES_USERNAME=dummy_user
@@ -69,4 +70,3 @@ networks:
 
 volumes:
   node_module:
-  content:

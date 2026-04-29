@@ -74,4 +74,3 @@ networks:
 
 volumes:
   node_module:
-  content:
