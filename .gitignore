@@ -129,3 +129,4 @@ integration_tests/screenshots/
 # flatnotes db
 editorDb/*
 !editorDb/.gitkeep
+content/**/.metadata
