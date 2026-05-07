@@ -49,31 +49,6 @@ services:
       - ./hmpps-auth-proxy/nginx.conf:/etc/nginx/nginx.conf
 
   editor:
-    # image: dockerbobw/flatnotes-enhanced:latest
-    # container_name: editor
-    # restart: unless-stopped
-    # # Forces Docker to run the container using your host account permissions
-    # user: "502:20"
-    # environment:
-    #   - FLATNOTES_AUTH_TYPE=none 
-    #   - REPOPATH="/repo"  # Sets internal execution user
-    #   - PUID=502
-    #   - PGID=20
-    # ports:
-    #   - "9080:8854"
-    # volumes:
-    #   - ./content:/repo
-    #   - ./editor:/data/DiaryMD
-
-    # image: zefhemel/silverbullet:latest
-    # container_name: silverbullet
-    # volumes:
-    #   - ./content:/space
-    # ports:
-    #   - "9080:3000"
-    # user: "502:20" # Explicitly sets your PUID/PGID permissions
-    # restart: unless-stopped
-
     image: dockerbobw/flatnotes-enhanced:latest
     container_name: flatnotes
     ports:
