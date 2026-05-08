@@ -36,7 +36,7 @@ jobs:
   # main node build workflow
   node_build:
     name: node build
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@607c82f9fa98d1c35286644d7d70f13c50c4316b # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@658ee37b404f39de63423d2bd7bdf1f2fce7da19 # v2
     secrets: inherit
     with:
       node_version_file: ".node-version" # updated the version of node engine to 22.22.1
@@ -64,7 +64,7 @@ jobs:
   build:
     name: Build docker image from hmpps-github-actions
     if: github.ref == 'refs/heads/main'
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/docker_build.yml@607c82f9fa98d1c35286644d7d70f13c50c4316b # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/docker_build.yml@658ee37b404f39de63423d2bd7bdf1f2fce7da19 # v2
     needs:
       # - node_integration_tests
       - node_unit_tests
@@ -79,7 +79,7 @@ jobs:
     needs:
       - build
       - helm_lint
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@607c82f9fa98d1c35286644d7d70f13c50c4316b # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@658ee37b404f39de63423d2bd7bdf1f2fce7da19 # v2
     secrets: inherit
     with:
       environment: 'dev'
@@ -89,7 +89,7 @@ jobs:
     needs:
       - build
       - deploy_dev
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@607c82f9fa98d1c35286644d7d70f13c50c4316b # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@658ee37b404f39de63423d2bd7bdf1f2fce7da19 # v2
     secrets: inherit
     with:
       environment: 'preprod'
@@ -99,7 +99,7 @@ jobs:
     needs:
       - build
       - deploy_preprod
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@607c82f9fa98d1c35286644d7d70f13c50c4316b # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@658ee37b404f39de63423d2bd7bdf1f2fce7da19 # v2
     secrets: inherit
     with:
       environment: 'prod'
