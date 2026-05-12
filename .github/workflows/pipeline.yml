@@ -36,7 +36,7 @@ jobs:
   # main node build workflow
   node_build:
     name: node build
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@255709aa1349e6ec1d77b3fec0ed6cbe9f962973 # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@e7db1568006ed68b8238ec1ded2a6c175d6b78a6 # v2
     secrets: inherit
     with:
       node_version_file: ".node-version" # updated the version of node engine to 22.22.1
