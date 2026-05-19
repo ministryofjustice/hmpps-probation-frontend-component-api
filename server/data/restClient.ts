@@ -125,7 +125,11 @@ export default class RestClient {
             const s = new Readable()
             // eslint-disable-next-line no-underscore-dangle
             s._read = () => {}
-            s.push(response.body)
+            const chunk =
+              typeof response.body === 'string' || Buffer.isBuffer(response.body)
+                ? response.body
+                : response.text || JSON.stringify(response.body)
+            s.push(chunk)
             s.push(null)
             resolve(s)
           }
