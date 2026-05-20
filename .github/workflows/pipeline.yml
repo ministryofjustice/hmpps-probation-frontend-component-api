@@ -43,7 +43,7 @@ jobs:
   # generic node unit tests - feel free to override with local tests if required
   node_unit_tests:
     name: node unit tests
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_unit_tests.yml@e7db1568006ed68b8238ec1ded2a6c175d6b78a6 # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_unit_tests.yml@c2a23fcb9a0ce8f98145230d4fe930bd9008d12b # v2
     needs: [node_build]
     secrets: inherit
   # generic node integration tests using wiremock - feel free to override with local tests if required
