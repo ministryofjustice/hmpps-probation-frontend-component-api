@@ -16,7 +16,7 @@
     "lint-fix": "eslint . --cache --max-warnings 0 --fix",
     "typecheck": "tsc && tsc -p integration_tests",
     "test": "npm run build && jest",
-    "test:ci": "jest --runInBand",
+    "test:ci": "jest --runInBand --coverage",
     "security_audit": "npx audit-ci --config audit-ci.json",
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open --e2e --browser chrome",
@@ -30,13 +30,24 @@
     "npm": ">=10"
   },
   "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
     "transform": {
       "^.+\\.tsx?$": [
         "ts-jest"
       ]
     },
     "collectCoverageFrom": [
-      "server/**/*.{ts,js,jsx,mjs}"
+      "server/**/*.{ts,js,jsx,mjs}",
+      "!server/index.ts",
+      "!server/testutils/**",
+      "!server/routes/testutils/**"
     ],
     "testMatch": [
       "<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}"
