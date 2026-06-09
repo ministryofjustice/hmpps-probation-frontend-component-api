@@ -14,6 +14,7 @@ jest.mock('../../logger', () => ({
   __esModule: true,
   default: {
     error: (...args: unknown[]) => loggerError(...args),
+    debug: (...args: unknown[]) => loggerError(...args),
   },
 }))
 
