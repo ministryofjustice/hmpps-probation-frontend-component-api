@@ -120,6 +120,12 @@ export default function componentRoutes(services: Services): Router {
    *           headerAndFooter:
    *             value: ['header', 'footer']
    *             summary: Request both the header and footer components
+   *       - in: query
+   *         name: classes
+   *         schema:
+   *           type: string
+   *         required: false
+   *         description: Optional CSS classes to be added to the component wrapper element (e.g., 'class1 class2')
    *       - in: header
    *         name: x-user-token
    *         schema:
