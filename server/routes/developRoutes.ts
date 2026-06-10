@@ -11,6 +11,13 @@ export default function developRoutes(services: Services): Router {
   const router = Router()
   const controller = componentsController()
 
+  function getClassesFromQueryParam(classes: unknown): string | undefined {
+    if (!classes) return undefined
+    if (Array.isArray(classes)) return classes.filter(Boolean).join(' ').trim() || undefined
+    if (typeof classes === 'string') return classes.trim() || undefined
+    return undefined
+  }
+
   router.use(authorisationMiddleware())
   router.use(auth.authenticationMiddleware(tokenVerifier))
   router.use(populateCurrentUser(services.userService))
@@ -27,7 +34,9 @@ export default function developRoutes(services: Services): Router {
       path,
       asyncMiddleware(async (_req, res, _next) => {
         const viewModel = await getViewModel(res.locals.user)
-        return res.render('pages/componentPreview', viewModel)
+        const classes = getClassesFromQueryParam(_req.query.classes)
+        const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
+        return res.render('pages/componentPreview', viewModelWithClasses)
       }),
     )
   })
