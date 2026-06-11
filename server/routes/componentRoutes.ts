@@ -49,7 +49,6 @@ export default function componentRoutes(services: Services): Router {
       expressjwt({
         secret: jwksIssuer,
         issuer: `${config.apis.hmppsAuth.url}/issuer`,
-        // issuer: `http://localhost:9090/issuer`,
         algorithms: ['RS256'],
         getToken: reqInternal => reqInternal.headers['x-user-token'] as string,
       })(req, res, next)
