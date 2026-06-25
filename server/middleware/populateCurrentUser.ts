@@ -39,7 +39,9 @@ export default function populateCurrentUser(userService: UserService): RequestHa
       const userRoles = roles.map(role => role.substring(role.indexOf('_') + 1) as Role)
       logger.debug(`The list of User Roles are :: ${JSON.stringify(roles)}`)
       logger.debug(`The list of SET User Roles are :: ${JSON.stringify(userRoles)}`)
-      logger.debug(`Decoded token :: ${JSON.stringify(jwtDecode(res.locals.user.token))}`)
+      // @todo: lines below are needed for local debugging but got caught by threats scanner - needs a rethink
+      // logger.debug(`token :: ${JSON.stringify((res.locals.user.token))}`)
+      // logger.debug(`Decoded token :: ${JSON.stringify(jwtDecode(res.locals.user.token))}`)
       logger.debug(`User services :: ${JSON.stringify(userService.getServicesForUser(userRoles))}`)
 
       res.locals.user = {
