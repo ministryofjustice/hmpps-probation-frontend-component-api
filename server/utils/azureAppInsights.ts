@@ -6,7 +6,7 @@ import {
   setup,
   TelemetryClient,
 } from 'applicationinsights'
-import { EnvelopeTelemetry } from 'applicationinsights/out/Declarations/Contracts'
+
 import { RequestHandler } from 'express'
 import { ApplicationInfo } from '../applicationInfo'
 
