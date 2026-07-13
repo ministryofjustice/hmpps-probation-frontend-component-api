@@ -11,6 +11,7 @@ jest.mock('../../config', () => ({
     nDelius: { url: 'url' },
     oAsys: { url: 'url' },
     prepareACase: { url: 'url' },
+    probationDigitalReporting: { url: 'url' },
     referAndMonitor: { url: 'url' },
     transitionalAccomodation: { url: 'url' },
     workloadMeasurementTool: { url: 'url' },
@@ -27,6 +28,7 @@ describe('getServicesForUser', () => {
             'Approved Premises (CAS1)',
             'NDelius (opens in a new tab)',
             'OASys (opens in a new tab)',
+            'Probation Digital Reporting',
             'Refer and monitor an intervention',
             'Transitional Accomodation (CAS3)',
           ].includes(service.heading)
