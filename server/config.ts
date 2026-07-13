@@ -102,7 +102,7 @@ export default {
       url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction),
     },
     probationDigitalReporting: {
-      url: get('PROBATION_DIGITAL_REPORTING', 'http://localhost:3001', requiredInProduction),
+      url: get('PROBATION_DIGITAL_REPORTING_URL', 'http://localhost:3001', requiredInProduction),
     },
     referAndMonitor: {
       url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction),
