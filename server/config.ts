@@ -89,6 +89,9 @@ export default {
     nDelius: { url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction) },
     oAsys: { url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction) },
     prepareACase: { url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction) },
+    probationDigitalReporting: {
+      url: get('PROBATION_DIGITAL_REPORTING', 'http://localhost:3001', requiredInProduction),
+    },
     referAndMonitor: { url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction) },
     transitionalAccomodation: {
       url: get('TRANSITIONAL_ACCOMODATION_URL', 'http://localhost:3001', requiredInProduction),
