@@ -99,8 +99,6 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.probationDigitalReporting.url,
       navEnabled: true,
       enabled: () => true,
-      accessibilityHeading: 'Probation Digital Reporting',
-      accessibilityUrl: '/accessibility/probation-digital-reporting',
     },
     {
       id: 'refer-and-monitor-an-intervention',
