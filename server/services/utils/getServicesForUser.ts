@@ -98,7 +98,7 @@ export default (roles: string[]): Service[] => {
       heading: 'Probation Digital Reporting',
       href: config.serviceUrls.probationDigitalReporting.url,
       navEnabled: true,
-      enabled: () => true,
+      enabled: () => ['LOCAL', 'DEV'].includes(config.environmentName),
     },
     {
       id: 'refer-and-monitor-an-intervention',
