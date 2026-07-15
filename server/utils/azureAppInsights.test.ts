@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
 
-import { Contracts, defaultClient, DistributedTracingModes, getCorrelationContext, setup } from 'applicationinsights'
+import { defaultClient, DistributedTracingModes, getCorrelationContext, setup } from 'applicationinsights'
 
 import type { ApplicationInfo } from '../applicationInfo'
 import { appInsightsMiddleware, buildAppInsightsClient, initialiseAppInsights } from './azureAppInsights'
@@ -30,6 +30,8 @@ const applicationInfo: ApplicationInfo = {
   productId: 'p1',
   branchName: 'main',
 }
+const requestTelemetryBaseType = 'RequestData'
+const dependencyTelemetryBaseType = 'RemoteDependencyData'
 
 function getTelemetryProcessors(): Array<(envelope: unknown, context?: unknown) => boolean> {
   return (defaultClient as unknown as { addTelemetryProcessor: jest.Mock }).addTelemetryProcessor.mock.calls.map(
@@ -109,7 +111,7 @@ describe('azureAppInsights', () => {
       const [addUserData] = getTelemetryProcessors()
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Request,
+          baseType: requestTelemetryBaseType,
           baseData: {
             properties: { existing: 'keep' },
           },
@@ -135,7 +137,7 @@ describe('azureAppInsights', () => {
       const [addUserData] = getTelemetryProcessors()
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Trace,
+          baseType: 'MessageData',
           baseData: { properties: { a: 1 } },
         },
       }
@@ -169,12 +171,10 @@ describe('azureAppInsights', () => {
 
     it('ignoredRequestsProcessor drops telemetry for ignored path prefixes', () => {
       const [, , ignoredRequests] = getTelemetryProcessors()
-      const rd = new Contracts.RequestData()
-      rd.name = 'GET /ping'
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Request,
-          baseData: rd,
+          baseType: requestTelemetryBaseType,
+          baseData: { name: 'GET /ping' },
         },
       }
 
@@ -183,24 +183,22 @@ describe('azureAppInsights', () => {
 
     it('ignoredRequestsProcessor keeps non-ignored requests', () => {
       const [, , ignoredRequests] = getTelemetryProcessors()
-      const rd = new Contracts.RequestData()
-      rd.name = 'GET /api/components'
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Request,
-          baseData: rd,
+          baseType: requestTelemetryBaseType,
+          baseData: { name: 'GET /api/components' },
         },
       }
 
       expect(ignoredRequests(envelope)).toBe(true)
     })
 
-    it('ignoredRequestsProcessor returns true when request baseData is not RequestData', () => {
+    it('ignoredRequestsProcessor returns true when request name is not available', () => {
       const [, , ignoredRequests] = getTelemetryProcessors()
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Request,
-          baseData: { name: 'GET /ping' },
+          baseType: requestTelemetryBaseType,
+          baseData: { route: '/ping' },
         },
       }
 
@@ -209,12 +207,10 @@ describe('azureAppInsights', () => {
 
     it('ignoredDependenciesProcessor drops sqs dependencies', () => {
       const [, , , ignoredDeps] = getTelemetryProcessors()
-      const dep = new Contracts.RemoteDependencyData()
-      dep.target = 'sqs.eu-west-2.amazonaws.com'
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Dependency,
-          baseData: dep,
+          baseType: dependencyTelemetryBaseType,
+          baseData: { target: 'sqs.eu-west-2.amazonaws.com' },
         },
       }
 
@@ -223,12 +219,10 @@ describe('azureAppInsights', () => {
 
     it('ignoredDependenciesProcessor keeps other dependencies', () => {
       const [, , , ignoredDeps] = getTelemetryProcessors()
-      const dep = new Contracts.RemoteDependencyData()
-      dep.target = 'https://auth.example.com'
       const envelope = {
         data: {
-          baseType: Contracts.TelemetryTypeString.Dependency,
-          baseData: dep,
+          baseType: dependencyTelemetryBaseType,
+          baseData: { target: 'https://auth.example.com' },
         },
       }
 
