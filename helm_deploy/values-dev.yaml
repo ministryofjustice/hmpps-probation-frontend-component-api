@@ -22,6 +22,7 @@ generic-service:
     NDELIUS_URL: "https://ndelius.test.probation.service.justice.gov.uk"
     OASYS_URL: "https://t2.oasys.service.justice.gov.uk"
     PREPARE_A_CASE_URL: "https://prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk"
+    PROBATION_DIGITAL_REPORTING_URL: "https://hmpps-probation-mi-ui-dev.hmpps.service.justice.gov.uk"
     REFER_AND_MONITOR_URL: "https://hmpps-interventions-ui-dev.apps.live-1.cloud-platform.service.justice.gov.uk"
     TRANSITIONAL_ACCOMODATION_URL: "https://transitional-accommodation-dev.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_TOOL_URL: "https://workload-measurement-dev.hmpps.service.justice.gov.uk"
