@@ -94,6 +94,13 @@ export default (roles: string[]): Service[] => {
       accessibilityUrl: '/accessibility/prepare-a-case-for-sentence',
     },
     {
+      id: 'probation-digital-reporting',
+      heading: 'Probation Digital Reporting',
+      href: config.serviceUrls.probationDigitalReporting.url,
+      navEnabled: true,
+      enabled: () => ['LOCAL', 'DEV'].includes(config.environmentName),
+    },
+    {
       id: 'refer-and-monitor-an-intervention',
       heading: 'Refer and monitor an intervention',
       href: config.serviceUrls.referAndMonitor.url,
