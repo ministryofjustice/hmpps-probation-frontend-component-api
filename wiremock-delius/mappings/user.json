@@ -23,22 +23,36 @@
     },
     {
       "request": {
-        "urlPattern": "/user?email=.*",
+        "urlPattern": "/user/gerard.mason",
         "method": "GET"
       },
       "response": {
         "status": 200,
-        "jsonBody": [
-          {
-            "userId": 1234567890,
-            "username": "deliususer",
-            "firstName": "Delius",
-            "surname": "User",
-            "email": "delius.user@example.com",
-            "enabled": true,
-            "roles": []
-          }
-        ],
+        "jsonBody": {
+          "userId": 2500099997,
+          "username": "gerard.mason",
+          "firstName": "Gerard",
+          "surname": "Mason",
+          "email": "gerard.mason@justice.gov.uk",
+          "enabled": true,
+          "roles": [
+            "LOCAL_LICENCE_ACO",
+            "LOCAL_LICENCE_CA",
+            "LOCAL_LICENCE_DM",
+            "LOCAL_MAKE_RECALL_DECISION",
+            "LOCAL_MAKE_RECALL_DECISION_PPCS",
+            "LOCAL_MAKE_RECALL_DECISION_SPO",
+            "LOCAL_MANAGE_A_WORKFORCE_ALLOCATE",
+            "LOCAL_MANAGE_SUPERVISIONS",
+            "LOCAL_MARD_DUTY_MANAGER",
+            "LOCAL_MARD_RESIDENT_WORKER",
+            "LOCAL_PREPARE_A_CASE",
+            "LOCAL_LICENCE_READONLY",
+            "LOCAL_LICENCE_RO",
+            "LOCAL_NOMIS_BATCHLOAD",
+            "LOCAL_WORKLOAD_MEASUREMENT"
+          ]
+        },
         "headers": {
           "Content-Type": "application/json"
         }
