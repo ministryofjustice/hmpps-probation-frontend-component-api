@@ -80,16 +80,33 @@ export default {
     allocateAPersonOnProbation: {
       url: get('ALLOCATE_A_PERSON_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
     },
-    approvedPremises: { url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction) },
-    considerARecall: { url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction) },
-    createAndVaryALicence: { url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction) },
+    approvedPremises: {
+      url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    considerARecall: {
+      url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    createAndVaryALicence: {
+      url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction),
+    },
     managePeopleOnProbation: {
       url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
     },
-    nDelius: { url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction) },
-    oAsys: { url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction) },
-    prepareACase: { url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction) },
-    referAndMonitor: { url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction) },
+    nDelius: {
+      url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    oAsys: {
+      url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    prepareACase: {
+      url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    probationDigitalReporting: {
+      url: get('PROBATION_DIGITAL_REPORTING_URL', 'http://localhost:3001'),
+    },
+    referAndMonitor: {
+      url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction),
+    },
     transitionalAccomodation: {
       url: get('TRANSITIONAL_ACCOMODATION_URL', 'http://localhost:3001', requiredInProduction),
     },
