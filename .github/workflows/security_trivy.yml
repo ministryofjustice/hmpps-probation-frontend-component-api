@@ -6,7 +6,7 @@ on:
 jobs:
   security-kotlin-trivy-check:
     name: Project security trivy dependency check
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/security_trivy.yml@5156d7f46810b00163ce8e6a180346f00d8cc055 # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/security_trivy.yml@3099514d634a6b7bcd443ea82fde249861702515 # v2
     with:
       channel_id: ${{ vars.SECURITY_ALERTS_SLACK_CHANNEL_ID || 'NO_SLACK' }}
     secrets: inherit
