@@ -45,9 +45,12 @@
     },
     "collectCoverageFrom": [
       "server/**/*.{ts,js,jsx,mjs}",
+      "!server/applicationInfo.ts",
       "!server/index.ts",
-      "!server/testutils/**",
-      "!server/routes/testutils/**"
+      "!server/config.ts",
+      "!server/@types/express/index.d.ts",
+      "!server/routes/testutils/**",
+      "!server/testutils/**"
     ],
     "testMatch": [
       "<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}"
