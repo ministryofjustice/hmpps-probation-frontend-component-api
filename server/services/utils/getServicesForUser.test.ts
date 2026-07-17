@@ -1,8 +1,10 @@
 import { Role } from './roles'
 import getServicesForUser from './getServicesForUser'
+import config from '../../config'
 
 jest.mock('../../config', () => ({
   serviceUrls: {
+    environmentName: 'DEV',
     allocateAPersonOnProbation: { url: 'url' },
     approvedPremises: { url: 'url' },
     considerARecall: { url: 'url' },
@@ -11,6 +13,7 @@ jest.mock('../../config', () => ({
     nDelius: { url: 'url' },
     oAsys: { url: 'url' },
     prepareACase: { url: 'url' },
+    probationDigitalReporting: { url: 'url' },
     referAndMonitor: { url: 'url' },
     transitionalAccomodation: { url: 'url' },
     workloadMeasurementTool: { url: 'url' },
@@ -18,6 +21,10 @@ jest.mock('../../config', () => ({
 }))
 
 describe('getServicesForUser', () => {
+  beforeEach(() => {
+    config.environmentName = 'DEV'
+  })
+
   describe('Open services', () => {
     it('user with no roles can see open services', () => {
       const output = getServicesForUser([])
@@ -27,11 +34,26 @@ describe('getServicesForUser', () => {
             'Approved Premises (CAS1)',
             'NDelius (opens in a new tab)',
             'OASys (opens in a new tab)',
+            'Probation Digital Reporting',
             'Refer and monitor an intervention',
             'Transitional Accomodation (CAS3)',
           ].includes(service.heading)
         }),
       ).toEqual(true)
+    })
+
+    describe('Probation Digital Reporting', () => {
+      test.each`
+        environmentName     | visible
+        ${'LOCAL'}          | ${true}
+        ${'DEV'}            | ${true}
+        ${'PRE-PRODUCTION'} | ${false}
+        ${'PRODUCTION'}     | ${false}
+      `('user can see service in $environmentName: $visible', ({ environmentName, visible }) => {
+        config.environmentName = environmentName
+        const output = getServicesForUser([])
+        expect(!!output.find(service => service.heading === 'Probation Digital Reporting')).toEqual(visible)
+      })
     })
   })
 
