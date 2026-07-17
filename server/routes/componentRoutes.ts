@@ -146,7 +146,6 @@ export default function componentRoutes(services: Services): Router {
       const userToken = req.headers['x-user-token'] as string
       const cacheKey = buildComponentsCacheKey(userToken, componentsRequested)
       const cachedResponse = await cacheService.getData<ComponentsResponseBody>(cacheKey)
-      logger.debug(`Cache Key is :::  ${cacheKey}`)
 
       if (cachedResponse) {
         res.send(cachedResponse)
