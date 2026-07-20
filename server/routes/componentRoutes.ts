@@ -2,7 +2,7 @@ import { createHash } from 'crypto'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwksRsa from 'jwks-rsa'
 import { expressjwt, GetVerificationKey } from 'express-jwt'
-import jwt from 'jsonwebtoken'
+import jwt, { VerifyOptions } from 'jsonwebtoken'
 import { Services } from '../services'
 import config from '../config'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -32,12 +32,25 @@ export default function componentRoutes(services: Services): Router {
   const controller = componentsController()
   const { cacheService } = services
 
+  function getClassesFromRequest(req: Request): string | undefined {
+    const raw = req.query.classes
+    logger.debug('Raw classes header', JSON.stringify(raw))
+    if (!raw) return undefined
+    if (Array.isArray(raw)) return raw.filter(Boolean).join(' ').trim() || undefined
+    if (typeof raw === 'string') return raw.trim() || undefined
+    return undefined
+  }
+
+  const verifyOptions: VerifyOptions = {
+    clockTolerance: 3660,
+  }
   const jwksIssuer = jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     cacheMaxAge: 604800000, // a week
     jwksRequestsPerMinute: 2,
     jwksUri: `${config.apis.hmppsAuth.url}/.well-known/jwks.json`,
+    ...verifyOptions,
   }) as GetVerificationKey
 
   router.use((req, res, next) => {
@@ -54,11 +67,18 @@ export default function componentRoutes(services: Services): Router {
     }
   })
 
-  async function getHeaderResponseBody(res: Response, viewModelCached?: HeaderViewModel): Promise<Component> {
+  async function getHeaderResponseBody(
+    req: Request,
+    res: Response,
+    viewModelCached?: HeaderViewModel,
+  ): Promise<Component> {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['header'], res.locals.user)).header
+    const classes = getClassesFromRequest(req)
+    const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
+    logger.debug('viewModelWithClasses >>> in getHeaderResponseBody :: ', viewModelWithClasses)
 
     return new Promise(resolve => {
-      res.render('components/header', viewModel, (_, html) => {
+      res.render('components/header', viewModelWithClasses, (_, html) => {
         resolve({
           html,
           css: [`${config.ingressUrl}/assets/css/header.css`],
@@ -68,7 +88,11 @@ export default function componentRoutes(services: Services): Router {
     })
   }
 
-  async function getFooterResponseBody(res: Response, viewModelCached?: FooterViewModel): Promise<Component> {
+  async function getFooterResponseBody(
+    _req: Request,
+    res: Response,
+    viewModelCached?: FooterViewModel,
+  ): Promise<Component> {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['footer'], res.locals.user)).footer
     return new Promise(resolve => {
       res.render('components/footer', viewModel, (_, html) => {
@@ -107,6 +131,12 @@ export default function componentRoutes(services: Services): Router {
    *           headerAndFooter:
    *             value: ['header', 'footer']
    *             summary: Request both the header and footer components
+   *       - in: query
+   *         name: classes
+   *         schema:
+   *           type: string
+   *         required: false
+   *         description: Optional CSS classes to be added to the component wrapper element (e.g., 'class1 class2')
    *       - in: header
    *         name: x-user-token
    *         schema:
@@ -127,7 +157,7 @@ export default function componentRoutes(services: Services): Router {
     asyncMiddleware(async (req, res, _next) => {
       const componentMethods: Record<
         AvailableComponent,
-        (r: Response, cachedViewModel: HeaderViewModel | FooterViewModel) => Promise<Component>
+        (request: Request, response: Response, cachedViewModel: HeaderViewModel | FooterViewModel) => Promise<Component>
       > = {
         header: getHeaderResponseBody,
         footer: getFooterResponseBody,
@@ -156,7 +186,7 @@ export default function componentRoutes(services: Services): Router {
 
       const renders = await Promise.all(
         componentsRequested.map(component =>
-          componentMethods[component as AvailableComponent](res, viewModels[component]),
+          componentMethods[component as AvailableComponent](req, res, viewModels[component]),
         ),
       )
 
@@ -176,7 +206,8 @@ export default function componentRoutes(services: Services): Router {
   )
 
   router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    logger.error(`Error: ${err}`)
+    logger.debug(`component route error is: `, err)
+
     if (err.name === 'UnauthorizedError') {
       res.status(401).send('Unauthorised')
     } else {

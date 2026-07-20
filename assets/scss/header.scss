@@ -1,5 +1,5 @@
-@use "govuk-frontend/dist/govuk/objects/width-container" with (
-  $govuk-page-width: 1170px
-);
-@use "@ministryofjustice/frontend/moj/components/domain-specific/probation/header/header";
+@use "govuk-frontend/dist/govuk";
 
+.govuk-width-container {
+  @include govuk.govuk-width-container(1170px);
+}
