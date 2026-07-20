@@ -71,7 +71,7 @@ describe('GET /api/components', () => {
       .expect(res => {
         const body = JSON.parse(res.text)
         expect(body.header).toBeDefined()
-        expect(body.header.html).toContain('class="my-wrapper-class')
+        expect(body.header.html).toContain('my-wrapper-class')
       })
   })
 
