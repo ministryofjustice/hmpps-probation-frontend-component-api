@@ -47,7 +47,11 @@
       "server/**/*.{ts,js,jsx,mjs}",
       "!server/index.ts",
       "!server/testutils/**",
-      "!server/routes/testutils/**"
+      "!server/routes/testutils/**",
+      "!server/applicationInfo.ts",
+      "!server/@types/**/*",
+      "!server/interfaces/**/*",
+      "!server/routes/developRoutes.ts"
     ],
     "testMatch": [
       "<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}"
