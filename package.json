@@ -32,7 +32,7 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "branches": 79,
+        "branches": 80,
         "functions": 80,
         "lines": 80,
         "statements": 80
@@ -45,10 +45,15 @@
     },
     "collectCoverageFrom": [
       "server/**/*.{ts,js,jsx,mjs}",
-      "!server/applicationInfo.ts",
-      "!server/index.ts",
-      "!server/config.ts",
+      "!server/@types/Components.ts",
+      "!server/@types/Users.ts",
       "!server/@types/express/index.d.ts",
+      "!server/applicationInfo.ts",
+      "!server/config.ts",
+      "!server/data/index.ts",
+      "!server/index.ts",
+      "!server/interfaces/PageLink.ts",
+      "!server/interfaces/userPassport.ts",
       "!server/routes/testutils/**",
       "!server/testutils/**"
     ],
