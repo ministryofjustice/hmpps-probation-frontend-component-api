@@ -87,7 +87,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.782.0",
-    "@ministryofjustice/frontend": "^8.0.1",
+    "@ministryofjustice/frontend": "10.0.0",
     "@ministryofjustice/hmpps-auth-clients": "^0.0.1-alpha.4",
     "@ministryofjustice/hmpps-monitoring": "^2.1.0",
     "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.3",
@@ -107,7 +107,7 @@
     "express": "^4.21.2",
     "express-jwt": "^8.5.1",
     "express-session": "^1.18.2",
-    "govuk-frontend": "^5.11.0",
+    "govuk-frontend": "6.4.0",
     "helmet": "^8.1.0",
     "http-errors": "^2.0.0",
     "jwks-rsa": "^3.2.0",
@@ -171,6 +171,7 @@
   },
   "overrides": {
     "diff": "^8.0.3",
-    "serialize-javascript": "^7.0.4"
+    "serialize-javascript": "^7.0.4",
+    "undici": "^6.26.1"
   }
 }
