@@ -62,6 +62,19 @@ describe('GET /api/components', () => {
       })
   })
 
+  it('should include provided classes in header html when requested', () => {
+    return request(app)
+      .get('/api/components?component=header&classes=my-wrapper-class')
+      .set('x-user-token', token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(res => {
+        const body = JSON.parse(res.text)
+        expect(body.header).toBeDefined()
+        expect(body.header.html).toContain('my-wrapper-class')
+      })
+  })
+
   it('should return one component if requested', () => {
     return request(app)
       .get('/api/components?component=footer')
