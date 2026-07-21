@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwksRsa from 'jwks-rsa'
 import { expressjwt, GetVerificationKey } from 'express-jwt'
@@ -16,9 +17,20 @@ import Component from '../@types/Component'
 import { TokenData } from '../@types/Users'
 import logger from '../../logger'
 
+export type ComponentsResponseBody = Partial<Record<AvailableComponent, Component>> & {
+  meta: ComponentsData['meta']
+}
+
+export function buildComponentsCacheKey(userToken: string, components: AvailableComponent[]): string {
+  const tokenHash = createHash('sha256').update(userToken).digest('hex')
+  const componentsKey = [...components].sort().join(',')
+  return `components:${tokenHash}:${componentsKey}`
+}
+
 export default function componentRoutes(services: Services): Router {
   const router = Router()
   const controller = componentsController()
+  const { cacheService } = services
 
   function getClassesFromRequest(req: Request): string | undefined {
     const raw = req.query.classes
@@ -160,6 +172,16 @@ export default function componentRoutes(services: Services): Router {
         return
       }
 
+      // Key by user token so cached responses are never shared between users
+      const userToken = req.headers['x-user-token'] as string
+      const cacheKey = buildComponentsCacheKey(userToken, componentsRequested)
+      const cachedResponse = await cacheService.getData<ComponentsResponseBody>(cacheKey)
+
+      if (cachedResponse) {
+        res.send(cachedResponse)
+        return
+      }
+
       const viewModels = await controller.getViewModels(componentsRequested, res.locals.user)
 
       const renders = await Promise.all(
@@ -168,9 +190,7 @@ export default function componentRoutes(services: Services): Router {
         ),
       )
 
-      const responseBody = componentsRequested.reduce<
-        Partial<Record<AvailableComponent, Component>> & { meta: ComponentsData['meta'] }
-      >(
+      const responseBody = componentsRequested.reduce<ComponentsResponseBody>(
         (output, componentName, index) => {
           return {
             ...output,
@@ -180,6 +200,7 @@ export default function componentRoutes(services: Services): Router {
         { meta: viewModels.meta },
       )
 
+      await cacheService.setData(cacheKey, responseBody)
       res.send(responseBody)
     }),
   )

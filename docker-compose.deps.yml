@@ -17,7 +17,7 @@ services:
       - -global-response-templating
 
   hmpps-auth:
-    image: ghcr.io/ministryofjustice/hmpps-auth:2026-06-02.25.e6b91db
+    image: ghcr.io/ministryofjustice/hmpps-auth:2026-07-09.885.f9f6ade
     networks:
       - hmpps
     container_name: hmpps-auth
@@ -29,10 +29,11 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
     environment:
       - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=dev,delius
+      - SPRING_PROFILES_ACTIVE=dev,delius,manage-users-api
       - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
       - DELIUS_ENDPOINT_URL=http://delius:8080
+      - MANAGE_USERS_API_ENDPOINT_URL=http://delius:8080
       # - LOGGING_LEVEL_ROOT=INFO
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG

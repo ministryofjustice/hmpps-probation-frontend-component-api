@@ -5,6 +5,7 @@ import { App } from 'supertest/types'
 import jwt from 'jsonwebtoken'
 import createApp from '../app'
 import { services } from '../services'
+import type CacheService from '../services/cacheService'
 import { getTokenDataMock } from '../../tests/mocks/TokenDataMock'
 import { disconnectRedisClient } from '../middleware/setUpWebSession'
 
@@ -30,10 +31,16 @@ jest.mock('express-jwt', () => ({
   },
 }))
 
+const cacheService = {
+  getData: jest.fn().mockResolvedValue(null),
+  setData: jest.fn().mockResolvedValue('OK'),
+} as unknown as CacheService
+
 let app: App
 
 beforeEach(() => {
-  app = createApp({ ...services() })
+  jest.clearAllMocks()
+  app = createApp({ ...services(), cacheService })
 })
 
 afterEach(() => {

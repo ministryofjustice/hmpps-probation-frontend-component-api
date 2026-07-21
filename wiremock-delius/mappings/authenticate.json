@@ -13,6 +13,20 @@
       "response": {
         "status": 200
       }
+    },
+    {
+      "request": {
+        "urlPattern": "/authenticate",
+        "method": "POST",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\":\"GERARD.MASON\",\"password\":\"secret\"}"
+          }
+        ]
+      },
+      "response": {
+        "status": 200
+      }
     }
   ]
 }
