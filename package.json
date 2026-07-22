@@ -50,12 +50,12 @@
       "!server/config.ts",
       "!server/index.ts",
       "!server/data/index.ts",
-      "!server/routes/testutils/**",
-      "!server/@types/**",
-      "!server/testutils/**",
       "!server/interfaces/**",
       "!server/routes/developRoutes.ts",
+      "!server/routes/testutils/**",
       "!server/services/index.ts",
+      "!server/testutils/**",
+      "!server/@types/**",
       "!server/utils/nunjucksSetup.ts"
     ],
     "testMatch": [
