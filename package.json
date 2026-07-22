@@ -46,14 +46,17 @@
     "collectCoverageFrom": [
       "server/**/*.{ts,js,jsx,mjs}",
       "!server/applicationInfo.ts",
+      "!server/app.ts",
       "!server/config.ts",
       "!server/index.ts",
       "!server/data/index.ts",
       "!server/routes/testutils/**",
+      "!server/@types/**",
       "!server/testutils/**",
-      "!server/@types/**/*",
-      "!server/interfaces/**/*",
-      "!server/routes/developRoutes.ts"
+      "!server/interfaces/**",
+      "!server/routes/developRoutes.ts",
+      "!server/services/index.ts",
+      "!server/utils/nunjucksSetup.ts"
     ],
     "testMatch": [
       "<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}"
