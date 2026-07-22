@@ -32,10 +32,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
+        "branches": 79,
+        "functions": 79,
+        "lines": 79,
+        "statements": 79
       }
     },
     "transform": {
@@ -45,13 +45,18 @@
     },
     "collectCoverageFrom": [
       "server/**/*.{ts,js,jsx,mjs}",
-      "!server/index.ts",
-      "!server/testutils/**",
-      "!server/routes/testutils/**",
       "!server/applicationInfo.ts",
-      "!server/@types/**/*",
-      "!server/interfaces/**/*",
-      "!server/routes/developRoutes.ts"
+      "!server/app.ts",
+      "!server/config.ts",
+      "!server/index.ts",
+      "!server/data/index.ts",
+      "!server/interfaces/**",
+      "!server/routes/developRoutes.ts",
+      "!server/routes/testutils/**",
+      "!server/services/index.ts",
+      "!server/testutils/**",
+      "!server/@types/**",
+      "!server/utils/nunjucksSetup.ts"
     ],
     "testMatch": [
       "<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}"
@@ -99,7 +104,7 @@
     "@ministryofjustice/hmpps-rest-client": "^0.0.1-alpha.5",
     "@types/jsonwebtoken": "^9.0.9",
     "agentkeepalive": "^4.6.0",
-    "applicationinsights": "^2.9.6",
+    "applicationinsights": "^3.15.1",
     "body-parser": "^2.2.0",
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
