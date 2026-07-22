@@ -5,6 +5,7 @@ import { App } from 'supertest/types'
 import jwt from 'jsonwebtoken'
 import createApp from '../app'
 import { services } from '../services'
+import type CacheService from '../services/cacheService'
 import { getTokenDataMock } from '../../tests/mocks/TokenDataMock'
 import { disconnectRedisClient } from '../middleware/setUpWebSession'
 
@@ -30,10 +31,16 @@ jest.mock('express-jwt', () => ({
   },
 }))
 
+const cacheService = {
+  getData: jest.fn().mockResolvedValue(null),
+  setData: jest.fn().mockResolvedValue('OK'),
+} as unknown as CacheService
+
 let app: App
 
 beforeEach(() => {
-  app = createApp({ ...services() })
+  jest.clearAllMocks()
+  app = createApp({ ...services(), cacheService })
 })
 
 afterEach(() => {
@@ -59,6 +66,19 @@ describe('GET /api/components', () => {
 
         expect(body.footer.css).toEqual(['http://localhost:3000/assets/css/footer.css'])
         expect(body.footer.javascript).toEqual([])
+      })
+  })
+
+  it('should include provided classes in header html when requested', () => {
+    return request(app)
+      .get('/api/components?component=header&classes=my-wrapper-class')
+      .set('x-user-token', token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(res => {
+        const body = JSON.parse(res.text)
+        expect(body.header).toBeDefined()
+        expect(body.header.html).toContain('my-wrapper-class')
       })
   })
 

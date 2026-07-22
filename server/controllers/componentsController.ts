@@ -15,6 +15,7 @@ export interface HeaderViewModel {
   servicesLink: string
   services: Service[]
   titleLink: string
+  classes?: string
 }
 
 export interface FooterViewModel {
@@ -28,6 +29,7 @@ export interface FallbackHeaderViewModel {
   fallback: boolean
   user: HmppsUser
   name: string
+  classes?: string
 }
 
 export interface FallbackFooterViewModel {

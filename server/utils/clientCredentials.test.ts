@@ -1,6 +1,10 @@
 import generateOauthClientToken from './clientCredentials'
 
 describe('generateOauthClientToken', () => {
+  it('Token are defaulted', () => {
+    expect(generateOauthClientToken()).toContain(`Basic`)
+  })
+
   it('Token can be generated', () => {
     const base64Creds = Buffer.from('bob:secret').toString('base64')
     expect(generateOauthClientToken('bob', 'secret')).toBe(`Basic ${base64Creds}`)

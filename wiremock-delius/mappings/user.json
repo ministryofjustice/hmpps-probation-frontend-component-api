@@ -14,7 +14,7 @@
           "surname": "Beaks",
           "email": "bernard.beaks@digital.justice.gov.uk",
           "enabled": true,
-          "roles": ["LOCAL_MANAGE_SUPERVISIONS", "LOCAL_ROLE_PROBATION", "LOCAL_MAKE_RECALL_DECISION_SPO"]
+          "roles": ["DELIUS_LICENCE_ACO", "DELIUS_ROLE_PROBATION", "DELIUS_MAKE_RECALL_DECISION_SPO"]
         },
         "headers": {
           "Content-Type": "application/json"
@@ -23,22 +23,36 @@
     },
     {
       "request": {
-        "urlPattern": "/user?email=.*",
+        "urlPattern": "/user/gerard.mason",
         "method": "GET"
       },
       "response": {
         "status": 200,
-        "jsonBody": [
-          {
-            "userId": 1234567890,
-            "username": "deliususer",
-            "firstName": "Delius",
-            "surname": "User",
-            "email": "delius.user@example.com",
-            "enabled": true,
-            "roles": []
-          }
-        ],
+        "jsonBody": {
+          "userId": 2500099997,
+          "username": "gerard.mason",
+          "firstName": "Gerard",
+          "surname": "Mason",
+          "email": "gerard.mason@justice.gov.uk",
+          "enabled": true,
+          "roles": [
+            "DELIUS_LICENCE_ACO",
+            "DELIUS_LICENCE_CA",
+            "DELIUS_LICENCE_DM",
+            "DELIUS_MAKE_RECALL_DECISION",
+            "DELIUS_MAKE_RECALL_DECISION_PPCS",
+            "DELIUS_MAKE_RECALL_DECISION_SPO",
+            "DELIUS_MANAGE_A_WORKFORCE_ALLOCATE",
+            "DELIUS_MANAGE_SUPERVISIONS",
+            "DELIUS_MARD_DUTY_MANAGER",
+            "DELIUS_MARD_RESIDENT_WORKER",
+            "DELIUS_PREPARE_A_CASE",
+            "DELIUS_LICENCE_READONLY",
+            "DELIUS_LICENCE_RO",
+            "DELIUS_NOMIS_BATCHLOAD",
+            "DELIUS_WORKLOAD_MEASUREMENT"
+          ]
+        },
         "headers": {
           "Content-Type": "application/json"
         }
