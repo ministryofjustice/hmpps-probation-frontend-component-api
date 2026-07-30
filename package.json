@@ -181,6 +181,8 @@
   "overrides": {
     "diff": "^8.0.3",
     "serialize-javascript": "^7.0.4",
-    "undici": "^6.26.1"
+    "undici": "^6.26.1",
+    "@opentelemetry/propagator-jaeger": "^2.8.0",
+    "@opentelemetry/core": "^2.7.1"
   }
 }
