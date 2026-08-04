@@ -13,6 +13,7 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
+    PORT: "3000"
 
     ALLOCATE_A_PERSON_ON_PROBATION_URL: "https://workforce-management-preprod.hmpps.service.justice.gov.uk"
     APPROVED_PREMISES_URL: "https://approved-premises-preprod.hmpps.service.justice.gov.uk"

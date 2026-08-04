@@ -24,7 +24,7 @@ export interface ApiConfig {
 }
 
 export default {
-  ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  ingressUrl: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   buildNumber: get('BUILD_NUMBER', '1_0_0', requiredInProduction),
   productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),
   gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
@@ -38,7 +38,7 @@ export default {
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
     cacheTimeout: Number(get('CACHE_TIMEOUT', 600)),
-    enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
+    enabled: get('REDIS_ENABLED', 'true', requiredInProduction) === 'true',
   },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
@@ -54,11 +54,11 @@ export default {
         deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000))),
-      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-typescript-template', requiredInProduction),
+      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-probation-frontend-component', requiredInProduction),
       authCodeClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
       clientCredentialsClientId: get(
         'CLIENT_CREDS_CLIENT_ID',
-        'hmpps-typescript-template-system',
+        'hmpps-probation-frontend-component',
         requiredInProduction,
       ),
       clientCredentialsClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
@@ -73,7 +73,7 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
-  domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  domain: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   contentfulFooterLinksEnabled: false,
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
