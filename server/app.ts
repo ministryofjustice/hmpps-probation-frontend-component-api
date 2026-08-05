@@ -22,18 +22,20 @@ import applicationInfo from './applicationInfo'
 import { appInsightsMiddleware } from './utils/azureAppInsights'
 import contentRoutes from './routes/contentRoutes'
 import config from './config'
+import { establishCurrentUserContext } from './utils/currentUserContext'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
 
   app.set('json spaces', 2)
   app.set('trust proxy', true)
-  app.set('port', process.env.PORT || 3001)
+  app.set('port', process.env.PORT || 3000)
 
   app.use(appInsightsMiddleware())
   app.use(setUpHealthChecks(applicationInfo()))
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())
+  app.use(establishCurrentUserContext())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   setUpEnvironmentName(app)
