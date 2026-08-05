@@ -5,6 +5,7 @@ import type { RequestHandler } from 'express'
 import config from '../config'
 import generateOauthClientToken from './clientCredentials'
 import type { TokenVerifier } from '../data/tokenVerification'
+import { decodeUserToken, getRequestLogger, setCurrentUser } from '../utils/currentUserContext'
 
 passport.serializeUser((user, done) => {
   // Not used but required for Passport
@@ -20,9 +21,18 @@ export type AuthenticationMiddleware = (tokenVerifier: TokenVerifier) => Request
 
 const authenticationMiddleware: AuthenticationMiddleware = verifyToken => {
   return async (req, res, next) => {
+    const requestLogger = getRequestLogger()
+
     if (req.isAuthenticated() && (await verifyToken(req))) {
+      const token = (req.user as { token?: string } | undefined)?.token
+      if (token) {
+        setCurrentUser(decodeUserToken(token))
+      }
+      requestLogger.debug('Authentication middleware verified user session')
       return next()
     }
+
+    requestLogger.warn('Authentication failed or token invalid, redirecting to sign-in')
     req.session.returnTo = req.originalUrl
     return res.redirect('/sign-in')
   }
