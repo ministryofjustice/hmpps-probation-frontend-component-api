@@ -5,6 +5,15 @@ import { Role, userHasRoles } from './roles'
 export default (roles: string[]): Service[] => {
   return [
     {
+      id: 'accredited-programmes',
+      heading: 'Accredited Programmes',
+      href: config.serviceUrls.accreditedProgrammes.url,
+      navEnabled: true,
+      enabled: () => ['LOCAL', 'DEV'].includes(config.environmentName),
+      accessibilityHeading: 'Accredited Programmes',
+      accessibilityUrl: '/accessibility/accredited-programmes',
+    },
+    {
       id: 'allocate-a-person-on-probation',
       heading: 'Allocate a Person on Probation',
       href: config.serviceUrls.allocateAPersonOnProbation.url,
