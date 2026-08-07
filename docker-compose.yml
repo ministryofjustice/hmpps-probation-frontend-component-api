@@ -69,6 +69,7 @@ services:
       - NO_HTTPS=true
       - NODE_ENV=development
       - PORT=3001
+      - LOG_LEVEL=debug
 
 networks:
   hmpps:
