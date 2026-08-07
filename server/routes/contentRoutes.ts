@@ -26,6 +26,7 @@ export default function contentRoutes(services: Services): Router {
   Array.of(
     'cookies-policy',
     'privacy-policy',
+    'accessibility/accredited-programmes',
     'accessibility/allocate-a-person-on-probation',
     'accessibility/consider-a-recall',
     'accessibility/create-and-vary-a-licence',
