@@ -2,8 +2,6 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import request from 'supertest'
 import type { Session } from 'express-session'
 
-import setUpAuth from './setUpAuthentication'
-
 const passportInitialize = jest.fn(() => (_req: Request, _res: Response, next: NextFunction) => next())
 const passportSession = jest.fn(() => (_req: Request, _res: Response, next: NextFunction) => next())
 const passportAuthenticate = jest.fn()
@@ -44,6 +42,23 @@ jest.mock('../config', () => ({
   },
 }))
 
+jest.mock('../../logger', () => ({
+  __esModule: true,
+  default: {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  },
+}))
+
+// eslint-disable-next-line import/first
+import logger from '../../logger'
+// eslint-disable-next-line import/first
+import { establishCurrentUserContext } from '../utils/currentUserContext'
+// eslint-disable-next-line import/first
+import setUpAuth from './setUpAuthentication'
+
 describe('setUpAuthentication', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -54,6 +69,7 @@ describe('setUpAuthentication', () => {
     const app = express()
     app.use(express.urlencoded({ extended: false }))
     app.use(express.json())
+    app.use(establishCurrentUserContext())
     app.use((req, _res, next) => {
       if (!req.session) {
         req.session = { destroy: (cb: () => void) => cb() } as Session
@@ -82,6 +98,7 @@ describe('setUpAuthentication', () => {
 
     expect(res.status).toBe(401)
     expect(res.body).toEqual({ view: 'autherror' })
+    expect(logger.warn).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Rendering authentication error page')
   })
 
   it('GET /sign-in uses passport.authenticate("oauth2")', async () => {
@@ -92,6 +109,7 @@ describe('setUpAuthentication', () => {
 
     expect(passportAuthenticate).toHaveBeenCalledWith('oauth2')
     expect(res.status).toBe(200)
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Starting OAuth sign-in')
   })
 
   it('GET /sign-in/callback invokes passport.authenticate with successReturnToOrRedirect and failureRedirect', async () => {
@@ -111,13 +129,15 @@ describe('setUpAuthentication', () => {
       },
     ])
     expect(res.status).toBe(200)
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Handling OAuth sign-in callback')
   })
 
   it('GET /sign-in/callback uses req.session.returnTo when set', async () => {
     passportAuthenticate.mockImplementation((_strategy: unknown, _opts: Record<string, string>) => {
-      return (req: Request, res: Response) => res.status(200).json({ opts: _opts })
+      return (_req: Request, res: Response) => res.status(200).json({ opts: _opts })
     })
     const app = express()
+    app.use(establishCurrentUserContext())
     app.use((req, _res, next) => {
       req.session = { returnTo: '/somewhere' } as unknown as Session
       next()
@@ -136,6 +156,7 @@ describe('setUpAuthentication', () => {
 
     expect(res.status).toBe(302)
     expect(res.headers.location).toBe('https://auth.external.test/account-details')
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Redirecting to account details')
   })
 
   it('GET /sign-out redirects immediately when no req.user', async () => {
@@ -147,10 +168,15 @@ describe('setUpAuthentication', () => {
     expect(res.headers.location).toBe(
       'https://auth.external.test/sign-out?client_id=client-id&redirect_uri=https://example.test',
     )
+    expect(logger.info).toHaveBeenCalledWith(
+      { user_uuid: 'anonymous' },
+      'Sign-out requested with no authenticated user',
+    )
   })
 
   it('GET /sign-out logs out then destroys session then redirects when req.user exists', async () => {
     const app = express()
+    app.use(establishCurrentUserContext())
     app.use((req, _res, next) => {
       req.user = { username: 'USER1' } as Express.User
       req.logout = jest.fn((optsOrCb?: unknown, cb?: (err: unknown) => void) => {
@@ -171,15 +197,17 @@ describe('setUpAuthentication', () => {
     expect(res.headers.location).toBe(
       'https://auth.external.test/sign-out?client_id=client-id&redirect_uri=https://example.test',
     )
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Signing user out')
   })
 
   it('sets res.locals.user from req.user', async () => {
     const app = express()
+    app.use(establishCurrentUserContext())
     app.use((req, _res, next) => {
       req.user = { username: 'USER1' } as Express.User
       next()
     })
-    app.use((req, res, next) => {
+    app.use((_req, res, next) => {
       res.render = function renderOk(this: Response) {
         return this.status(200).send('ok')
       }
