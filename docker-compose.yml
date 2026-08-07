@@ -51,7 +51,7 @@ services:
       - node_module:/app/node_modules
       - "./:/app"
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3000/health"]
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3001/health"]
     environment:
       - PRODUCT_ID=UNASSIGNED
       - REDIS_ENABLED=true
@@ -68,6 +68,7 @@ services:
       - INGRESS_URL=http://localhost:3001
       - NO_HTTPS=true
       - NODE_ENV=development
+      - PORT=3001
 
 networks:
   hmpps:
