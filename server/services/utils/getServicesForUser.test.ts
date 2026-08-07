@@ -31,6 +31,7 @@ describe('getServicesForUser', () => {
       expect(
         !!output.every(service => {
           return [
+            'Accredited Programmes',
             'Approved Premises (CAS1)',
             'NDelius (opens in a new tab)',
             'OASys (opens in a new tab)',
@@ -40,6 +41,20 @@ describe('getServicesForUser', () => {
           ].includes(service.heading)
         }),
       ).toEqual(true)
+    })
+
+    describe('Accredited Programmes', () => {
+      test.each`
+        environmentName     | visible
+        ${'LOCAL'}          | ${true}
+        ${'DEV'}            | ${true}
+        ${'PRE-PRODUCTION'} | ${false}
+        ${'PRODUCTION'}     | ${false}
+      `('user can see service in $environmentName: $visible', ({ environmentName, visible }) => {
+        config.environmentName = environmentName
+        const output = getServicesForUser([])
+        expect(!!output.find(service => service.heading === 'Accredited Programmes')).toEqual(visible)
+      })
     })
 
     describe('Probation Digital Reporting', () => {
