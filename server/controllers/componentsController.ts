@@ -6,6 +6,7 @@ import { DEFAULT_USER_ACCESS } from '../services/userService'
 import { Service } from '../interfaces/Service'
 import { initialiseName } from '../utils/utils'
 import { Role, userHasRoles } from '../services/utils/roles'
+import { getRequestLogger } from '../utils/currentUserContext'
 
 export interface HeaderViewModel {
   isProbationUser: boolean
@@ -64,6 +65,7 @@ export default (): {
   getViewModels: (components: AvailableComponent[], user: HmppsUser) => Promise<ComponentsData>
 } => ({
   async getHeaderViewModel(user: HmppsUser): Promise<HeaderViewModel> {
+    getRequestLogger().debug('Building header view model')
     const hasAccessToMPOP = userHasRoles([Role.ManageSupervisions], user.userRoles)
     return {
       isProbationUser: isProbationUser(user),
@@ -77,6 +79,7 @@ export default (): {
   },
 
   async getFooterViewModel(user: HmppsUser): Promise<FooterViewModel> {
+    getRequestLogger().debug('Building footer view model')
     const managedPages = defaultFooterLinks
 
     return {
@@ -87,6 +90,7 @@ export default (): {
   },
 
   async getFallbackFooterViewModel(): Promise<FallbackFooterViewModel> {
+    getRequestLogger().debug('Building fallback footer view model')
     return {
       component: 'footer',
       fallback: true,
@@ -94,6 +98,7 @@ export default (): {
   },
 
   async getFallbackHeaderViewModel(user: HmppsUser): Promise<FallbackHeaderViewModel> {
+    getRequestLogger().debug('Building fallback header view model')
     return {
       component: 'header',
       fallback: true,
@@ -103,6 +108,7 @@ export default (): {
   },
 
   async getViewModels(components: AvailableComponent[], user: HmppsUser) {
+    getRequestLogger().debug(`Building view models for components: ${components.join(', ')}`)
     const accessMethods = {
       header: this.getHeaderViewModel,
       footer: this.getFooterViewModel,

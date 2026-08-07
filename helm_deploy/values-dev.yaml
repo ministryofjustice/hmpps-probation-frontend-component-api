@@ -14,6 +14,7 @@ generic-service:
     ENVIRONMENT_NAME: DEV
     AUDIT_ENABLED: "false"
     PORT: "3000"
+    LOG_LEVEL: "info"
 
     ALLOCATE_A_PERSON_ON_PROBATION_URL: "https://workforce-management-dev.hmpps.service.justice.gov.uk"
     APPROVED_PREMISES_URL: "https://approved-premises-dev.hmpps.service.justice.gov.uk"

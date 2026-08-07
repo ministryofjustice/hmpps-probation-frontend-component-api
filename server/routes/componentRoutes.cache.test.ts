@@ -14,6 +14,8 @@ jest.mock('../../logger', () => ({
   default: {
     error: jest.fn(),
     debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
   },
 }))
 
