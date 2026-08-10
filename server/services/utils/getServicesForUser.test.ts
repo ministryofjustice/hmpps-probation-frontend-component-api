@@ -5,6 +5,7 @@ import config from '../../config'
 jest.mock('../../config', () => ({
   serviceUrls: {
     environmentName: 'DEV',
+    accreditedProgrammes: { url: 'url' },
     allocateAPersonOnProbation: { url: 'url' },
     approvedPremises: { url: 'url' },
     considerARecall: { url: 'url' },
@@ -54,6 +55,17 @@ describe('getServicesForUser', () => {
         const output = getServicesForUser([])
         expect(!!output.find(service => service.heading === 'Probation Digital Reporting')).toEqual(visible)
       })
+    })
+  })
+
+  describe('Accredited Programmes', () => {
+    test.each`
+      roles                              | visible
+      ${[Role.Probation]}                | ${true}
+      ${[]}                              | ${false}
+    `('user with roles: $roles, can see: $visible', ({ roles, visible }) => {
+      const output = getServicesForUser(roles)
+      expect(!!output.find(service => service.heading === 'Accredited Programmes')).toEqual(visible)
     })
   })
 
