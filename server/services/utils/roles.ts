@@ -10,6 +10,7 @@ export enum Role {
   MardDutyManager = 'MARD_DUTY_MANAGER',
   MardResidentWorker = 'MARD_RESIDENT_WORKER',
   PrepareACase = 'PREPARE_A_CASE',
+  Probation = 'PROBATION',
   ReadOnly = 'LICENCE_READONLY',
   ResponsibleOfficer = 'LICENCE_RO',
   Support = 'NOMIS_BATCHLOAD',
