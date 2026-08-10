@@ -2,15 +2,13 @@
 
 Last reviewed: 22 July 2026
 
-This accessibility statement applies to the Accredited Programmes service for probation staff.
+This accessibility statement applies to the [Accredited Programmes service](https://accredited-programmes-manage-and-deliver.hmpps.service.justice.gov.uk/) for probation staff.
 
 ## Using this service
 
 This website is run by HMPPS Digital Services.
 
-We want as many people as possible to be able to use this website.
-
-For example, that means you should be able to:
+We want as many people as possible to be able to use this website. For example, that means you should be able to:
 
 - change colours, contrast levels and fonts using browser or device settings
 
@@ -26,7 +24,7 @@ We also make the website text as simple as possible to understand.
 
 ## How accessible this website is
 
-This website is fully compliant with the Web Content Accessibility Guidelines version 2.2 AA standard.
+This website is fully compliant with the [Web Content Accessibility Guidelines version 2.2](https://www.w3.org/TR/WCAG22/) AA standard.
 
 ## Feedback and contact information
 
@@ -46,9 +44,9 @@ HMPPS Digital Services is committed to making its website accessible, in accorda
 
 ### Compliance status
 
-This website was tested in June 2026 against the [Web Content Accessibility Guidelines version 2.2 AA standard](https://www.w3.org/TR/WCAG21/).
+This website was tested in June 2026 against the [Web Content Accessibility Guidelines version 2.2](https://www.w3.org/TR/WCAG21/) AA standard.
 
-This website is fully compliant with the [Web Content Accessibility Guidelines version 2.2 AA standard](https://www.w3.org/TR/WCAG21/).
+This website is fully compliant with the [Web Content Accessibility Guidelines version 2.2](https://www.w3.org/TR/WCAG21/) AA standard.
 
 ## What we’re doing to improve accessibility
 
@@ -56,7 +54,7 @@ While creating this service, we tested with a broad range of users, including us
 
 Ministry of Justice accessibility specialists tested a sample of pages in March 2026 and we improved the service based on their recommendations. For example, we made sure all tables in the service had clear captions for users of assistive technology.
 
-In June and July 2026, we fixed all issues with non-accessible content identified by the User Vision audit to make the service fully compliant with the [Web Content Accessibility Guidelines version 2.2 AA standard](https://www.w3.org/TR/WCAG21/). For example, we made sure links did not disappear when users zoomed to above 200%.
+In June and July 2026, we fixed all issues with non-accessible content identified by the User Vision audit to make the service fully compliant with the [Web Content Accessibility Guidelines version 2.2](https://www.w3.org/TR/WCAG21/) AA standard. For example, we made sure links did not disappear when users zoomed to above 200%.
 
 Over the coming months, we also intend to look at other aspects of the service that do not affect compliance, but where accessibility could still be improved, including 13 observations identified in the User Vision audit. For example, we want to continue improving hint text and labelling to make it clearer to all users what they need to do on some screens.
 
@@ -66,6 +64,6 @@ We're continuing to test the service with users to check how well it is working 
 
 This statement was prepared on 22 July 2026.
 
-This website was tested in June 2026 against the [Web Content Accessibility Guidelines version 2.2 AA standard](https://www.w3.org/TR/WCAG22/). The audit was carried out by [User Vision](https://uservision.co.uk/).
+This website was tested in June 2026 against the [Web Content Accessibility Guidelines version 2.2](https://www.w3.org/TR/WCAG22/) AA standard. The audit was carried out by [User Vision](https://uservision.co.uk/).
 
 The website was retested in July 2026 by User Vision, to check issues we had fixed.
