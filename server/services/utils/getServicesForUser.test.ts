@@ -60,9 +60,9 @@ describe('getServicesForUser', () => {
 
   describe('Accredited Programmes', () => {
     test.each`
-      roles                              | visible
-      ${[Role.Probation]}                | ${true}
-      ${[]}                              | ${false}
+      roles               | visible
+      ${[Role.Probation]} | ${true}
+      ${[]}               | ${false}
     `('user with roles: $roles, can see: $visible', ({ roles, visible }) => {
       const output = getServicesForUser(roles)
       expect(!!output.find(service => service.heading === 'Accredited Programmes')).toEqual(visible)
