@@ -14,6 +14,7 @@ generic-service:
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
     PORT: "3000"
+    LOG_LEVEL: "info"
 
     ACCREDITED_PROGRAMMES_URL: "https://accredited-programmes-manage-and-deliver-preprod.hmpps.service.justice.gov.uk"
     ALLOCATE_A_PERSON_ON_PROBATION_URL: "https://workforce-management-preprod.hmpps.service.justice.gov.uk"

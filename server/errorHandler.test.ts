@@ -1,9 +1,8 @@
 import type { NextFunction, Request, Response } from 'express'
 import type { HTTPError } from 'superagent'
 
-import type { HmppsUser } from './interfaces/hmppsUser'
-
 import createErrorHandler from './errorHandler'
+import { runWithCurrentUserContext, setCurrentUser } from './utils/currentUserContext'
 
 jest.mock('../logger', () => ({
   __esModule: true,
@@ -46,16 +45,21 @@ describe('createErrorHandler', () => {
     jest.resetAllMocks()
   })
 
-  it('logs the error with url and username', () => {
+  it('logs the error with url and user_uuid', () => {
     const handler = createErrorHandler(false)
     const req = createReq('/some/path')
     const res = createRes()
-    res.locals.user = { username: 'USER1' } as unknown as HmppsUser
     const err: HttpErrorLike = { status: 500, message: 'Boom', stack: 'stack' }
 
-    handler(asHttpError(err), req, res, next)
+    runWithCurrentUserContext(() => {
+      setCurrentUser({ user_uuid: 'uuid-err-1', authorities: [] })
+      handler(asHttpError(err), req, res, next)
+    })
 
-    expect(logger.error).toHaveBeenCalledWith("Error handling request for '/some/path', user 'USER1'", err)
+    expect(logger.error).toHaveBeenCalledWith(
+      expect.objectContaining({ user_uuid: 'uuid-err-1', message: 'Boom' }),
+      "Error handling request for '/some/path'",
+    )
   })
 
   it.each([401, 403])('redirects to sign-out on %s and does not render', status => {
@@ -64,9 +68,12 @@ describe('createErrorHandler', () => {
     const res = createRes()
     const err: HttpErrorLike = { status, message: 'Auth error' }
 
-    handler(asHttpError(err), req, res, next)
+    runWithCurrentUserContext(() => {
+      setCurrentUser({ user_uuid: 'uuid-err-1', authorities: [] })
+      handler(asHttpError(err), req, res, next)
+    })
 
-    expect(logger.info).toHaveBeenCalledWith('Logging user out')
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'uuid-err-1' }, 'Logging user out')
     expect(res.redirect).toHaveBeenCalledWith('/sign-out')
     expect(res.status).not.toHaveBeenCalled()
     expect(res.render).not.toHaveBeenCalled()

@@ -15,7 +15,7 @@ import componentsController, {
 import { AvailableComponent } from '../@types/AvailableComponent'
 import Component from '../@types/Component'
 import { TokenData } from '../@types/Users'
-import logger from '../../logger'
+import { getRequestLogger } from '../utils/currentUserContext'
 
 export type ComponentsResponseBody = Partial<Record<AvailableComponent, Component>> & {
   meta: ComponentsData['meta']
@@ -34,7 +34,7 @@ export default function componentRoutes(services: Services): Router {
 
   function getClassesFromRequest(req: Request): string | undefined {
     const raw = req.query.classes
-    logger.debug('Raw classes header', JSON.stringify(raw))
+    getRequestLogger().debug('Raw classes header', JSON.stringify(raw))
     if (!raw) return undefined
     if (Array.isArray(raw)) return raw.filter(Boolean).join(' ').trim() || undefined
     if (typeof raw === 'string') return raw.trim() || undefined
@@ -75,7 +75,7 @@ export default function componentRoutes(services: Services): Router {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['header'], res.locals.user)).header
     const classes = getClassesFromRequest(req)
     const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
-    logger.debug('viewModelWithClasses >>> in getHeaderResponseBody :: ', viewModelWithClasses)
+    getRequestLogger().debug('viewModelWithClasses >>> in getHeaderResponseBody :: ', viewModelWithClasses)
 
     return new Promise(resolve => {
       res.render('components/header', viewModelWithClasses, (_, html) => {
@@ -155,6 +155,9 @@ export default function componentRoutes(services: Services): Router {
     '/components',
     populateCurrentUser(services.userService),
     asyncMiddleware(async (req, res, _next) => {
+      const requestLogger = getRequestLogger()
+      requestLogger.info('Serving /api/components')
+
       const componentMethods: Record<
         AvailableComponent,
         (request: Request, response: Response, cachedViewModel: HeaderViewModel | FooterViewModel) => Promise<Component>
@@ -168,6 +171,7 @@ export default function componentRoutes(services: Services): Router {
         .filter(component => componentMethods[component as AvailableComponent]) as AvailableComponent[]
 
       if (!componentsRequested.length) {
+        requestLogger.debug('No valid components requested')
         res.send({})
         return
       }
@@ -178,6 +182,7 @@ export default function componentRoutes(services: Services): Router {
       const cachedResponse = await cacheService.getData<ComponentsResponseBody>(cacheKey)
 
       if (cachedResponse) {
+        requestLogger.debug('Returning cached components response')
         res.send(cachedResponse)
         return
       }
@@ -201,17 +206,20 @@ export default function componentRoutes(services: Services): Router {
       )
 
       await cacheService.setData(cacheKey, responseBody)
+      requestLogger.info(`Served components: ${componentsRequested.join(', ')}`)
       res.send(responseBody)
     }),
   )
 
   router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    logger.debug(`component route error is: `, err)
+    const requestLogger = getRequestLogger()
+    requestLogger.debug(`component route error is: `, err)
 
     if (err.name === 'UnauthorizedError') {
+      requestLogger.warn('Unauthorised request for components')
       res.status(401).send('Unauthorised')
     } else {
-      logger.error(err.message)
+      requestLogger.error(err.message)
       res.status(500).send('An unexpected error occurred')
     }
   })

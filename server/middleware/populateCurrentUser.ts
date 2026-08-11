@@ -1,13 +1,14 @@
 import { RequestHandler } from 'express'
-import { jwtDecode } from 'jwt-decode'
-import logger from '../../logger'
 import { convertToTitleCase } from '../utils/utils'
 import { Role } from '../services/utils/roles'
 import { HmppsUser } from '../interfaces/hmppsUser'
 import { UserService } from '../services'
+import { decodeUserToken, getRequestLogger, setCurrentUser } from '../utils/currentUserContext'
 
 export default function populateCurrentUser(userService: UserService): RequestHandler {
   return async (req, res, next) => {
+    const requestLogger = getRequestLogger()
+
     try {
       // expressjwt middleware puts user object on req.auth
       if (!res.locals.user && req.auth) {
@@ -18,44 +19,32 @@ export default function populateCurrentUser(userService: UserService): RequestHa
         } as HmppsUser
       }
 
-      // Should be able to leave this uncommented safely but unaware of the log level in higher environment at the moment
-      // logger.debug(`raw token is ${JSON.stringify(res.locals.user.token)}`)
+      const decodedUser = decodeUserToken(res.locals.user.token)
+      setCurrentUser(decodedUser)
 
-      const {
-        name,
-        user_id: userId,
-        /**
-         * This does two things:
-         * Renames: It takes the value of authorities and assigns it to a constant named roles.
-         * Default Value: If authorities is missing (undefined) in the token, it defaults roles to an empty array ([]) to prevent errors later in the code.
-         */
-        authorities: roles = [],
-      } = jwtDecode(res.locals.user.token) as {
-        name?: string
-        user_id?: string
-        authorities?: string[]
-      }
+      const { name, user_id: userId, user_uuid: userUuid, authorities: roles = [] } = decodedUser
 
       const userRoles = roles.map(role => role.substring(role.indexOf('_') + 1) as Role)
-      logger.debug(`The list of User Roles are :: ${JSON.stringify(roles)}`)
-      logger.debug(`The list of SET User Roles are :: ${JSON.stringify(userRoles)}`)
-      // @todo: lines below are needed for local debugging but got caught by threats scanner - needs a rethink
-      // logger.debug(`token :: ${JSON.stringify((res.locals.user.token))}`)
-      // logger.debug(`Decoded token :: ${JSON.stringify(jwtDecode(res.locals.user.token))}`)
-      logger.debug(`User services :: ${JSON.stringify(userService.getServicesForUser(userRoles))}`)
+      const services = userService.getServicesForUser(userRoles)
+
+      requestLogger.debug(`The list of User Roles are :: ${JSON.stringify(roles)}`)
+      requestLogger.debug(`The list of SET User Roles are :: ${JSON.stringify(userRoles)}`)
+      requestLogger.debug(`User services :: ${JSON.stringify(services)}`)
 
       res.locals.user = {
         ...res.locals.user,
         userId,
+        userUuid,
         name,
         displayName: convertToTitleCase(name),
         userRoles,
-        services: userService.getServicesForUser(userRoles),
+        services,
       }
 
+      requestLogger.info('Populated current user details')
       next()
     } catch (error) {
-      logger.error(error, `Failed to populate user details for: ${res.locals.user && res.locals.user.username}`)
+      requestLogger.error(error, `Failed to populate user details for: ${res.locals.user && res.locals.user.username}`)
       next(error)
     }
   }

@@ -9,12 +9,17 @@ import type CacheService from '../services/cacheService'
 import type UserService from '../services/userService'
 
 const loggerError = jest.fn()
+const loggerWarn = jest.fn()
+const loggerInfo = jest.fn()
+const loggerDebug = jest.fn()
 
 jest.mock('../../logger', () => ({
   __esModule: true,
   default: {
     error: (...args: unknown[]) => loggerError(...args),
-    debug: (...args: unknown[]) => loggerError(...args),
+    warn: (...args: unknown[]) => loggerWarn(...args),
+    info: (...args: unknown[]) => loggerInfo(...args),
+    debug: (...args: unknown[]) => loggerDebug(...args),
   },
 }))
 
@@ -115,7 +120,7 @@ describe('componentRoutes auth/error handling', () => {
 
             expect(res.status).toBe(500)
             expect(res.text).toBe('An unexpected error occurred')
-            expect(loggerError).toHaveBeenCalledWith('boom')
+            expect(loggerError).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'boom')
             resolve()
           } catch (err) {
             reject(err)
