@@ -80,7 +80,7 @@ export default {
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
     accreditedProgrammes: {
-      url: get('ACCREDITED_PROGRAMMES_URL', 'http://localhost:3001'),
+      url: get('ACCREDITED_PROGRAMMES_URL', 'http://localhost:3001', requiredInProduction),
     },
     allocateAPersonOnProbation: {
       url: get('ALLOCATE_A_PERSON_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
