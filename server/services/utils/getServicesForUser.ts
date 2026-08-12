@@ -9,7 +9,14 @@ export default (roles: string[]): Service[] => {
       heading: 'Accredited Programmes',
       href: config.serviceUrls.accreditedProgrammes.url,
       navEnabled: true,
-      enabled: () => userHasRoles([Role.Probation], roles),
+      enabled: () => 
+        userHasRoles(
+          [
+            Role.Probation,
+            Role.AccreditedProgrammes,
+          ],
+          roles,
+        ),
       accessibilityHeading: 'Accredited Programmes',
       accessibilityUrl: '/accessibility/accredited-programmes',
     },

@@ -1,4 +1,5 @@
 export enum Role {
+  AccreditedProgrammes = 'ACCREDITED_PROGRAMME_COMMUNITY_PROGRAMME_TEAM',
   AssistantChief = 'LICENCE_ACO',
   CaseAdmin = 'LICENCE_CA',
   DecisionMaker = 'LICENCE_DM',

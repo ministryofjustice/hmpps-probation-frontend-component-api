@@ -57,6 +57,27 @@
           "Content-Type": "application/json"
         }
       }
+    },
+    {
+      "request": {
+        "urlPattern": "/user/jean-luc.picard",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "userId": 2500099996,
+          "username": "jean-luc.picard",
+          "firstName": "Jean-Luc",
+          "surname": "Picard",
+          "email": "jean-luc.picard@justice.gov.uk",
+          "enabled": true,
+          "roles": ["DELIUS_RMBT002"]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
     }
   ]
 }
