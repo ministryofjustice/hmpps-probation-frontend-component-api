@@ -27,6 +27,20 @@
       "response": {
         "status": 200
       }
+    },
+    {
+      "request": {
+        "urlPattern": "/authenticate",
+        "method": "POST",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\":\"JEAN-LUC.PICARD\",\"password\":\"secret\"}"
+          }
+        ]
+      },
+      "response": {
+        "status": 200
+      }
     }
   ]
 }
