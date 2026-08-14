@@ -62,9 +62,9 @@ describe('GET /api/components', () => {
         expect(
           $header('a[class="probation-common-header__link probation-common-header__title__organisation-name"]').text(),
         ).toContain('Probation Digital Services')
-        expect(body.header.css).toEqual(['http://localhost:3000/assets/css/header.css'])
+        expect(body.header.css).toEqual(['http://localhost:3001/assets/css/header.css'])
 
-        expect(body.footer.css).toEqual(['http://localhost:3000/assets/css/footer.css'])
+        expect(body.footer.css).toEqual(['http://localhost:3001/assets/css/footer.css'])
         expect(body.footer.javascript).toEqual([])
       })
   })
