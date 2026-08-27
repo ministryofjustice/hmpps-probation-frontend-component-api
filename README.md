@@ -59,7 +59,7 @@ Sign in with local Auth users:
 
 | username          | Password | Associated Roles |
 | :---------------- | :------: | ----: |
-| Pbernard.beaks    |   secret | "LICENCE_ACO", "PROBATION", "MAKE_RECALL_DECISION_SPO" |
+| bernard.beaks    |   secret | "LICENCE_ACO", "PROBATION", "MAKE_RECALL_DECISION_SPO" |
 | gerard.mason      |   secret | "LICENCE_ACO", "LICENCE_CA", "LICENCE_DM", "MAKE_RECALL_DECISION", "MAKE_RECALL_DECISION_PPCS", "MAKE_RECALL_DECISION_SPO", "MANAGE_A_WORKFORCE_ALLOCATE", "MANAGE_SUPERVISIONS", "MARD_DUTY_MANAGER", "MARD_RESIDENT_WORKER", "PREPARE_A_CASE", "LICENCE_READONLY", "LICENCE_RO", "NOMIS_BATCHLOAD", "WORKLOAD_MEASUREMENT" |
 | jean-luc.picard   |   secret | "ACCREDITED_PROGRAMME_COMMUNITY_PROGRAMME_TEAM" |
 | `<username>` |  `<password>`   | `<roles>` |
