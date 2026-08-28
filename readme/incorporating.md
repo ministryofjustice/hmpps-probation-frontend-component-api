@@ -4,4 +4,4 @@ The easiest way to incorporate the components into your application is to use th
 
 Instructions can be found in that project's readme file.
 
-Using the NPM package is the preferred method of implementation, but if you cannot do this you can [incorporate the components manually](incorporating_manually.md). Please discuss your requirements in the #probation-connected-services Slack channel first.
+Using the NPM package is the preferred method of implementation, but if you cannot do this you can [incorporate the components manually](incorporating_manually.md). Please discuss your requirements in the #moj-design-system-support Slack channel first.
