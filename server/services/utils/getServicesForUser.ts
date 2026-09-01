@@ -119,13 +119,13 @@ export default (roles: string[]): Service[] => {
       accessibilityUrl: '/accessibility/refer-and-monitor-an-intervention',
     },
     {
-      id: 'transitional-accomodation',
-      heading: 'Transitional Accomodation (CAS3)',
-      href: config.serviceUrls.transitionalAccomodation.url,
+      id: 'transitional-accommodation',
+      heading: 'Transitional Accommodation (CAS3)',
+      href: config.serviceUrls.transitionalAccommodation.url,
       navEnabled: true,
       enabled: () => true,
       accessibilityHeading: 'Transitional Accommodation (CAS3)',
-      accessibilityUrl: '/accessibility/transitional-accomodation',
+      accessibilityUrl: '/accessibility/transitional-accommodation',
     },
     {
       id: 'workload-measurement-tool',

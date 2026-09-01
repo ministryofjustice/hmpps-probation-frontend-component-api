@@ -112,8 +112,8 @@ export default {
     referAndMonitor: {
       url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction),
     },
-    transitionalAccomodation: {
-      url: get('TRANSITIONAL_ACCOMODATION_URL', 'http://localhost:3001', requiredInProduction),
+    transitionalAccommodation: {
+      url: get('TRANSITIONAL_ACCOMMODATION_URL', 'http://localhost:3001', requiredInProduction),
     },
     workloadMeasurementTool: {
       url: get('WORKLOAD_MEASUREMENT_TOOL_URL', 'http://localhost:3001', requiredInProduction),
