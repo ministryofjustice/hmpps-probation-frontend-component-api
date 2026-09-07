@@ -16,7 +16,7 @@ jest.mock('../../config', () => ({
     prepareACase: { url: 'url' },
     probationDigitalReporting: { url: 'url' },
     referAndMonitor: { url: 'url' },
-    transitionalAccomodation: { url: 'url' },
+    transitionalAccommodation: { url: 'url' },
     workloadMeasurementTool: { url: 'url' },
   },
 }))
@@ -37,7 +37,7 @@ describe('getServicesForUser', () => {
             'OASys (opens in a new tab)',
             'Probation Digital Reporting',
             'Refer and monitor an intervention',
-            'Transitional Accomodation (CAS3)',
+            'Transitional Accommodation (CAS3)',
           ].includes(service.heading)
         }),
       ).toEqual(true)
