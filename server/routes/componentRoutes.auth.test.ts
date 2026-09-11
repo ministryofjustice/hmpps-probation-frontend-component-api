@@ -1,6 +1,5 @@
 import express, { type NextFunction, type Request, type Response, type Router } from 'express'
 import request from 'supertest'
-import jwt from 'jsonwebtoken'
 
 import type { HmppsUser } from '../interfaces/hmppsUser'
 

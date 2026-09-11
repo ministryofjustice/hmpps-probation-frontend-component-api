@@ -2,7 +2,7 @@ import { createHash } from 'crypto'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwksRsa from 'jwks-rsa'
 import { expressjwt, GetVerificationKey } from 'express-jwt'
-import jwt, { VerifyOptions } from 'jsonwebtoken'
+import { VerifyOptions } from 'jsonwebtoken'
 import { Services } from '../services'
 import config from '../config'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -14,7 +14,6 @@ import componentsController, {
 } from '../controllers/componentsController'
 import { AvailableComponent } from '../@types/AvailableComponent'
 import Component from '../@types/Component'
-import { TokenData } from '../@types/Users'
 import { getRequestLogger } from '../utils/currentUserContext'
 
 export type ComponentsResponseBody = Partial<Record<AvailableComponent, Component>> & {
