@@ -54,17 +54,12 @@ export default function componentRoutes(services: Services): Router {
   }) as GetVerificationKey
 
   router.use((req, res, next) => {
-    if (process.env.NODE_ENV === 'inttest') {
-      req.auth = jwt.decode(req.headers['x-user-token'] as string) as TokenData
-      next()
-    } else {
-      expressjwt({
-        secret: jwksIssuer,
-        issuer: `${config.apis.hmppsAuth.url}/issuer`,
-        algorithms: ['RS256'],
-        getToken: reqInternal => reqInternal.headers['x-user-token'] as string,
-      })(req, res, next)
-    }
+    expressjwt({
+      secret: jwksIssuer,
+      issuer: `${config.apis.hmppsAuth.url}/issuer`,
+      algorithms: ['RS256'],
+      getToken: reqInternal => reqInternal.headers['x-user-token'] as string,
+    })(req, res, next)
   })
 
   async function getHeaderResponseBody(
