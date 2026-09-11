@@ -1,5 +1,5 @@
 import { AgentConfig } from '@ministryofjustice/hmpps-rest-client'
-import { serviceCheckFactory } from '../data/healthCheck'
+import { redisServiceCheckFactory, serviceCheckFactory } from '../data/healthCheck'
 import config from '../config'
 import type { ApplicationInfo } from '../applicationInfo'
 
@@ -42,8 +42,18 @@ function gatherCheckInfo(aggregateStatus: Record<string, unknown>, currentStatus
   return { ...aggregateStatus, [currentStatus.name]: { status: currentStatus.status, details: currentStatus.message } }
 }
 
+function redisService(name: string): HealthCheckService {
+  const check = redisServiceCheckFactory(name)
+
+  return () =>
+    check()
+      .then(result => ({ name, status: 'UP', message: result }))
+      .catch(err => ({ name, status: 'DOWN', message: err }))
+}
+
 const apiChecks = [
   service('hmppsAuth', `${config.apis.hmppsAuth.url}/health/ping`, config.apis.hmppsAuth.agent),
+  ...(config.redis.enabled ? [redisService('redis')] : []),
   ...(config.apis.tokenVerification.enabled
     ? [
         service(
