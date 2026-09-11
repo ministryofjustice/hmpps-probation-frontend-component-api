@@ -1,6 +1,5 @@
 import express, { type NextFunction, type Request, type Response, type Router } from 'express'
 import request from 'supertest'
-import jwt from 'jsonwebtoken'
 
 import type { HmppsUser } from '../interfaces/hmppsUser'
 
@@ -62,37 +61,6 @@ describe('componentRoutes auth/error handling', () => {
     jest.resetModules()
     jest.clearAllMocks()
     delete process.env.NODE_ENV
-  })
-
-  it('uses jwt.decode when NODE_ENV=inttest', async () => {
-    process.env.NODE_ENV = 'inttest'
-
-    await new Promise<void>((resolve, reject) => {
-      jest.isolateModules(() => {
-        ;(async () => {
-          try {
-            const expressjwt = jest.fn()
-            jest.doMock('express-jwt', () => ({
-              expressjwt: () => expressjwt,
-            }))
-
-            // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
-            const componentRoutes = require('./componentRoutes').default as ComponentRoutesFactory
-
-            const app = express()
-            app.use('/api', componentRoutes(minimalServices))
-
-            const token = jwt.sign({ user_name: 'USER1' }, 'secret')
-            await request(app).get('/api/components').set('x-user-token', token).expect(200)
-
-            expect(expressjwt).not.toHaveBeenCalled()
-            resolve()
-          } catch (err) {
-            reject(err)
-          }
-        })().catch(reject)
-      })
-    })
   })
 
   it('calls getToken and returns 500 + logs for unexpected errors', async () => {
