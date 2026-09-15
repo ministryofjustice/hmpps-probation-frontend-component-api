@@ -51,24 +51,26 @@ function redisService(name: string): HealthCheckService {
       .catch(err => ({ name, status: 'DOWN', message: err }))
 }
 
-const apiChecks = [
-  service('hmppsAuth', `${config.apis.hmppsAuth.url}/health/ping`, config.apis.hmppsAuth.agent),
-  ...(config.redis.enabled ? [redisService('redis')] : []),
-  ...(config.apis.tokenVerification.enabled
-    ? [
-        service(
-          'tokenVerification',
-          `${config.apis.tokenVerification.url}/health/ping`,
-          config.apis.tokenVerification.agent,
-        ),
-      ]
-    : []),
-]
+function getApiChecks(): HealthCheckService[] {
+  return [
+    service('hmppsAuth', `${config.apis.hmppsAuth.url}/health/ping`, config.apis.hmppsAuth.agent),
+    ...(config.redis.enabled ? [redisService('redis')] : []),
+    ...(config.apis.tokenVerification.enabled
+      ? [
+          service(
+            'tokenVerification',
+            `${config.apis.tokenVerification.url}/health/ping`,
+            config.apis.tokenVerification.agent,
+          ),
+        ]
+      : []),
+  ]
+}
 
 export default function healthCheck(
   applicationInfo: ApplicationInfo,
   callback: HealthCheckCallback,
-  checks = apiChecks,
+  checks = getApiChecks(),
 ): void {
   Promise.all(checks.map(fn => fn())).then(checkResults => {
     const allOk = checkResults.every(item => item.status === 'UP') ? 'UP' : 'DOWN'
