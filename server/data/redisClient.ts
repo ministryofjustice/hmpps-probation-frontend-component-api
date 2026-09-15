@@ -10,6 +10,12 @@ const url =
     ? `rediss://${config.redis.host}:${config.redis.port}`
     : `redis://${config.redis.host}:${config.redis.port}`
 
+let sharedRedisClient: RedisClient | null = null
+
+/**
+ * Internal factory function that creates a new Redis client instance.
+ * Used by getRedisClient() to initialize the singleton and by tests that need fresh instances.
+ */
 export const createRedisClient = (): RedisClient => {
   const client = createClient({
     url,
@@ -31,4 +37,24 @@ export const createRedisClient = (): RedisClient => {
   client.on('error', (e: Error) => logger.error('Redis client error', e))
 
   return client
+}
+
+/**
+ * Returns a singleton Redis client instance.
+ * Lazily initializes the client on first call and reuses it for all subsequent calls.
+ * This ensures a single, unified connection across the application's data factory layer.
+ */
+export const getRedisClient = (): RedisClient => {
+  if (!sharedRedisClient) {
+    sharedRedisClient = createRedisClient()
+  }
+  return sharedRedisClient
+}
+
+/**
+ * Resets the shared Redis client instance.
+ * Used primarily for testing purposes to allow injection of mock clients or fresh instances.
+ */
+export const resetRedisClient = (): void => {
+  sharedRedisClient = null
 }

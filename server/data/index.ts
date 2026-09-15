@@ -11,7 +11,7 @@ initialiseAppInsights()
 buildAppInsightsClient(applicationInfo)
 
 import { systemTokenBuilder } from './hmppsAuthClient'
-import { createRedisClient } from './redisClient'
+import { getRedisClient } from './redisClient'
 import TokenStore from './tokenStore'
 import RestClient, { CreateRestClientBuilder } from './restClient'
 import { ApiConfig } from '../config'
@@ -28,7 +28,7 @@ export default function restClientBuilder<T>(
 }
 
 export const dataAccess = {
-  getSystemToken: systemTokenBuilder(new TokenStore(createRedisClient())),
+  getSystemToken: systemTokenBuilder(new TokenStore(getRedisClient())),
   applicationInfo,
 }
 

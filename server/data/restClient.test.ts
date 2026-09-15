@@ -187,6 +187,7 @@ describe('STREAM', () => {
       reqheaders: { authorization: 'Bearer token-1' },
     })
       .get('/api/stream-fail')
+      .thrice() // alias to .times(3)
       .reply(500)
 
     await expect(restClient.stream({ path: '/stream-fail' })).rejects.toBeTruthy()
