@@ -35,7 +35,7 @@ export default function contentRoutes(services: Services): Router {
     'accessibility/manage-people-on-probation',
     'accessibility/prepare-a-case-for-sentence',
     'accessibility/refer-and-monitor-an-intervention',
-    'accessibility/transitional-accomodation',
+    'accessibility/transitional-accommodation',
     'accessibility/workload-measurement-tool',
   ).forEach(page =>
     router.get(

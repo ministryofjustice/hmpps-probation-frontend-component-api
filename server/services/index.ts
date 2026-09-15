@@ -1,11 +1,11 @@
 import UserService from './userService'
 import config from '../config'
-import { createRedisClient } from '../data/redisClient'
+import { getRedisClient } from '../data/redisClient'
 import '../data'
 import CacheService from './cacheService'
 
 export const services = () => {
-  const cacheService = new CacheService(createRedisClient(), config.redis.cacheTimeout)
+  const cacheService = new CacheService(getRedisClient(), config.redis.cacheTimeout)
   const userService = new UserService(cacheService)
 
   return {

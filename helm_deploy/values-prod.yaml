@@ -24,7 +24,7 @@ generic-service:
     OASYS_URL: "https://oasys.service.justice.gov.uk"
     PREPARE_A_CASE_URL: "https://prepare-case-probation.service.justice.gov.uk"
     REFER_AND_MONITOR_URL: "https://refer-monitor-intervention.service.justice.gov.uk"
-    TRANSITIONAL_ACCOMODATION_URL: "https://transitional-accommodation.hmpps.service.justice.gov.uk"
+    TRANSITIONAL_ACCOMMODATION_URL: "https://transitional-accommodation.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_TOOL_URL: "https://workload-measurement.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
