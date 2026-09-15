@@ -73,6 +73,38 @@ describe('redisClient', () => {
     )
   })
 
+  it('gets a singleton Redis client when one has not already been instantiated', () => {
+    mockConfig('false')
+    const redisClient = { on, unref }
+    createClient.mockReturnValue(redisClient)
+
+    jest.isolateModules(() => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
+      const { getRedisClient } = require('./redisClient')
+
+      expect(getRedisClient()).toBe(redisClient)
+    })
+
+    expect(createClient).toHaveBeenCalledTimes(1)
+  })
+
+  it('gets the existing singleton Redis client when one has already been instantiated', () => {
+    mockConfig('false')
+    const firstRedisClient = { on, unref }
+    const secondRedisClient = { on, unref }
+    createClient.mockReturnValueOnce(firstRedisClient).mockReturnValueOnce(secondRedisClient)
+
+    jest.isolateModules(() => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
+      const { getRedisClient } = require('./redisClient')
+
+      expect(getRedisClient()).toBe(firstRedisClient)
+      expect(getRedisClient()).toBe(firstRedisClient)
+    })
+
+    expect(createClient).toHaveBeenCalledTimes(1)
+  })
+
   it('calls unref() when NODE_ENV is test', () => {
     mockConfig('false')
     jest.isolateModules(() => {

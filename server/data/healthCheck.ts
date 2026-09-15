@@ -2,6 +2,7 @@ import superagent from 'superagent'
 import { HttpAgent, HttpsAgent } from 'agentkeepalive'
 import { AgentConfig } from '@ministryofjustice/hmpps-rest-client'
 import logger from '../../logger'
+import { createRedisClient } from './redisClient'
 
 export type ServiceCheck = () => Promise<string>
 
@@ -39,6 +40,33 @@ export function serviceCheckFactory(
       throw error
     } finally {
       keepaliveAgent.destroy()
+    }
+  }
+}
+
+export function redisServiceCheckFactory(name = 'redis'): ServiceCheck {
+  return async () => {
+    const client = createRedisClient()
+
+    try {
+      if (!client.isOpen) {
+        await client.connect()
+      }
+
+      const response = await client.ping()
+
+      if (response === 'PONG') {
+        return 'OK'
+      }
+
+      throw new Error(`Unexpected Redis PING response: ${response}`)
+    } catch (error) {
+      logger.error(error.stack, `Error calling ${name}`)
+      throw error
+    } finally {
+      if (client.isOpen) {
+        await client.quit()
+      }
     }
   }
 }
