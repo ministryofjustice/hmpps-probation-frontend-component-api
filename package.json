@@ -185,6 +185,6 @@
     "diff": "^8.0.3",
     "serialize-javascript": "^7.0.4",
     "undici": "^6.26.1",
-    "js-yaml": "3.15.1"
+    "js-yaml": "3.15.2"
   }
 }
