@@ -5,7 +5,6 @@ import type { Services } from '../services'
 import type CacheService from '../services/cacheService'
 import type UserService from '../services/userService'
 import type { HmppsUser } from '../interfaces/hmppsUser'
-import contentRoutes from './contentRoutes'
 
 jest.mock('../middleware/authorisationMiddleware', () => ({
   __esModule: true,
@@ -29,11 +28,28 @@ jest.mock('../middleware/populateCurrentUser', () => ({
   default: () => (_req: Request, _res: Response, next: NextFunction) => next(),
 }))
 
+jest.mock('../../logger', () => ({
+  __esModule: true,
+  default: {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  },
+}))
+
 const getAccessibilityServicesForUser = jest.fn()
 jest.mock('../services/utils/getAccessibilityServicesForUser', () => ({
   __esModule: true,
   default: (...args: unknown[]) => getAccessibilityServicesForUser(...args),
 }))
+
+// eslint-disable-next-line import/first
+import logger from '../../logger'
+// eslint-disable-next-line import/first
+import { establishCurrentUserContext } from '../utils/currentUserContext'
+// eslint-disable-next-line import/first
+import contentRoutes from './contentRoutes'
 
 const emptyServices = {
   userService: {} as UserService,
@@ -47,6 +63,7 @@ describe('contentRoutes', () => {
 
   function appWithUser(user: Pick<HmppsUser, 'authSource' | 'services'> | { authSource: string; services: unknown[] }) {
     const app = express()
+    app.use(establishCurrentUserContext())
     app.use((_req, res, next) => {
       res.render = function renderJson(this: Response, view: string, model?: unknown) {
         return this.status(200).json({ view, model })
@@ -65,6 +82,7 @@ describe('contentRoutes', () => {
     expect(res.body.view).toBe('pages/markdown')
     expect(res.body.model.page).toBe('index')
     expect(res.body.model.components).toBeTruthy()
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Serving index content page')
   })
 
   it('GET /cookies-policy renders markdown with backlink', async () => {
@@ -74,6 +92,7 @@ describe('contentRoutes', () => {
     expect(res.body.view).toBe('pages/markdown')
     expect(res.body.model.page).toBe('cookies-policy')
     expect(res.body.model.showBacklink).toBe(true)
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Serving content page: cookies-policy')
   })
 
   it('GET /services renders services page', async () => {
@@ -81,6 +100,7 @@ describe('contentRoutes', () => {
     const res = await request(app).get('/services')
 
     expect(res.body.view).toBe('pages/services')
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Serving services page')
   })
 
   it('GET /accessibility uses accessibility services for delius users', async () => {
@@ -91,6 +111,7 @@ describe('contentRoutes', () => {
     expect(getAccessibilityServicesForUser).toHaveBeenCalledWith([{ id: 'raw' }])
     expect(res.body.view).toBe('pages/accessibility')
     expect(res.body.model.services).toEqual([{ id: 'svc1' }])
+    expect(logger.info).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'Serving accessibility page')
   })
 
   it('GET /accessibility uses DEFAULT_USER_ACCESS for non-delius users', async () => {

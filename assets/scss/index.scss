@@ -1,20 +1,22 @@
-$govuk-global-styles: true;
-$path: "/assets/images/";
+@use "footer";
 
-$moj-page-width: 1170px;
-$govuk-page-width: $moj-page-width;
+@use "govuk-frontend/dist/govuk";
 
-@import "govuk-frontend/dist/govuk/index";
-@import "govuk-frontend/dist/govuk/core";
-@import "govuk-frontend/dist/govuk/objects";
-@import "govuk-frontend/dist/govuk/components";
-@import "govuk-frontend/dist/govuk/utilities";
-@import "govuk-frontend/dist/govuk/overrides";
-@import "@ministryofjustice/frontend/moj/all";
+@use "header";
 
-@import "assets/scss/local";
-@import "./components/error-page";
-@import "./services";
+// to silence the specific 'govuk-text-colour' deprecation warning
+// govuk.$govuk-suppressed-warnings: map.merge(
+//   govuk.$govuk-suppressed-warnings, 
+//   ("govuk-text-colour": true)
+// );
+// govuk.$govuk-suppressed-warnings: ("govuk-text-colour": true);
 
-@import "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/header";
-@import "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/footer";
+
+@use "@ministryofjustice/frontend/moj/all";
+
+@use "assets/scss/local";
+@use "./components/error-page";
+@use "./services";
+
+@use "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/header" as moj-header;
+@use "@ministryofjustice/hmpps-probation-frontend-components/dist/assets/footer" as moj-footer;

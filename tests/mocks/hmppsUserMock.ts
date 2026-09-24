@@ -15,6 +15,7 @@ export const probationUserMock: ProbationUser = {
   authSource: 'delius',
   username: 'PROBATION_USER',
   userId: '11111',
+  userUuid: '',
   name: 'Prison User',
   displayName: 'P. User',
   userRoles: [],

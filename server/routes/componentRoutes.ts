@@ -1,7 +1,8 @@
+import { createHash } from 'crypto'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwksRsa from 'jwks-rsa'
 import { expressjwt, GetVerificationKey } from 'express-jwt'
-import jwt from 'jsonwebtoken'
+import { VerifyOptions } from 'jsonwebtoken'
 import { Services } from '../services'
 import config from '../config'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -13,40 +14,65 @@ import componentsController, {
 } from '../controllers/componentsController'
 import { AvailableComponent } from '../@types/AvailableComponent'
 import Component from '../@types/Component'
-import { TokenData } from '../@types/Users'
-import logger from '../../logger'
+import { getRequestLogger } from '../utils/currentUserContext'
+
+export type ComponentsResponseBody = Partial<Record<AvailableComponent, Component>> & {
+  meta: ComponentsData['meta']
+}
+
+export function buildComponentsCacheKey(userToken: string, components: AvailableComponent[]): string {
+  const tokenHash = createHash('sha256').update(userToken).digest('hex')
+  const componentsKey = [...components].sort().join(',')
+  return `components:${tokenHash}:${componentsKey}`
+}
 
 export default function componentRoutes(services: Services): Router {
   const router = Router()
   const controller = componentsController()
+  const { cacheService } = services
 
+  function getClassesFromRequest(req: Request): string | undefined {
+    const raw = req.query.classes
+    getRequestLogger().debug('Raw classes header', JSON.stringify(raw))
+    if (!raw) return undefined
+    if (Array.isArray(raw)) return raw.filter(Boolean).join(' ').trim() || undefined
+    if (typeof raw === 'string') return raw.trim() || undefined
+    return undefined
+  }
+
+  const verifyOptions: VerifyOptions = {
+    clockTolerance: 3660,
+  }
   const jwksIssuer = jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     cacheMaxAge: 604800000, // a week
     jwksRequestsPerMinute: 2,
     jwksUri: `${config.apis.hmppsAuth.url}/.well-known/jwks.json`,
+    ...verifyOptions,
   }) as GetVerificationKey
 
   router.use((req, res, next) => {
-    if (process.env.NODE_ENV === 'inttest') {
-      req.auth = jwt.decode(req.headers['x-user-token'] as string) as TokenData
-      next()
-    } else {
-      expressjwt({
-        secret: jwksIssuer,
-        issuer: `${config.apis.hmppsAuth.url}/issuer`,
-        algorithms: ['RS256'],
-        getToken: reqInternal => reqInternal.headers['x-user-token'] as string,
-      })(req, res, next)
-    }
+    expressjwt({
+      secret: jwksIssuer,
+      issuer: `${config.apis.hmppsAuth.url}/issuer`,
+      algorithms: ['RS256'],
+      getToken: reqInternal => reqInternal.headers['x-user-token'] as string,
+    })(req, res, next)
   })
 
-  async function getHeaderResponseBody(res: Response, viewModelCached?: HeaderViewModel): Promise<Component> {
+  async function getHeaderResponseBody(
+    req: Request,
+    res: Response,
+    viewModelCached?: HeaderViewModel,
+  ): Promise<Component> {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['header'], res.locals.user)).header
+    const classes = getClassesFromRequest(req)
+    const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
+    getRequestLogger().debug('viewModelWithClasses >>> in getHeaderResponseBody :: ', viewModelWithClasses)
 
     return new Promise(resolve => {
-      res.render('components/header', viewModel, (_, html) => {
+      res.render('components/header', viewModelWithClasses, (_, html) => {
         resolve({
           html,
           css: [`${config.ingressUrl}/assets/css/header.css`],
@@ -56,7 +82,11 @@ export default function componentRoutes(services: Services): Router {
     })
   }
 
-  async function getFooterResponseBody(res: Response, viewModelCached?: FooterViewModel): Promise<Component> {
+  async function getFooterResponseBody(
+    _req: Request,
+    res: Response,
+    viewModelCached?: FooterViewModel,
+  ): Promise<Component> {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['footer'], res.locals.user)).footer
     return new Promise(resolve => {
       res.render('components/footer', viewModel, (_, html) => {
@@ -95,6 +125,12 @@ export default function componentRoutes(services: Services): Router {
    *           headerAndFooter:
    *             value: ['header', 'footer']
    *             summary: Request both the header and footer components
+   *       - in: query
+   *         name: classes
+   *         schema:
+   *           type: string
+   *         required: false
+   *         description: Optional CSS classes to be added to the component wrapper element (e.g., 'class1 class2')
    *       - in: header
    *         name: x-user-token
    *         schema:
@@ -113,9 +149,12 @@ export default function componentRoutes(services: Services): Router {
     '/components',
     populateCurrentUser(services.userService),
     asyncMiddleware(async (req, res, _next) => {
+      const requestLogger = getRequestLogger()
+      requestLogger.info('Serving /api/components')
+
       const componentMethods: Record<
         AvailableComponent,
-        (r: Response, cachedViewModel: HeaderViewModel | FooterViewModel) => Promise<Component>
+        (request: Request, response: Response, cachedViewModel: HeaderViewModel | FooterViewModel) => Promise<Component>
       > = {
         header: getHeaderResponseBody,
         footer: getFooterResponseBody,
@@ -126,7 +165,19 @@ export default function componentRoutes(services: Services): Router {
         .filter(component => componentMethods[component as AvailableComponent]) as AvailableComponent[]
 
       if (!componentsRequested.length) {
+        requestLogger.debug('No valid components requested')
         res.send({})
+        return
+      }
+
+      // Key by user token so cached responses are never shared between users
+      const userToken = req.headers['x-user-token'] as string
+      const cacheKey = buildComponentsCacheKey(userToken, componentsRequested)
+      const cachedResponse = await cacheService.getData<ComponentsResponseBody>(cacheKey)
+
+      if (cachedResponse) {
+        requestLogger.debug('Returning cached components response')
+        res.send(cachedResponse)
         return
       }
 
@@ -134,13 +185,11 @@ export default function componentRoutes(services: Services): Router {
 
       const renders = await Promise.all(
         componentsRequested.map(component =>
-          componentMethods[component as AvailableComponent](res, viewModels[component]),
+          componentMethods[component as AvailableComponent](req, res, viewModels[component]),
         ),
       )
 
-      const responseBody = componentsRequested.reduce<
-        Partial<Record<AvailableComponent, Component>> & { meta: ComponentsData['meta'] }
-      >(
+      const responseBody = componentsRequested.reduce<ComponentsResponseBody>(
         (output, componentName, index) => {
           return {
             ...output,
@@ -150,15 +199,21 @@ export default function componentRoutes(services: Services): Router {
         { meta: viewModels.meta },
       )
 
+      await cacheService.setData(cacheKey, responseBody)
+      requestLogger.info(`Served components: ${componentsRequested.join(', ')}`)
       res.send(responseBody)
     }),
   )
 
   router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    const requestLogger = getRequestLogger()
+    requestLogger.debug(`component route error is: `, err)
+
     if (err.name === 'UnauthorizedError') {
+      requestLogger.warn('Unauthorised request for components')
       res.status(401).send('Unauthorised')
     } else {
-      logger.error(err.message)
+      requestLogger.error(err.message)
       res.status(500).send('An unexpected error occurred')
     }
   })

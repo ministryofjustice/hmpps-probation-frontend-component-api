@@ -6,10 +6,18 @@ import auth from '../authentication/auth'
 import tokenVerifier from '../data/tokenVerification'
 import componentsController from '../controllers/componentsController'
 import populateCurrentUser from '../middleware/populateCurrentUser'
+import { getRequestLogger } from '../utils/currentUserContext'
 
 export default function developRoutes(services: Services): Router {
   const router = Router()
   const controller = componentsController()
+
+  function getClassesFromQueryParam(classes: unknown): string | undefined {
+    if (!classes) return undefined
+    if (Array.isArray(classes)) return classes.filter(Boolean).join(' ').trim() || undefined
+    if (typeof classes === 'string') return classes.trim() || undefined
+    return undefined
+  }
 
   router.use(authorisationMiddleware())
   router.use(auth.authenticationMiddleware(tokenVerifier))
@@ -26,8 +34,11 @@ export default function developRoutes(services: Services): Router {
     router.get(
       path,
       asyncMiddleware(async (_req, res, _next) => {
+        getRequestLogger().info(`Serving component preview for ${path}`)
         const viewModel = await getViewModel(res.locals.user)
-        return res.render('pages/componentPreview', viewModel)
+        const classes = getClassesFromQueryParam(_req.query.classes)
+        const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
+        return res.render('pages/componentPreview', viewModelWithClasses)
       }),
     )
   })

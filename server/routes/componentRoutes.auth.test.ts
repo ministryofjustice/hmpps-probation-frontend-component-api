@@ -1,6 +1,5 @@
 import express, { type NextFunction, type Request, type Response, type Router } from 'express'
 import request from 'supertest'
-import jwt from 'jsonwebtoken'
 
 import type { HmppsUser } from '../interfaces/hmppsUser'
 
@@ -9,11 +8,17 @@ import type CacheService from '../services/cacheService'
 import type UserService from '../services/userService'
 
 const loggerError = jest.fn()
+const loggerWarn = jest.fn()
+const loggerInfo = jest.fn()
+const loggerDebug = jest.fn()
 
 jest.mock('../../logger', () => ({
   __esModule: true,
   default: {
     error: (...args: unknown[]) => loggerError(...args),
+    warn: (...args: unknown[]) => loggerWarn(...args),
+    info: (...args: unknown[]) => loggerInfo(...args),
+    debug: (...args: unknown[]) => loggerDebug(...args),
   },
 }))
 
@@ -58,37 +63,6 @@ describe('componentRoutes auth/error handling', () => {
     delete process.env.NODE_ENV
   })
 
-  it('uses jwt.decode when NODE_ENV=inttest', async () => {
-    process.env.NODE_ENV = 'inttest'
-
-    await new Promise<void>((resolve, reject) => {
-      jest.isolateModules(() => {
-        ;(async () => {
-          try {
-            const expressjwt = jest.fn()
-            jest.doMock('express-jwt', () => ({
-              expressjwt: () => expressjwt,
-            }))
-
-            // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
-            const componentRoutes = require('./componentRoutes').default as ComponentRoutesFactory
-
-            const app = express()
-            app.use('/api', componentRoutes(minimalServices))
-
-            const token = jwt.sign({ user_name: 'USER1' }, 'secret')
-            await request(app).get('/api/components').set('x-user-token', token).expect(200)
-
-            expect(expressjwt).not.toHaveBeenCalled()
-            resolve()
-          } catch (err) {
-            reject(err)
-          }
-        })().catch(reject)
-      })
-    })
-  })
-
   it('calls getToken and returns 500 + logs for unexpected errors', async () => {
     await new Promise<void>((resolve, reject) => {
       jest.isolateModules(() => {
@@ -114,7 +88,7 @@ describe('componentRoutes auth/error handling', () => {
 
             expect(res.status).toBe(500)
             expect(res.text).toBe('An unexpected error occurred')
-            expect(loggerError).toHaveBeenCalledWith('boom')
+            expect(loggerError).toHaveBeenCalledWith({ user_uuid: 'anonymous' }, 'boom')
             resolve()
           } catch (err) {
             reject(err)

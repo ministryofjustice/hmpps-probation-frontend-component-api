@@ -52,12 +52,26 @@ jest.mock('./clientCredentials', () => ({
   default: jest.fn(),
 }))
 
+jest.mock('../../logger', () => ({
+  __esModule: true,
+  default: {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  },
+}))
+
 // eslint-disable-next-line import/first
 import passport from 'passport'
 // eslint-disable-next-line import/first
 import generateOauthClientToken from './clientCredentials'
 // eslint-disable-next-line import/first
 import auth from './auth'
+// eslint-disable-next-line import/first
+import logger from '../../logger'
+// eslint-disable-next-line import/first
+import { runWithCurrentUserContext } from '../utils/currentUserContext'
 
 const passportUse = passport.use as jest.Mock
 const generateOauthClientTokenMock = generateOauthClientToken as jest.Mock
@@ -105,12 +119,18 @@ describe('authentication/auth', () => {
       const req = createReq({ isAuthenticated: true })
       const res = createRes()
 
-      await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      await runWithCurrentUserContext(async () => {
+        await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      })
 
       expect(verifyToken).toHaveBeenCalledWith(req)
       expect(next).toHaveBeenCalled()
       expect(res.redirect).not.toHaveBeenCalled()
       expect(req.session?.returnTo).toBeUndefined()
+      expect(logger.debug).toHaveBeenCalledWith(
+        { user_uuid: 'anonymous' },
+        'Authentication middleware verified user session',
+      )
     })
 
     it('redirects to /sign-in and sets returnTo when not authenticated (short-circuits verification)', async () => {
@@ -118,12 +138,18 @@ describe('authentication/auth', () => {
       const req = createReq({ isAuthenticated: false, originalUrl: '/the/page' })
       const res = createRes()
 
-      await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      await runWithCurrentUserContext(async () => {
+        await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      })
 
       expect(verifyToken).not.toHaveBeenCalled()
       expect(next).not.toHaveBeenCalled()
       expect(req.session?.returnTo).toEqual('/the/page')
       expect(res.redirect).toHaveBeenCalledWith('/sign-in')
+      expect(logger.warn).toHaveBeenCalledWith(
+        { user_uuid: 'anonymous' },
+        'Authentication failed or token invalid, redirecting to sign-in',
+      )
     })
 
     it('redirects to /sign-in and sets returnTo when token fails verification', async () => {
@@ -131,12 +157,18 @@ describe('authentication/auth', () => {
       const req = createReq({ isAuthenticated: true, originalUrl: '/somewhere' })
       const res = createRes()
 
-      await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      await runWithCurrentUserContext(async () => {
+        await auth.authenticationMiddleware(verifyToken)(req, res, next)
+      })
 
       expect(verifyToken).toHaveBeenCalledWith(req)
       expect(next).not.toHaveBeenCalled()
       expect(req.session?.returnTo).toEqual('/somewhere')
       expect(res.redirect).toHaveBeenCalledWith('/sign-in')
+      expect(logger.warn).toHaveBeenCalledWith(
+        { user_uuid: 'anonymous' },
+        'Authentication failed or token invalid, redirecting to sign-in',
+      )
     })
   })
 

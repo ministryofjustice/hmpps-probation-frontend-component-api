@@ -5,6 +5,15 @@ import { Role, userHasRoles } from './roles'
 export default (roles: string[]): Service[] => {
   return [
     {
+      id: 'accredited-programmes',
+      heading: 'Accredited Programmes',
+      href: config.serviceUrls.accreditedProgrammes.url,
+      navEnabled: true,
+      enabled: () => userHasRoles([Role.Probation, Role.AccreditedProgrammes], roles),
+      accessibilityHeading: 'Accredited Programmes',
+      accessibilityUrl: '/accessibility/accredited-programmes',
+    },
+    {
       id: 'allocate-a-person-on-probation',
       heading: 'Allocate a Person on Probation',
       href: config.serviceUrls.allocateAPersonOnProbation.url,
@@ -94,6 +103,13 @@ export default (roles: string[]): Service[] => {
       accessibilityUrl: '/accessibility/prepare-a-case-for-sentence',
     },
     {
+      id: 'probation-digital-reporting',
+      heading: 'Probation Digital Reporting',
+      href: config.serviceUrls.probationDigitalReporting.url,
+      navEnabled: true,
+      enabled: () => ['LOCAL', 'DEV'].includes(config.environmentName),
+    },
+    {
       id: 'refer-and-monitor-an-intervention',
       heading: 'Refer and monitor an intervention',
       href: config.serviceUrls.referAndMonitor.url,
@@ -103,13 +119,13 @@ export default (roles: string[]): Service[] => {
       accessibilityUrl: '/accessibility/refer-and-monitor-an-intervention',
     },
     {
-      id: 'transitional-accomodation',
-      heading: 'Transitional Accomodation (CAS3)',
-      href: config.serviceUrls.transitionalAccomodation.url,
+      id: 'transitional-accommodation',
+      heading: 'Transitional Accommodation (CAS3)',
+      href: config.serviceUrls.transitionalAccommodation.url,
       navEnabled: true,
       enabled: () => true,
       accessibilityHeading: 'Transitional Accommodation (CAS3)',
-      accessibilityUrl: '/accessibility/transitional-accomodation',
+      accessibilityUrl: '/accessibility/transitional-accommodation',
     },
     {
       id: 'workload-measurement-tool',

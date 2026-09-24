@@ -14,6 +14,7 @@ jest.mock('../../services/auditService')
 export const user: HmppsUser = {
   name: 'FIRST LAST',
   userId: 'id',
+  userUuid: 'uuid-test-1',
   token: 'token',
   username: 'user1',
   displayName: 'First Last',

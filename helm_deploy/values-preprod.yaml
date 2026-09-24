@@ -13,7 +13,10 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
+    PORT: "3000"
+    LOG_LEVEL: "info"
 
+    ACCREDITED_PROGRAMMES_URL: "https://accredited-programmes-manage-and-deliver-preprod.hmpps.service.justice.gov.uk"
     ALLOCATE_A_PERSON_ON_PROBATION_URL: "https://workforce-management-preprod.hmpps.service.justice.gov.uk"
     APPROVED_PREMISES_URL: "https://approved-premises-preprod.hmpps.service.justice.gov.uk"
     CONSIDER_A_RECALL_URL: "https://consider-a-recall-preprod.hmpps.service.justice.gov.uk"
@@ -23,7 +26,7 @@ generic-service:
     OASYS_URL: "https://pp.oasys.service.justice.gov.uk"
     PREPARE_A_CASE_URL: "https://prepare-a-case-preprod.apps.live-1.cloud-platform.service.justice.gov.uk"
     REFER_AND_MONITOR_URL: "https://hmpps-interventions-ui-preprod.apps.live-1.cloud-platform.service.justice.gov.uk"
-    TRANSITIONAL_ACCOMODATION_URL: "https://transitional-accommodation-preprod.hmpps.service.justice.gov.uk"
+    TRANSITIONAL_ACCOMMODATION_URL: "https://transitional-accommodation-preprod.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_TOOL_URL: "https://workload-measurement-preprod.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:

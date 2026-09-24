@@ -1,4 +1,5 @@
 import { AgentConfig } from '@ministryofjustice/hmpps-rest-client'
+import { resolveLogLevel } from './utils/resolveLogLevel'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -24,13 +25,14 @@ export interface ApiConfig {
 }
 
 export default {
-  ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  ingressUrl: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   buildNumber: get('BUILD_NUMBER', '1_0_0', requiredInProduction),
   productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),
   gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
   branchName: get('GIT_BRANCH', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
   production,
   https: production,
+  logLevel: resolveLogLevel(process.env.LOG_LEVEL, { production }),
   staticResourceCacheDuration: '1h',
   redis: {
     host: get('REDIS_HOST', 'localhost', requiredInProduction),
@@ -47,14 +49,14 @@ export default {
   app: {},
   apis: {
     hmppsAuth: {
-      url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
-      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:9090/auth')),
+      url: get('HMPPS_AUTH_URL', 'http://localhost:8080/auth', requiredInProduction),
+      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:8080/auth')),
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000))),
-      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-typescript-template', requiredInProduction),
+      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-probation-frontend-component', requiredInProduction),
       authCodeClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
       clientCredentialsClientId: get(
         'CLIENT_CREDS_CLIENT_ID',
@@ -73,25 +75,45 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
-  domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  domain: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   contentfulFooterLinksEnabled: false,
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
+    accreditedProgrammes: {
+      url: get('ACCREDITED_PROGRAMMES_URL', 'http://localhost:3001', requiredInProduction),
+    },
     allocateAPersonOnProbation: {
       url: get('ALLOCATE_A_PERSON_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
     },
-    approvedPremises: { url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction) },
-    considerARecall: { url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction) },
-    createAndVaryALicence: { url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction) },
+    approvedPremises: {
+      url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    considerARecall: {
+      url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    createAndVaryALicence: {
+      url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction),
+    },
     managePeopleOnProbation: {
       url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
     },
-    nDelius: { url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction) },
-    oAsys: { url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction) },
-    prepareACase: { url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction) },
-    referAndMonitor: { url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction) },
-    transitionalAccomodation: {
-      url: get('TRANSITIONAL_ACCOMODATION_URL', 'http://localhost:3001', requiredInProduction),
+    nDelius: {
+      url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    oAsys: {
+      url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    prepareACase: {
+      url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    probationDigitalReporting: {
+      url: get('PROBATION_DIGITAL_REPORTING_URL', 'http://localhost:3001'),
+    },
+    referAndMonitor: {
+      url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction),
+    },
+    transitionalAccommodation: {
+      url: get('TRANSITIONAL_ACCOMMODATION_URL', 'http://localhost:3001', requiredInProduction),
     },
     workloadMeasurementTool: {
       url: get('WORKLOAD_MEASUREMENT_TOOL_URL', 'http://localhost:3001', requiredInProduction),
