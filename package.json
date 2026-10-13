@@ -155,7 +155,7 @@
     "audit-ci": "^7.1.0",
     "aws-sdk-client-mock": "^4.1.0",
     "chokidar": "^3.6.0",
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.5",
     "cypress": "^15.16.0",
     "cypress-multi-reporters": "^2.0.5",
     "esbuild": "^0.28.1",
