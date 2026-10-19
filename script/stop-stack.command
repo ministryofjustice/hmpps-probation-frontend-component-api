@@ -14,5 +14,5 @@ fi
 cd .. && docker compose down -v
 
 # Display the dialog using the custom checkmark icon
-osascript -e 'display dialog "Docker is installed and running successfully!" buttons {"OK"} default button "OK" with icon note'
+osascript -e 'display dialog "Docker stack terminated successfully!" buttons {"OK"} default button "OK" with icon note'
 #osascript -e 'display notification "Docker environment is ready." with title "Success" sound name "Glass"'
