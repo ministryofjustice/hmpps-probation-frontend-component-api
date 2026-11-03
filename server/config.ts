@@ -80,43 +80,43 @@ export default {
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
     accreditedProgrammes: {
-      url: get('ACCREDITED_PROGRAMMES_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('ACCREDITED_PROGRAMMES_URL', 'https://example.com', requiredInProduction),
     },
     allocateAPersonOnProbation: {
-      url: get('ALLOCATE_A_PERSON_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('ALLOCATE_A_PERSON_ON_PROBATION_URL', 'https://example.com', requiredInProduction),
     },
     approvedPremises: {
-      url: get('APPROVED_PREMISES_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('APPROVED_PREMISES_URL', 'https://example.com', requiredInProduction),
     },
     considerARecall: {
-      url: get('CONSIDER_A_RECALL_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('CONSIDER_A_RECALL_URL', 'https://example.com', requiredInProduction),
     },
     createAndVaryALicence: {
-      url: get('CREATE_AND_VARY_A_LICENCE_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('CREATE_AND_VARY_A_LICENCE_URL', 'https://example.com', requiredInProduction),
     },
     managePeopleOnProbation: {
-      url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'https://example.com', requiredInProduction),
     },
     nDelius: {
-      url: get('NDELIUS_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('NDELIUS_URL', 'https://example.com', requiredInProduction),
     },
     oAsys: {
-      url: get('OASYS_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('OASYS_URL', 'https://example.com', requiredInProduction),
     },
     prepareACase: {
-      url: get('PREPARE_A_CASE_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('PREPARE_A_CASE_URL', 'https://example.com', requiredInProduction),
     },
     probationDigitalReporting: {
-      url: get('PROBATION_DIGITAL_REPORTING_URL', 'http://localhost:3001'),
+      url: get('PROBATION_DIGITAL_REPORTING_URL', 'https://example.com'),
     },
     referAndMonitor: {
-      url: get('REFER_AND_MONITOR_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('REFER_AND_MONITOR_URL', 'https://example.com', requiredInProduction),
     },
     transitionalAccommodation: {
-      url: get('TRANSITIONAL_ACCOMMODATION_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('TRANSITIONAL_ACCOMMODATION_URL', 'https://example.com', requiredInProduction),
     },
     workloadMeasurementTool: {
-      url: get('WORKLOAD_MEASUREMENT_TOOL_URL', 'http://localhost:3001', requiredInProduction),
+      url: get('WORKLOAD_MEASUREMENT_TOOL_URL', 'https://example.com', requiredInProduction),
     },
   },
   features: {},
