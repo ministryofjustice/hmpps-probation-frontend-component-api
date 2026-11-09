@@ -79,7 +79,7 @@ jobs:
     needs:
       - build
       - helm_lint
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@2f477d94de98edf4c481ff948624118c3fc93e5a # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@0857853650a70c9453fc4ad47eb1790aae75639c # v2
     secrets: inherit
     with:
       environment: 'dev'
@@ -89,7 +89,7 @@ jobs:
     needs:
       - build
       - deploy_dev
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@2f477d94de98edf4c481ff948624118c3fc93e5a # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@0857853650a70c9453fc4ad47eb1790aae75639c # v2
     secrets: inherit
     with:
       environment: 'preprod'
@@ -99,7 +99,7 @@ jobs:
     needs:
       - build
       - deploy_preprod
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@2f477d94de98edf4c481ff948624118c3fc93e5a # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@0857853650a70c9453fc4ad47eb1790aae75639c # v2
     secrets: inherit
     with:
       environment: 'prod'
