@@ -69,7 +69,6 @@ export default function componentRoutes(services: Services): Router {
     const viewModel = viewModelCached ?? (await controller.getViewModels(['header'], res.locals.user)).header
     const classes = getClassesFromRequest(req)
     const viewModelWithClasses = classes ? { ...viewModel, classes } : viewModel
-    getRequestLogger().debug('viewModelWithClasses >>> in getHeaderResponseBody :: ', viewModelWithClasses)
 
     return new Promise(resolve => {
       res.render('components/header', viewModelWithClasses, (_, html) => {

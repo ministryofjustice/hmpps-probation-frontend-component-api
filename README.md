@@ -86,16 +86,19 @@ See [readme/building_and_running.md](readme/building_and_running.md) for the sam
 docker compose up -d --build
 ```
 
-## Edit documents in the local CMS
+## Local CMS (Flatnotes)
 
-Policy and accessibility copy lives as markdown in `content/`. The **editor** container (Flatnotes) mounts that directory so you can edit in a browser.
+The Docker Compose stack includes a local Flatnotes CMS at [http://localhost:9080/](http://localhost:9080/). Start the stack with `docker compose up -d --build` to run it.
 
-1. Start the stack (`docker compose up -d --build`).
-2. Open **http://localhost:9080**. Auth is off locally (`FLATNOTES_AUTH_TYPE=none` in `docker-compose.deps.yml`).
-3. Open an existing note (for example `cookies-policy` or files under `accessibility/`).
-4. Edit and save. Files are written straight into `content/` on your machine.
-5. Refresh the matching page on the app (for example http://localhost:3001/cookies-policy) after signing in. The app reads markdown from disk on each request, so you do not need to rebuild.
-6. Commit and push the changes into a PR
+> **Tip:** On macOS, you can also start or tear down the stack from Finder by opening [`script/start-stack.command`](script/start-stack.command) or [`script/stop-stack.command`](script/stop-stack.command), respectively.
+
+Policy and accessibility copy lives as markdown in `content/`. The **editor** container mounts that directory so you can edit in a browser.
+
+1. Open [http://localhost:9080/](http://localhost:9080/). Auth is off locally (`FLATNOTES_AUTH_TYPE=none` in `docker-compose.deps.yml`).
+2. Open an existing note (for example `cookies-policy` or files under `accessibility/`).
+3. Edit and save. Files are written straight into `content/` on your machine.
+4. Refresh the matching page on the app (for example http://localhost:3001/cookies-policy) after signing in. The app reads markdown from disk on each request, so you do not need to rebuild.
+5. Commit and push the changes into a PR
 
 Notes:
 

@@ -1,5 +1,6 @@
-@use "govuk-frontend/dist/govuk";
+@use "@ministryofjustice/frontend/moj/vendor/govuk-frontend" as *;
+@use "@ministryofjustice/frontend/moj/components/domain-specific/probation/header/header";
 
-.govuk-width-container {
-  @include govuk.govuk-width-container(1170px);
+.probation-common-header .govuk-width-container {
+  @include govuk-width-container(1170px);
 }

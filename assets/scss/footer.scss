@@ -1,1 +1,6 @@
+@use "@ministryofjustice/frontend/moj/vendor/govuk-frontend" as *;
 @use "@ministryofjustice/frontend/moj/components/domain-specific/probation/footer/footer";
+
+.probation-common-footer .govuk-width-container {
+  @include govuk-width-container(1170px);
+}
