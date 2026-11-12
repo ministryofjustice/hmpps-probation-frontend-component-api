@@ -28,6 +28,8 @@ export default (roles: string[]): Service[] => {
       href: config.serviceUrls.approvedPremises.url,
       navEnabled: true,
       enabled: () => true,
+      accessibilityHeading: 'Approved Premises (CAS1)',
+      accessibilityUrl: '/accessibility/approved-premises',
     },
     {
       id: 'consider-a-recall',

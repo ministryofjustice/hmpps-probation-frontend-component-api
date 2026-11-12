@@ -30,6 +30,7 @@ export default function contentRoutes(services: Services): Router {
     'privacy-policy',
     'accessibility/accredited-programmes',
     'accessibility/allocate-a-person-on-probation',
+    'accessibility/approved-premises',
     'accessibility/consider-a-recall',
     'accessibility/create-and-vary-a-licence',
     'accessibility/manage-people-on-probation',
