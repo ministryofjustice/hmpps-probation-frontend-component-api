@@ -11,8 +11,8 @@ const hmppsAuthUrl = config.apis.hmppsAuth.url
 
 function getSystemClientTokenFromHmppsAuth(username?: string): Promise<superagent.Response> {
   const systemToken = generateOauthClientToken(
-    config.apis.hmppsAuth.clientCredentialsClientId,
-    config.apis.hmppsAuth.clientCredentialsClientSecret,
+    config.apis.hmppsAuth.systemClientId,
+    config.apis.hmppsAuth.systemClientSecret,
   )
 
   const grantRequest = new URLSearchParams({
@@ -20,7 +20,7 @@ function getSystemClientTokenFromHmppsAuth(username?: string): Promise<superagen
     ...(username && { username }),
   }).toString()
 
-  logger.info(`${grantRequest} HMPPS Auth request for client id '${config.apis.hmppsAuth.clientCredentialsClientId}''`)
+  logger.info(`${grantRequest} HMPPS Auth request for client id '${config.apis.hmppsAuth.systemClientId}''`)
 
   return superagent
     .post(`${hmppsAuthUrl}/oauth/token`)

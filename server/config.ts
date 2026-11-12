@@ -49,21 +49,28 @@ export default {
   app: {},
   apis: {
     hmppsAuth: {
+      enabled: get('HMPPS_AUTH_ENABLED', 'false', requiredInProduction) === 'true',
       url: get('HMPPS_AUTH_URL', 'http://localhost:8080/auth', requiredInProduction),
-      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:8080/auth')),
+      healthPath: '/health/ping',
+      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:9091/auth')),
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000))),
-      authCodeClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-probation-frontend-component', requiredInProduction),
-      authCodeClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
-      clientCredentialsClientId: get(
-        'CLIENT_CREDS_CLIENT_ID',
-        'hmpps-typescript-template-system',
-        requiredInProduction,
-      ),
-      clientCredentialsClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+      authClientId: get('AUTH_CODE_CLIENT_ID', 'hmpps-probation-frontend-component', requiredInProduction),
+      authClientSecret: get('AUTH_CODE_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+      systemClientId: get('CLIENT_CREDS_CLIENT_ID', 'hmpps-typescript-template-system', requiredInProduction),
+      systemClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+    },
+    probationOfficerLocation: {
+      url: get('PROBATION_OFFICER_LOCATION_API_URL', 'http://localhost:8090', requiredInProduction),
+      timeout: {
+        response: Number(get('PROBATION_OFFICER_LOCATION_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('PROBATION_OFFICER_LOCATION_API_TIMEOUT_DEADLINE', 5000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_OFFICER_LOCATION_API_TIMEOUT_RESPONSE', 5000))),
+      enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),

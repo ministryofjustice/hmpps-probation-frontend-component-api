@@ -1,0 +1,20 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/probation-officer-location",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "currentProvider": "London",
+          "currentTeam": "OMU B"
+        }
+      }
+    }
+  ]
+}

@@ -40,8 +40,8 @@ jest.mock('../config', () => ({
       hmppsAuth: {
         externalUrl: 'https://auth.external.test',
         url: 'https://auth.internal.test',
-        authCodeClientId: 'client-id',
-        authCodeClientSecret: 'client-secret',
+        authClientId: 'client-id',
+        authClientSecret: 'client-secret',
       },
     },
   },

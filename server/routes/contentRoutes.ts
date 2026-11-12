@@ -15,7 +15,7 @@ export default function contentRoutes(services: Services): Router {
 
   router.use(authorisationMiddleware())
   router.use(auth.authenticationMiddleware(tokenVerifier))
-  router.use(populateCurrentUser(services.userService))
+  router.use(populateCurrentUser(services.userService, services.hmppsAuthClient))
 
   router.get(
     '/',

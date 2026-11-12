@@ -1,9 +1,13 @@
 import type { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { AuthenticationClient, InMemoryTokenStore } from '@ministryofjustice/hmpps-auth-clients'
 
 import populateCurrentUser from './populateCurrentUser'
 import type { UserService } from '../services'
 import { runWithCurrentUserContext } from '../utils/currentUserContext'
+
+import config from '../config'
+import logger from '../../logger'
 
 jest.mock('../../logger', () => ({
   __esModule: true,
@@ -14,9 +18,6 @@ jest.mock('../../logger', () => ({
     error: jest.fn(),
   },
 }))
-
-// eslint-disable-next-line import/first
-import logger from '../../logger'
 
 function createToken(overrides: Record<string, unknown> = {}) {
   return jwt.sign(
@@ -38,6 +39,7 @@ describe('populateCurrentUser', () => {
   const next = jest.fn()
   const getServicesForUser = jest.fn().mockReturnValue([{ id: 'svc', navEnabled: true }])
   const userService = { getServicesForUser } as unknown as UserService
+  const authClient = new AuthenticationClient(config.apis.hmppsAuth, logger, new InMemoryTokenStore())
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -57,7 +59,7 @@ describe('populateCurrentUser', () => {
     await new Promise<void>((resolve, reject) => {
       runWithCurrentUserContext(() => {
         Promise.resolve(
-          populateCurrentUser(userService)(req, res, (...args: unknown[]) => {
+          populateCurrentUser(userService, authClient)(req, res, (...args: unknown[]) => {
             next(...args)
             resolve()
           }),
@@ -96,7 +98,7 @@ describe('populateCurrentUser', () => {
     await new Promise<void>((resolve, reject) => {
       runWithCurrentUserContext(() => {
         Promise.resolve(
-          populateCurrentUser(userService)(req, res, (...args: unknown[]) => {
+          populateCurrentUser(userService, authClient)(req, res, (...args: unknown[]) => {
             next(...args)
             resolve()
           }),
