@@ -1,4 +1,4 @@
-# Accessibility statement for Approved Premises
+# Accessibility statement for Approved Premises (CAS1)
 
 Last reviewed: 2 April 2026
 
