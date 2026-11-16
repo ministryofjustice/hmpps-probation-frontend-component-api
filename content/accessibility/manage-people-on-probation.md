@@ -39,11 +39,7 @@ We know some parts of this website are not fully accessible:
 - some documents accessed through the service are in PDF format and are not accessible 
 
 ## Feedback and contact information 
-If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact mpop-digital-team@justice.gov.uk. 
-
-If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille, email mpop-digital-team@justice.gov.uk. 
-
-We’ll consider your request and get back to you in 7 working days. 
+If you have difficulty using this service, email [mpop-digital-team@justice.gov.uk](mpop-digital-team@justice.gov.uk). 
 
 ### Enforcement procedure 
 The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). 

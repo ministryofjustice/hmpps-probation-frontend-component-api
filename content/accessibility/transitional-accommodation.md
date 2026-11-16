@@ -36,11 +36,7 @@ We know some parts of this website are not fully accessible:
 
 ## Feedback and contact information
 
-If you find any problems not listed on this page or think we’re not meeting accessibility requirements, email the CAS3 digital team with details of the issue you have experienced.
-
-Email: [cas3support@digital.justice.gov.uk](mailto:cas3support@digital.justice.gov.uk)
-
-We’ll consider your request and get back to you within 2 working days.
+If you have difficulty using this service, , email [cas3support@digital.justice.gov.uk](mailto:cas3support@digital.justice.gov.uk).
 
 ## Enforcement procedure
 

@@ -32,9 +32,7 @@ We know some parts of this service are not fully accessible:
 
 ## Feedback and contact information
 
-If you have difficulty using this service, email: [manageaworkforce@digital.justice.gov.uk](mailto:manageaworkforce@digital.justice.gov.uk)
-
-As part of providing this service, we may need to send you messages or documents. We’ll ask you how you want us to send messages or documents to you, but contact us if you need them in a different format. For example large print, audio recording or braille.
+If you have difficulty using this service, email [manageaworkforce@digital.justice.gov.uk](mailto:manageaworkforce@digital.justice.gov.uk).
 
 ## Reporting accessibility problems with this service
 

@@ -28,9 +28,7 @@ This website is fully compliant with the [Web Content Accessibility Guidelines v
 
 ## Feedback and contact information
 
-If you find any problems not listed on this page or think we're not meeting accessibility requirements, email [acpcommunity.digitalsupport@justice.gov.uk](mailto:acpcommunity.digitalsupport@justice.gov.uk).
-
-If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille, email [acpcommunity.digitalsupport@justice.gov.uk](mailto:acpcommunity.digitalsupport@justice.gov.uk). We'll consider your request and get back to you in 7 working days.
+If you have difficulty using this service, email [acpcommunity.digitalsupport@justice.gov.uk](mailto:acpcommunity.digitalsupport@justice.gov.uk).
 
 ### Enforcement procedure
 
