@@ -75,7 +75,7 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
-  domain: get('INGRESS_URL', 'https://example.com', requiredInProduction),
+  domain: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   contentfulFooterLinksEnabled: false,
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
