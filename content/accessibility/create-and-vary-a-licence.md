@@ -38,7 +38,7 @@ We know some parts of this service are not fully accessible:
 
 ## Feedback and contact information
 
-We are always looking to improve our service, including its accessibility. If you find any problems that are not listed on this page or think we are not meeting accessibility requirements, email: [createandvaryalicence@digital.justice.gov.uk](mailto:createandvaryalicence@digital.justice.gov.uk)
+If you have difficulty using this service, email [createandvaryalicence@digital.justice.gov.uk](mailto:createandvaryalicence@digital.justice.gov.uk).
 
 ## Enforcement procedure
 

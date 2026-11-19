@@ -30,9 +30,7 @@ Parts of this website are not fully accessible. For example:
 
 ## Feedback and contact information
 
-If you need information on this website in a different format like accessible PDF or large print, email: [mrd@digital.justice.gov.uk](mailto:mrd@digital.justice.gov.uk)
-
-If you cannot view the map on our 'Contact us' page, [call or email us for directions](https://www.gov.uk/government/organisations/ministry-of-justice).
+If you have difficulty using this service, email [mrd@digital.justice.gov.uk](mailto:mrd@digital.justice.gov.uk).
 
 ### Reporting accessibility problems with this website
 
