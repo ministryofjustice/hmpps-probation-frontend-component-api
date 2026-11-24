@@ -146,7 +146,7 @@ export default function componentRoutes(services: Services): Router {
    */
   router.get(
     '/components',
-    populateCurrentUser(services.userService, services.hmppsAuthClient),
+    populateCurrentUser(services.userService, services.hmppsAuthClient, services.cacheService),
     asyncMiddleware(async (req, res, _next) => {
       const requestLogger = getRequestLogger()
       requestLogger.info('Serving /api/components')

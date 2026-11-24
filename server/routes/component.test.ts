@@ -31,8 +31,15 @@ jest.mock('express-jwt', () => ({
   },
 }))
 
+const getCachedData = async (key: string) => {
+  if (key.startsWith('location:')) {
+    return { currentProvider: 'N07', currentTeam: 'N07AAA' }
+  }
+  return null
+}
+
 const cacheService = {
-  getData: jest.fn().mockResolvedValue(null),
+  getData: jest.fn(getCachedData),
   setData: jest.fn().mockResolvedValue('OK'),
 } as unknown as CacheService
 
@@ -40,11 +47,12 @@ let app: App
 
 beforeEach(() => {
   jest.clearAllMocks()
+  ;(cacheService.getData as jest.Mock).mockImplementation(getCachedData)
+  ;(cacheService.setData as jest.Mock).mockResolvedValue('OK')
   app = createApp({ ...services(), cacheService })
 })
 
 afterEach(() => {
-  jest.resetAllMocks()
   disconnectRedisClient()
 })
 

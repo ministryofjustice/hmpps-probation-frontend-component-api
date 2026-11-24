@@ -21,7 +21,7 @@ export default function developRoutes(services: Services): Router {
 
   router.use(authorisationMiddleware())
   router.use(auth.authenticationMiddleware(tokenVerifier))
-  router.use(populateCurrentUser(services.userService, services.hmppsAuthClient))
+  router.use(populateCurrentUser(services.userService, services.hmppsAuthClient, services.cacheService))
 
   const routes = [
     { path: '/header', getViewModel: controller.getHeaderViewModel },

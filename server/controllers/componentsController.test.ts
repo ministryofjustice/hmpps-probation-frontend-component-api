@@ -42,6 +42,7 @@ const user: HmppsUser = {
   displayName: 'First Last',
   authSource: 'delius',
   userRoles: [Role.ManageSupervisions],
+  location: 'N07AAA',
   services: [{ id: 'svc', heading: 'Service', navEnabled: true, href: '/' }],
 }
 
