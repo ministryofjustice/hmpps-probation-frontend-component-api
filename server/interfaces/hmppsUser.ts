@@ -39,6 +39,7 @@ export interface PrisonUser extends BaseUser, UserAccess {
  */
 export interface ProbationUser extends BaseUser, UserAccess {
   authSource: 'delius'
+  location: string
 }
 
 /**

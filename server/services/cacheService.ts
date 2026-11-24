@@ -29,7 +29,10 @@ export default class CacheService {
       const redisData = await this.redisClient.get(key)
       if (!redisData) return null
 
-      return JSON.parse(redisData)
+      // Handle Buffer response from Redis client
+      const dataString = Buffer.isBuffer(redisData) ? redisData.toString('utf-8') : redisData
+
+      return JSON.parse(dataString as string)
     } catch (error) {
       logger.error(error.stack, `Error calling redis`)
       return null

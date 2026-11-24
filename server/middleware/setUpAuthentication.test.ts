@@ -36,7 +36,7 @@ jest.mock('../config', () => ({
     apis: {
       hmppsAuth: {
         externalUrl: 'https://auth.external.test',
-        authCodeClientId: 'client-id',
+        authClientId: 'client-id',
       },
     },
   },

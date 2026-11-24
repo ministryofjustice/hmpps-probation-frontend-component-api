@@ -20,5 +20,6 @@ export const probationUserMock: ProbationUser = {
   displayName: 'P. User',
   userRoles: [],
   token: 'abc.def.ghi',
+  location: 'N07AAA',
   services: servicesMock,
 }

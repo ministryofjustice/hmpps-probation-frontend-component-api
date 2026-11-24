@@ -23,8 +23,10 @@ export default class UserService {
     return this.cacheService.getData<UserAccess>(`${user.username}_meta_data`)
   }
 
-  private setCache(user: BaseUser, access: UserAccess): Promise<string> {
-    return this.cacheService.setData(`${user.username}_meta_data`, access)
+  private setCache(user: BaseUser, access: UserAccess): void {
+    this.cacheService.setData(`${user.username}_meta_data`, access).catch(error => {
+      logger.error(error, 'Failed to cache user data')
+    })
   }
 
   private handleError(error: Error) {

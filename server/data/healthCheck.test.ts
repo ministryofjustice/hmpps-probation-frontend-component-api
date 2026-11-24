@@ -10,10 +10,28 @@ jest.mock('./redisClient', () => ({
 const createRedisClientMock = createRedisClient as jest.MockedFunction<typeof createRedisClient>
 
 describe('Service healthcheck', () => {
-  const healthcheck = serviceCheckFactory('externalService', 'http://test-service.com/ping', new AgentConfig(), {
+  // cases below use shortTimeout instead.
+  const serviceTimeout = {
+    response: 1000,
+    deadline: 1500,
+  }
+  const shortTimeout = {
     response: 100,
     deadline: 150,
-  })
+  }
+
+  const healthcheck = serviceCheckFactory(
+    'externalService',
+    'http://test-service.com/ping',
+    new AgentConfig(),
+    serviceTimeout,
+  )
+  const shortTimeoutHealthcheck = serviceCheckFactory(
+    'externalService',
+    'http://test-service.com/ping',
+    new AgentConfig(),
+    shortTimeout,
+  )
 
   let fakeServiceApi: nock.Scope
 
@@ -66,7 +84,7 @@ describe('Service healthcheck', () => {
     it('Should retry twice if request times out', async () => {
       fakeServiceApi
         .get('/ping')
-        .delay(10000) // delay set to 10s, timeout to 900/3=300ms
+        .delay(10000)
         .reply(200, { failure: 'one' })
         .get('/ping')
         .delay(10000)
@@ -74,14 +92,14 @@ describe('Service healthcheck', () => {
         .get('/ping')
         .reply(200, 'pong')
 
-      const response = await healthcheck()
+      const response = await shortTimeoutHealthcheck()
       expect(response).toEqual('OK')
     })
 
     it('Should fail if request times out three times', async () => {
       fakeServiceApi
         .get('/ping')
-        .delay(10000) // delay set to 10s, timeout to 900/3=300ms
+        .delay(10000)
         .reply(200, { failure: 'one' })
         .get('/ping')
         .delay(10000)
@@ -90,7 +108,7 @@ describe('Service healthcheck', () => {
         .delay(10000)
         .reply(200, { failure: 'three' })
 
-      await expect(healthcheck()).rejects.toThrow('Response timeout of 100ms exceeded')
+      await expect(shortTimeoutHealthcheck()).rejects.toThrow('Response timeout of 100ms exceeded')
     })
   })
 
@@ -100,10 +118,7 @@ describe('Service healthcheck', () => {
         'secureService',
         'https://secure-service.com/ping',
         new AgentConfig(),
-        {
-          response: 100,
-          deadline: 150,
-        },
+        serviceTimeout,
       )
 
       nock('https://secure-service.com').get('/ping').reply(200, 'pong')

@@ -1,4 +1,4 @@
-import type { RedisClient } from './redisClient'
+import { RedisClient } from './redisClient'
 
 import logger from '../../logger'
 
@@ -6,7 +6,7 @@ export default class TokenStore {
   private readonly prefix = 'systemToken:'
 
   constructor(private readonly client: RedisClient) {
-    client.on('error', error => {
+    client.on('error', (error: Error) => {
       logger.error(error, `Redis error`)
     })
   }
@@ -24,6 +24,17 @@ export default class TokenStore {
 
   public async getToken(key: string): Promise<string> {
     await this.ensureConnected()
-    return this.client.get(`${this.prefix}${key}`)
+    const value = await this.client.get(`${this.prefix}${key}`)
+
+    if (!value) {
+      return ''
+    }
+
+    // Handle Buffer response from Redis client
+    if (Buffer.isBuffer(value)) {
+      return value.toString('utf-8')
+    }
+
+    return value as string
   }
 }
