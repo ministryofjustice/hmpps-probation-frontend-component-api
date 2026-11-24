@@ -20,6 +20,7 @@ export const user: HmppsUser = {
   displayName: 'First Last',
   authSource: 'delius',
   userRoles: [],
+  location: 'N07AAA',
   services: [],
 }
 

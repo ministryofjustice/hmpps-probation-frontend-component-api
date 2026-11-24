@@ -9,7 +9,7 @@ export default class ProbationLocationClient extends RestClient {
     super('Probation Location API', config.apis.probationOfficerLocation, logger, authenticationClient)
   }
 
-  async getCalculationDetails(token: string): Promise<ProbationOfficerLocation> {
+  async getLocationDetails(token: string): Promise<ProbationOfficerLocation> {
     return this.get({ path: `/probation-officer-location`, headers: { token } }, asSystem())
   }
 }
