@@ -52,7 +52,7 @@ export default {
       enabled: get('HMPPS_AUTH_ENABLED', 'false', requiredInProduction) === 'true',
       url: get('HMPPS_AUTH_URL', 'http://localhost:8080/auth', requiredInProduction),
       healthPath: '/health/ping',
-      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:9091/auth')),
+      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:8080/auth')),
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
         deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
@@ -82,7 +82,7 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
-  domain: get('INGRESS_URL', 'https://example.com', requiredInProduction),
+  domain: get('INGRESS_URL', 'http://localhost:3001', requiredInProduction),
   contentfulFooterLinksEnabled: false,
   environmentName: get('ENVIRONMENT_NAME', 'LOCAL'),
   serviceUrls: {
