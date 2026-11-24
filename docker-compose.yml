@@ -9,11 +9,6 @@ services:
       file: docker-compose.deps.yml
       service: delius
 
-  hmpps-auth:
-    extends:
-      file: docker-compose.deps.yml
-      service: hmpps-auth
-
   hmpps-auth-proxy:
     extends:
       file: docker-compose.deps.yml

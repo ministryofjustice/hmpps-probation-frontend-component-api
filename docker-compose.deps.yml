@@ -38,17 +38,6 @@ services:
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
       # - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG
 
-  hmpps-auth-proxy:
-    image: nginx:latest
-    depends_on:
-      - hmpps-auth
-    networks:
-      - hmpps
-    ports:
-      - "9091:9091"
-    volumes:
-      - ./hmpps-auth-proxy/nginx.conf:/etc/nginx/nginx.conf
-
   editor:
     image: dockerbobw/flatnotes-enhanced:latest
     container_name: flatnotes
