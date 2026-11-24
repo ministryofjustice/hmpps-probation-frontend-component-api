@@ -73,7 +73,7 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
     tokenVerification: {
-      url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
+      url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8080/auth', requiredInProduction),
       timeout: {
         response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000)),
         deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 5000)),
