@@ -64,7 +64,7 @@ jobs:
   build:
     name: Build docker image from hmpps-github-actions
     if: github.ref == 'refs/heads/main'
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/docker_build.yml@304442013204ed99de7752c66ab9dcb98defb25c # v2
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/docker_build.yml@b9374f6f9203795af3cc3f2246c5019680e4464d # v2
     needs:
       # - node_integration_tests
       - node_unit_tests
